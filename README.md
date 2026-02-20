@@ -1,7 +1,9 @@
 # Hello
 
-Please don't roast me to much, I am a newb to lua and nvim.
-Help is very welcomed!
+**Please don't roast me to much, I am a newb to lua and nvim.
+Help is very welcomed!**
+
+Btw, DO NOT RUN `foobar.zsh`
 
 # NvChad README
 
