@@ -3,7 +3,16 @@
 **Please don't roast me to much, I am a newb to lua and nvim.
 Help is very welcomed!**
 
-Btw, DO NOT RUN `foobar.bash`
+Btw, **DO NOT RUN** `foobar.bash`
+
+# TODO
+
+- [x] Create a TODO list and commit
+- [ ] Integrate kickstart.nvim
+- Follow/take inspiration from good videos:
+  - [ ] <https://invidious.nerdvpn.de/watch?v=Mtgo-nP_r8Y>
+  - [ ] <https://invidious.nerdvpn.de/watch?v=m8C0Cq9Uv9o>
+  - [ ] <https://invidious.nerdvpn.de/watch?v=stqUbv-5u2s>
 
 # NvChad README
 

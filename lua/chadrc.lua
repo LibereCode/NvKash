@@ -6,7 +6,7 @@
 local M = {}
 
 M.base46 = {
-  theme = "onedark",
+  theme = "gruvchad",
 
   hl_override = {
     Comment = { italic = true },
@@ -50,13 +50,13 @@ return M
 -- local options = {
 --
 --   base46 = {
---     theme = "onedark", -- default theme
+--     theme = "gruvchad", -- default theme
 --     hl_add = {},
 --     hl_override = {},
 --     integrations = {},
 --     changed_themes = {},
 --     transparency = false,
---     theme_toggle = { "onedark", "one_light" },
+--     theme_toggle = { "gruvchad", "one_light" },
 --   },
 --
 --   ui = {
