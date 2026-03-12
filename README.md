@@ -1,3 +1,8 @@
+# NOTE
+
+**Do NOT edit this branch (beyond this README edit),
+because this serves as a reference to the default config !!**
+
 # kickstart.nvim
 
 ## Introduction
