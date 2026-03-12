@@ -1,5 +1,7 @@
 # README
 
+**THIS WAS MOSTLY MERGED FROM THE BRANCH `nvchad` OF THE PREVIOUS (CodeBerg) REPO**
+
 ## NOTICE
 
 This was migrate here from [Github LibereCode/NvKash](https://github.com/LibereCode/NvKash)
