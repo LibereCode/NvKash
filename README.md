@@ -1,4 +1,7 @@
-# kickstart.nvim
+# kickkash 2.0
+
+I will redo kickstart, but this time import less stuff (unless it is simple
+simple native configs)
 
 ## Introduction
 
