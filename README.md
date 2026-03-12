@@ -1,4 +1,10 @@
-# kickstart.nvim
+# NvKash
+
+With kickstart.nvim as a base, I will try to import AMAP from NvChad, **BUT**
+but keep ALL in the main lua directory (and not rely on the nvchad plugin)
+
+- `mkdir lua/NvChad`
+- `mkdir lua/ui`
 
 ## Introduction
 
