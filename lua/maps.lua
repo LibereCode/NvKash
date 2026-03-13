@@ -108,6 +108,14 @@ map('n', '<leader>l', '<cmd>Lazy<CR>', { desc = 'Lazy󰒲 ' })
 map('n', '<leader>ms', '<CMD>Markview splitToggle<CR>', { desc = 'toggle split' })
 map('n', '<leader>mt', '<CMD>Markview Toggle<CR>', { desc = 'toggle markview' })
 
+-- HACK: Plugins
+--
+-- Dial
+vim.keymap.set('n', '<C-a>', function() require('dial.map').manipulate('increment', 'normal') end, { desc = 'dial [a]dd' })
+vim.keymap.set('n', '<C-x>', function() require('dial.map').manipulate('decrement', 'normal') end, { desc = 'dial [a]dd' })
+vim.keymap.set('n', 'g<C-a>', function() require('dial.map').manipulate('increment', 'gnormal') end, { desc = 'dial [a]dd' })
+vim.keymap.set('n', 'g<C-x>', function() require('dial.map').manipulate('decrement', 'gnormal') end, { desc = 'dial [a]dd' })
+
 -- TEST: Test
 --
 map('n', '<leader>it', ':echo("test?")') -- allows to write a cmd starting with 'echo("test?")' (so you can finish it)
