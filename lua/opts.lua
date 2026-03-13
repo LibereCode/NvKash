@@ -56,3 +56,5 @@ o.scrolloff = 15 -- Minimal number of screen lines to keep above and below the c
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
 o.confirm = true
+
+opt.foldenable = false

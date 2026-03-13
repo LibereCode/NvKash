@@ -3,6 +3,18 @@
 I will redo kickstart, but this time import less stuff (unless it is simple
 simple native configs)
 
+## TODO
+
+- [ ] Markdown (choose or all)
+  - [x] Markview
+  - ~ Markdown render~
+  - ~ Markdown.nvim (mappings)~
+  - [ ] Marksman
+
+----
+
+**Original README**
+
 ## Introduction
 
 A starting point for Neovim that is:

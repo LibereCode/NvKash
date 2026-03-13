@@ -93,14 +93,20 @@ map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
 
 -- HACK: NAVIGATION
 --
-map('n', '<C-e>', '<cmd>Lex<CR>', { desc = 'Toggle Left Explorer' })
-map('n', '<leader>e', function() -- ABSOLUTE BANGER !
-  if not pcall(vim.cmd, 'Rex') then vim.cmd.Explore() end
-end, { desc = 'Toggle Explorer' })
+-- map('n', '<leader>e', '<cmd>Lex<CR>', { desc = 'Toggle Left Explorer' })
+-- map('n', '<leader>e', function() -- ABSOLUTE BANGER !
+--   if not pcall(vim.cmd, 'Rex') then vim.cmd.Explore() end
+-- end, { desc = 'Toggle Explorer' }) -- dock lite buggy...
 
 -- HACK: Lazy
 --
 map('n', '<leader>l', '<cmd>Lazy<CR>', { desc = 'Lazy󰒲 ' })
+
+-- HACK: Text
+--
+-- Markdown
+map('n', '<leader>ms', '<CMD>Markview splitToggle<CR>', { desc = 'toggle split' })
+map('n', '<leader>mt', '<CMD>Markview Toggle<CR>', { desc = 'toggle markview' })
 
 -- TEST: Test
 --
