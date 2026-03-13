@@ -1,7 +1,7 @@
 return {
   key = {
     {
-      '<leader>cf', -- HACK: <>f --> <>cf
+      '<leader>cf', -- HACK: >f --> >cf
       function() require('conform').format { async = true, lsp_format = 'fallback' } end,
       mode = '',
       desc = '[F]ormat buffer',

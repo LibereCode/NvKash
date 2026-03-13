@@ -70,13 +70,4 @@ return {
     ---@type blink.cmp.Config
     opts = require('configs.blink').opt,
   },
-
-  { -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
-    lazy = false,
-    build = ':TSUpdate',
-    branch = 'main',
-    -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
-    config = function() require 'configs.treesitter' end,
-  },
 }
