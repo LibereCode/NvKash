@@ -1,4 +1,13 @@
-# kickstart.nvim
+# NvChad.nvim
+
+## NOTE
+
+The branch `kickstart.2` is the _"main"_ development branch (at least related to kickstart.nvim)
+Do check it out, if you would fancy.
+
+-----
+
+original kickstart:
 
 ## Introduction
 
