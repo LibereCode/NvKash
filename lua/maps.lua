@@ -28,21 +28,23 @@ map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]ui
 
 -- HACK: TERMINAL
 --
-map('n', '<leader>tv', function()
-  vim.cmd.vnew()
-  vim.cmd.terminal()
-end, { desc = 'vterm' })
-map('n', '<leader>tt', function()
-  vim.cmd.new()
-  vim.cmd.terminal()
-end, { desc = 'term' })
+-- map('n', '<leader>tv', function() vim.cmd.vnew() vim.cmd.terminal() end, { desc = 'vterm' })
+-- map('n', '<leader>th', function() vim.cmd.new() vim.cmd.terminal() end, { desc = 'term' })
+-- clankerGPT floating terminal
+map('n', '<leader>tt', function() require('custom.toggle_term').float() end, { desc = 'Floating terminal' })
+map('n', '<leader>tv', function() require('custom.toggle_term').verti() end, { desc = 'Vertical terminal' })
+map('n', '<leader>th', function() require('custom.toggle_term').horiz() end, { desc = 'Horizontal terminal' })
+map('n', '<leader>th', function() require('custom.toggle_term').horiz() end, { desc = 'Horizontal terminal' })
+map({ 'n', 't' }, '<M-t>', function() require('custom.toggle_term').float() end, { desc = 'Toggle Term' })
+-- map({ 'n', 't' }, '<C-/>', function() require('custom.toggle_term').horiz() end, { desc = 'Toggle HTerm' })
+--
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
---
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 map('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+map('t', '<C-Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
 -- map('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -94,13 +96,19 @@ map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
 -- HACK: NAVIGATION
 --
 -- map('n', '<leader>e', '<cmd>Lex<CR>', { desc = 'Toggle Left Explorer' })
-map('n', '<leader>E', function() -- ABSOLUTE BANGER !
-  if not pcall(vim.cmd, 'Rex') then vim.cmd.Explore() end
-end, { desc = 'Toggle Explorer' }) -- dock lite buggy...
+map('n', '<leader>E', function()
+  if vim.fn.exists ':Rex' == 1 then
+    vim.cmd.Rex()
+  else
+    vim.cmd.Explore()
+  end
+end, { desc = 'Toggle (R)Explorer' })
 
 -- HACK: Lazy
 --
-map('n', '<leader>l', '<cmd>Lazy<CR>', { desc = 'Lazy󰒲 ' })
+map('n', '<leader>ll', '<cmd>Lazy<CR>', { desc = 'Lazy󰒲 ' })
+map({ 'n', 't' }, '<leader>lg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
+map({ 'n', 't' }, '<leader>gg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
 
 -- HACK: Code
 

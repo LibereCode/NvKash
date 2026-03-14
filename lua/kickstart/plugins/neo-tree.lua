@@ -13,7 +13,7 @@ return {
   },
   lazy = false,
   keys = {
-    { '<leader>e', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+    -- { '<leader>e', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
   },
   ---@module 'neo-tree'
   ---@type neotree.Config
@@ -22,7 +22,8 @@ return {
       window = {
         mappings = {
           -- ['\\'] = 'close_window', -- HACK:
-          ['<leader>e'] = 'close_window',
+          -- ['<leader>e'] = 'close_window',
+          ['<C-e>'] = 'close_window',
           ['q'] = 'close_window',
           ['l'] = 'open',
           ['h'] = 'close_node',
