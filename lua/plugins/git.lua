@@ -17,4 +17,7 @@ return {
       },
     },
   }, -- See kickstart.plugins.gitsigns for more
+
+  -- nvim v0.8.0
+  -- { 'kdheepak/lazygit.nvim' } -- HACK: replaced with custom.lazygit
 }
