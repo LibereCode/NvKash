@@ -24,7 +24,7 @@ and 'build up from the ground'.
   - [ ] Marksman
 - [ ] bufferline (or what it's called)
 
-----
+-----
 
 **Original README**
 
