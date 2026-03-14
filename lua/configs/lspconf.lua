@@ -149,7 +149,7 @@ local servers = {
 --
 -- You can press `g?` for help in this menu.
 local ensure_installed = vim.tbl_keys(servers or {})
-vim.list_extend(ensure_installed, {
+vim.list_extend(ensure_installed, { -- MASON "ensure_installed" IS HERE
   -- HACK: You can add other tools here that you want Mason to install
 })
 

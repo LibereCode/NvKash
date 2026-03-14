@@ -94,23 +94,23 @@ map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
 -- HACK: NAVIGATION
 --
 -- map('n', '<leader>e', '<cmd>Lex<CR>', { desc = 'Toggle Left Explorer' })
--- map('n', '<leader>e', function() -- ABSOLUTE BANGER !
---   if not pcall(vim.cmd, 'Rex') then vim.cmd.Explore() end
--- end, { desc = 'Toggle Explorer' }) -- dock lite buggy...
+map('n', '<leader>E', function() -- ABSOLUTE BANGER !
+  if not pcall(vim.cmd, 'Rex') then vim.cmd.Explore() end
+end, { desc = 'Toggle Explorer' }) -- dock lite buggy...
 
 -- HACK: Lazy
 --
 map('n', '<leader>l', '<cmd>Lazy<CR>', { desc = 'Lazy󰒲 ' })
 
--- HACK: Text
---
--- Markdown
-map('n', '<leader>ms', '<CMD>Markview splitToggle<CR>', { desc = 'toggle split' })
-map('n', '<leader>mt', '<CMD>Markview Toggle<CR>', { desc = 'toggle markview' })
+-- HACK: Code
 
--- HACK: Plugins
---
--- Dial
+-- NOTE:: Have plugin bindings inside the plugins
+-- either put it in keys = {}, opts = {}, or config (example:)
+-- config = function(_, opts)
+--   vim.keymap.set('n', '<leader>abc', function() require('plugin_name.foo').bar('do_some', 'normal') end, { desc = 'abc foobar' })
+-- end,
+
+-- Dial -- Didn't work inside of plugin
 vim.keymap.set('n', '<C-a>', function() require('dial.map').manipulate('increment', 'normal') end, { desc = 'dial [a]dd' })
 vim.keymap.set('n', '<C-x>', function() require('dial.map').manipulate('decrement', 'normal') end, { desc = 'dial [a]dd' })
 vim.keymap.set('n', 'g<C-a>', function() require('dial.map').manipulate('increment', 'gnormal') end, { desc = 'dial [a]dd' })

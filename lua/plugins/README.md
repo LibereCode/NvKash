@@ -2,12 +2,12 @@
 
 ## ADD THESE PLUGS
 
-- [ ] dial
-- [ ] flash
-- [ ] yazi
+- [x] dial
+- [x] flash
+- [x] yazi
 - [ ] mdflow
 - mini
-    - [ ] indentscope
+    - [x] indentscope
 
 ### Ponder? to add?
 
@@ -16,6 +16,7 @@
 - [ ] noice
 - [ ] orgmode
 
-## FIXME
+## TODO
 
-- [ ] Move plugs from lazy.lua
+- [x] Move plugs from lazy.lua
+- [ ] Sort plugins in files by category (inspiration/follow _LazyVim_ structure, maybe with tweaks for major plugs)
