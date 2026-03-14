@@ -25,10 +25,9 @@ rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
 
-  -- NOTE: Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
-  { 'NMAC427/guess-indent.nvim', opts = {} }, -- TODO: add to 'plugins/oneliners.lua'
-
-  -- Alternatively, use `config = function() ... end` for full control over the configuration.
+  -- NOTE Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
+  -- { 'NMAC427/guess-indent.nvim', opts = {} },
+  -- NOTE Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
   --    {
   --        'lewis6991/gitsigns.nvim',
@@ -37,29 +36,11 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
   --                -- Your gitsigns configuration here
   --            })
   --        end,
-  --    }
-  --
-  -- Here is a more advanced example where we pass configuration
-  -- options to `gitsigns.nvim`.
-  --
-  -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    ---@module 'gitsigns'
-    ---@type Gitsigns.Config
-    ---@diagnostic disable-next-line: missing-fields
-    opts = {
-      signs = {
-        add = { text = '+' }, ---@diagnostic disable-line: missing-fields
-        change = { text = '~' }, ---@diagnostic disable-line: missing-fields
-        delete = { text = '_' }, ---@diagnostic disable-line: missing-fields
-        topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
-        changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
-      },
-    },
-  },
+  --    } -- (plugins.oneliners)
 
-  -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
+  -- Gitsign (plugins.git)
+
+  -- NOTE Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
   -- lazy loading plugins that don't need to be loaded immediately at startup.
@@ -73,26 +54,7 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
   -- Then, because we use the `opts` key (recommended), the configuration runs
   -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
 
-  { -- Useful plugin to show you pending keybinds.
-    'folke/which-key.nvim',
-    event = 'VimEnter',
-    ---@module 'which-key'
-    ---@type wk.Opts
-    ---@diagnostic disable-next-line: missing-fields
-    opts = {
-      -- delay between pressing a key and opening which-key (milliseconds)
-      delay = 0,
-      icons = { mappings = vim.g.have_nerd_font },
-
-      -- Document existing key chains
-      spec = {
-        { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
-        { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
-        { 'gr', group = 'LSP Actions', mode = { 'n' } },
-      },
-    },
-  },
+  -- which-key (plugins.whichkey)
 
   -- NOTE Plugins can specify dependencies.
   --
@@ -100,6 +62,7 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
   -- you do for a plugin at the top level, you can do for a dependency.
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
+
   require 'configs.core',
   -- lspconf
   -- conform
@@ -107,21 +70,11 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
 
   require 'configs.theme', -- Change colortheme here !!
 
-  -- todo comments
-  -- Highlight todo, notes, etc in comments
-  {
-    'folke/todo-comments.nvim',
-    event = 'VimEnter',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    ---@module 'todo-comments'
-    ---@type TodoOptions
-    ---@diagnostic disable-next-line: missing-fields
-    opts = { signs = false },
-  },
+  -- Todo comments (plugins.text)
 
-  -- mini
+  -- mini (plugins.mini)
 
-  -- treesitter
+  -- treesitter (plugins.treesitter)
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -136,7 +89,7 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
   require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint', -- may cause errors if default isnt installed
-  require 'kickstart.plugins.autopairs',
+  -- require 'kickstart.plugins.autopairs', -- plugins.mini pairs instead
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommended keymaps
 
@@ -168,6 +121,53 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
       start = '🚀',
       task = '📌',
       lazy = '💤 ',
+      loaded = '',
+      not_loaded = '',
     },
   },
+
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        -- NvChad only
+        --
+        -- '2html_plugin',
+        -- 'tohtml',
+        -- 'getscript',
+        -- 'getscriptPlugin',
+        -- 'logipat',
+        -- 'netrw',
+        -- 'netrwSettings',
+        -- 'netrwFileHandlers',
+        -- 'tar',
+        -- 'rrhelper',
+        -- 'spellfile_plugin',
+        -- 'vimball',
+        -- 'vimballPlugin',
+        -- 'zip',
+        -- 'rplugin',
+        -- 'syntax',
+        -- 'synmenu',
+        -- 'optwin',
+        -- 'compiler',
+        -- 'bugreport',
+        -- 'ftplugin',
+
+        -- LazyVim optional
+        --
+        -- 'netrwPlugin',
+        -- 'matchit',
+        -- 'matchparen',
+
+        -- LazyVim default
+        --
+        'gzip',
+        'tarPlugin',
+        'zipPlugin',
+        -- 'tutor',
+      },
+    },
+  },
+  -- INFO: disables notify when changing (saving :w) config files
+  change_detection = { notify = false },
 })

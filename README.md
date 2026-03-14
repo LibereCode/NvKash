@@ -10,9 +10,8 @@ and 'build up from the ground'.
 
 - [ ] Markdown (choose or all)
   - [x] Markview
-  - ~ Markdown render~
-  - ~ Markdown.nvim (mappings)~
   - [ ] Marksman
+- [ ] bufferline (or what it's called)
 
 ----
 
