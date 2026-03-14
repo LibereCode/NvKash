@@ -3,6 +3,9 @@
 I will redo kickstart, but this time import less stuff (unless it is simple
 simple native configs)
 
+I will use this as the main nvim config, to try with a minimal base; and
+and 'build up from the ground'.
+
 ## TODO
 
 - [ ] Markdown (choose or all)

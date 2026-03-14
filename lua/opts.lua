@@ -30,7 +30,7 @@ o.signcolumn = 'yes' -- Keep signcolumn on by default
 
 o.updatetime = 250 -- Decrease update time
 
-o.timeoutlen = 300 -- Decrease mapped sequence wait time
+o.timeoutlen = 100 -- = 300 -- Decrease mapped sequence wait time
 
 o.splitright = true -- Configure how new splits should be opened
 o.splitbelow = true

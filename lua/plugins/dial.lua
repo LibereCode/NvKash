@@ -74,7 +74,7 @@ return { -- config from lazyvim https://www.lazyvim.org/extras/editor/dial#dialn
           augend.integer.alias.decimal, -- nonnegative decimal number (0, 1, 2, 3, ...)
           augend.integer.alias.decimal_int, -- nonnegative and negative decimal number
           augend.integer.alias.hex, -- nonnegative hex number  (0x01, 0x1a1f, etc.)
-          -- augend.date.alias['%Y/%m/%d'], -- date (2022/02/19, etc.)
+          -- augend.date.alias['%Y/%m/%d'], -- date (2022/02/19, etc.)  -- HACK: 2001-09-11
           augend.date.alias['%Y-%m-%d'],
           augend.constant.alias.en_weekday, -- Mon, Tue, ..., Sat, Sun
           augend.constant.alias.en_weekday_full, -- Monday, Tuesday, ..., Saturday, Sunday

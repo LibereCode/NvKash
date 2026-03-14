@@ -118,7 +118,7 @@ vim.keymap.set('n', 'g<C-x>', function() require('dial.map').manipulate('decreme
 
 -- TEST: Test
 --
-map('n', '<leader>it', ':echo("test?")') -- allows to write a cmd starting with 'echo("test?")' (so you can finish it)
+map('n', '<leader>it', ':echo "test?"') -- allows to write a cmd starting with 'echo("test?")' (so you can finish it)
 
 -- TODO:
 -- - buffer binds
