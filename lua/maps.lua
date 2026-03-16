@@ -28,13 +28,18 @@ map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]ui
 
 -- HACK: TERMINAL
 --
--- map('n', '<leader>tv', function() vim.cmd.vnew() vim.cmd.terminal() end, { desc = 'vterm' })
--- map('n', '<leader>th', function() vim.cmd.new() vim.cmd.terminal() end, { desc = 'term' })
+map('n', '<leader>tv', function()
+  vim.cmd.vnew()
+  vim.cmd.terminal()
+end, { desc = 'vterm' })
+map('n', '<leader>th', function()
+  vim.cmd.new()
+  vim.cmd.terminal()
+end, { desc = 'term' })
 -- clankerGPT floating terminal
 map('n', '<leader>tt', function() require('custom.toggle_term').float() end, { desc = 'Floating terminal' })
-map('n', '<leader>tv', function() require('custom.toggle_term').verti() end, { desc = 'Vertical terminal' })
-map('n', '<leader>th', function() require('custom.toggle_term').horiz() end, { desc = 'Horizontal terminal' })
-map('n', '<leader>th', function() require('custom.toggle_term').horiz() end, { desc = 'Horizontal terminal' })
+-- map('n', '<leader>tv', function() require('custom.toggle_term').verti() end, { desc = 'Vertical terminal' })
+-- map('n', '<leader>th', function() require('custom.toggle_term').horiz() end, { desc = 'Horizontal terminal' })
 map({ 'n', 't' }, '<M-t>', function() require('custom.toggle_term').float() end, { desc = 'Toggle Term' })
 -- map({ 'n', 't' }, '<C-/>', function() require('custom.toggle_term').horiz() end, { desc = 'Toggle HTerm' })
 --
@@ -94,9 +99,10 @@ map('n', '<C-c>', 'gcc', { desc = 'toggle comment', remap = true })
 map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
 
 -- HACK: NAVIGATION
+-- see also `kickstart.plugins.neo-tree` and `plugins.kickstart_plugified`
 --
 -- map('n', '<leader>e', '<cmd>Lex<CR>', { desc = 'Toggle Left Explorer' })
-map('n', '<leader>E', function()
+map('n', '<leader>e', function()
   if vim.fn.exists ':Rex' == 1 then
     vim.cmd.Rex()
   else
