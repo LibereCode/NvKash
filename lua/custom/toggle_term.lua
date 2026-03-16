@@ -2,6 +2,8 @@
 
 -- idea from (goat) TJ https://inv.nadeko.net/watch?v=5PIiKDES_wc
 
+-- FIX: (and simplify) vert/hori terminal (they are broken)
+
 -- expanded
 local M = {}
 -- Global state for reuse
@@ -36,7 +38,7 @@ local function toggle_term(layout_fn)
     -- send Enter to fix buffy ui -- version 2
     vim.schedule(function()
       local chan = vim.b[term_buf].terminal_job_id
-      if chan then vim.api.nvim_chan_send(chan, 'clear\n') end -- NOTE: clears term each entry after the first
+      if chan then vim.api.nvim_chan_send(chan, '\n') end -- NOTE: clears term each entry after the first
     end)
   end
 end
@@ -59,40 +61,42 @@ function M.float()
   end)
 end
 
--- Layout: horizontal terminal (bottom)
-function M.horiz()
-  toggle_term(function()
-    local height = math.floor(vim.o.lines * 0.25)
-    local width = vim.o.columns
-    local row = vim.o.lines - height
-    local col = 0
-    return {
-      relative = 'editor',
-      width = width,
-      height = height,
-      row = row,
-      col = col,
-      border = 'rounded', -- 'none'
-    }
-  end)
-end
+-- FIXME: Below are trash: doesn't allow to use < C-hjkl > to refocus the window
 
--- Layout: vertical terminal (right)
-function M.verti()
-  toggle_term(function()
-    local width = math.floor(vim.o.columns * 0.25)
-    local height = vim.o.lines
-    local row = 0
-    local col = vim.o.columns - width
-    return {
-      relative = 'editor',
-      width = width,
-      height = height,
-      row = row,
-      col = col,
-      border = 'rounded', -- 'none'
-    }
-  end)
-end
+-- -- Layout: horizontal terminal (bottom)
+-- function M.horiz()
+--   toggle_term(function()
+--     local height = math.floor(vim.o.lines * 0.25)
+--     local width = vim.o.columns
+--     local row = vim.o.lines - height
+--     local col = 0
+--     return {
+--       relative = 'editor',
+--       width = width,
+--       height = height,
+--       row = row,
+--       col = col,
+--       border = 'rounded', -- 'none'
+--     }
+--   end)
+-- end
+--
+-- -- Layout: vertical terminal (right)
+-- function M.verti()
+--   toggle_term(function()
+--     local width = math.floor(vim.o.columns * 0.25)
+--     local height = vim.o.lines
+--     local row = 0
+--     local col = vim.o.columns - width
+--     return {
+--       relative = 'editor',
+--       width = width,
+--       height = height,
+--       row = row,
+--       col = col,
+--       border = 'rounded', -- 'none'
+--     }
+--   end)
+-- end
 
 return M

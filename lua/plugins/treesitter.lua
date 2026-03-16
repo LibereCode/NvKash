@@ -19,12 +19,12 @@ return { -- Highlight, edit, and navigate code
         -- enables syntax highlighting and other treesitter features
         vim.treesitter.start(buf, language)
 
-        -- enables treesitter based folds
+        -- NOTE: enables treesitter based folds
         -- for more info on folds see `:help folds` -- HACK:
         vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
         vim.wo.foldmethod = 'expr'
 
-        -- enables treesitter based indentation
+        -- NOTE: enables treesitter based indentation
         vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
       end,
     })
