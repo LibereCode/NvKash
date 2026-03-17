@@ -1,16 +1,21 @@
 -- INFO: UI plugins.
--- currently includes:
--- > colorizer
--- > dashboard (alpha)
--- > buffer bar (barbar)
+-- ENABLED:
+-- > Colorizer
+-- > Alpha (dashboard)
+-- > Lualine (GOAT)
+-- > scope (tab-manager)
+-- DISBLED:
+-- > barbar (buffer/tab-bar)
+-- > cokeline (buffer-bar)
+-- > bufferline (buffer-bar)
 
 return {
-  { -- Colorizer (give color to #ff7200 hex codes) https://github.com/norcalli/nvim-colorizer.lua
+  { -- NOTE: Colorizer (give color to #ff7200 hex codes) https://github.com/norcalli/nvim-colorizer.lua
     'norcalli/nvim-colorizer.lua',
     config = function() require('colorizer').setup() end,
   },
 
-  { -- INFO: DASHBOARD https://github.com/goolord/alpha-nvim/blob/main/lua/alpha/themes/dashboard.lua
+  { -- NOTE: DASHBOARD https://github.com/goolord/alpha-nvim/blob/main/lua/alpha/themes/dashboard.lua
     'goolord/alpha-nvim',
     dependencies = {
       -- 'nvim-mini/mini.icons',
@@ -74,79 +79,114 @@ return {
     end,
   },
 
-  {
-    'romgrk/barbar.nvim',
+  { -- NOTE: Lualine https://github.com/nvim-lualine/lualine.nvim
+    'nvim-lualine/lualine.nvim',
     dependencies = {
-      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+      'nvim-tree/nvim-web-devicons',
+      { 'tiagovla/scope.nvim', config = true }, -- NOTE: Scope -- https://github.com/tiagovla/scope.nvim
     },
-    init = function() vim.g.barbar_auto_setup = false end,
-    -- opts = {
-    --   -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-    --   -- animation = true,
-    --   -- insert_at_start = true,
-    --   -- …etc.
-    -- },
-    opts = function()
+
+    config = function() -- opts = {},
+      require('lualine').setup {
+        options = {
+          icons_enabled = true,
+          theme = 'auto',
+          -- component_separators = { left = '', right = '' },
+          -- section_separators = { left = '', right = '' },
+          component_separators = { left = '|', right = '|' },
+          section_separators = { left = '', right = '' },
+          disabled_filetypes = {
+            -- statusline = { 'lua' },
+            statusline = {},
+            winbar = {},
+          },
+          ignore_focus = {},
+          always_divide_middle = true,
+          always_show_tabline = true,
+          globalstatus = false,
+          refresh = {
+            -- Update if auto if no event
+            statusline = 1000,
+            tabline = 100,
+            winbar = 1000,
+            -- speed
+            refresh_time = 16, -- ~60fps
+            events = { -- events
+              'WinEnter',
+              'BufEnter',
+              'BufWritePost',
+              'SessionLoadPost',
+              'FileChangedShellPost',
+              'VimResized',
+              'Filetype',
+              'CursorMoved',
+              'CursorMovedI',
+              'ModeChanged',
+            },
+          },
+        },
+        sections = { -- https://github.com/nvim-lualine/lualine.nvim?tab=readme-ov-file#component-options
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch', 'diff', 'diagnostics' },
+          lualine_c = { 'filename' },
+          lualine_x = { 'encoding', 'fileformat', 'filetype' },
+          lualine_y = { 'progress' },
+          lualine_z = { 'location' },
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { 'filename' },
+          lualine_x = { 'location' },
+          lualine_y = {},
+          lualine_z = {},
+        },
+
+        -- tabline = {},
+        tabline = { -- TODO: replace with bufferline (or barbar)
+          lualine_a = { 'buffers' },
+          lualine_b = { 'branch' },
+          lualine_c = { 'filename' },
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = { 'tabs' },
+        },
+
+        -- winbar = {},
+        -- inactive_winbar = {},
+        winbar = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { 'filename' },
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {},
+        },
+        inactive_winbar = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { 'filename' },
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {},
+        },
+
+        extensions = {
+          'neo-tree',
+          'lazy',
+          'man',
+          'mason',
+          'nvim-dap-ui',
+        },
+      }
+
       local map = vim.api.nvim_set_keymap
       local opts = { noremap = true, silent = true }
-
       -- Move to previous/next
-      map('n', '<leader>bh', '<Cmd>BufferPrevious<CR>', opts)
-      map('n', '<leader>bl', '<Cmd>BufferNext<CR>', opts)
-
-      -- Re-order to previous/next
-      map('n', '<leader>bH', '<Cmd>BufferMovePrevious<CR>', opts)
-      map('n', '<leader>bL', '<Cmd>BufferMoveNext<CR>', opts)
-
-      -- Goto buffer in position...
-      map('n', '<leader>b1', '<Cmd>BufferGoto 1<CR>', opts)
-      map('n', '<leader>b2', '<Cmd>BufferGoto 2<CR>', opts)
-      map('n', '<leader>b3', '<Cmd>BufferGoto 3<CR>', opts)
-      map('n', '<leader>b4', '<Cmd>BufferGoto 4<CR>', opts)
-      map('n', '<leader>b5', '<Cmd>BufferGoto 5<CR>', opts)
-      map('n', '<leader>b6', '<Cmd>BufferGoto 6<CR>', opts)
-      map('n', '<leader>b7', '<Cmd>BufferGoto 7<CR>', opts)
-      map('n', '<leader>b8', '<Cmd>BufferGoto 8<CR>', opts)
-      map('n', '<leader>b9', '<Cmd>BufferGoto 9<CR>', opts)
-      map('n', '<leader>b0', '<Cmd>BufferLast<CR>', opts)
-
-      -- Pin/unpin buffer
-      map('n', '<leader>b.', '<Cmd>BufferPin<CR>', opts)
-
-      -- Goto pinned/unpinned buffer
-      --                 :BufferGotoPinned
-      --                 :BufferGotoUnpinned
-
+      map('n', '<leader>bh', '<Cmd>bprev<CR>', opts)
+      map('n', '<leader>bl', '<Cmd>bnext<CR>', opts)
       -- Close buffer
-      map('n', '<leader>bc', '<Cmd>BufferClose<CR>', opts)
-
-      -- Wipeout buffer
-      --                 :BufferWipeout
-
-      -- Close commands
-      --                 :BufferCloseAllButCurrent
-      --                 :BufferCloseAllButPinned
-      --                 :BufferCloseAllButCurrentOrPinned
-      --                 :BufferCloseBuffersLeft
-      --                 :BufferCloseBuffersRight
-
-      -- Magic buffer-picking mode (select)
-      map('n', '<leader>bp', '<Cmd>BufferPick<CR>', opts)
-      map('n', '<leader>bd', '<Cmd>BufferPickDelete<CR>', opts)
-
-      -- Sort automatically by... (order)
-      map('n', '<leader>bob', '<Cmd>BufferOrderByBufferNumber<CR>', opts)
-      map('n', '<leader>bon', '<Cmd>BufferOrderByName<CR>', opts)
-      map('n', '<leader>bod', '<Cmd>BufferOrderByDirectory<CR>', opts)
-      map('n', '<leader>bol', '<Cmd>BufferOrderByLanguage<CR>', opts)
-      map('n', '<leader>bow', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
-
-      -- Other:
-      -- :BarbarEnable - enables barbar (enabled by default)
-      -- :BarbarDisable - very bad command, should never be used
+      map('n', '<leader>bd', '<Cmd>bnext | bdel #<CR>', opts)
     end,
-
-    version = '^1.0.0', -- optional: only update when a new 1.x version is released
   },
 }

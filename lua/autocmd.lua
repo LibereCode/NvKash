@@ -2,7 +2,6 @@
 --  See `:help lua-guide-autocommands`
 
 local autocmd = vim.api.nvim_create_autocmd
-local cmnd = vim.api.nvim_create_user_command
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
@@ -55,3 +54,10 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = ui_filetypes,
   callback = function() vim.b.miniindentscope_disable = true end,
 })
+
+-- INFO: Commands (vim.api.nvim_create_user_command &AND& vim.cmd(''))
+local cr_cmd = vim.api.nvim_create_user_command -- ('name', 'command', {})
+local cmd = vim.cmd -- (':cmd')
+
+cr_cmd('W', 'SudaWrite', {})
+-- cmd 'cd %:h' -- fucks up if not entering file

@@ -100,13 +100,13 @@ map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
 -- see also `kickstart.plugins.neo-tree` and
 --
 -- map('n', '<leader>e', '<cmd>Lex<CR>', { desc = 'Toggle Left Explorer' })
-map('n', '<leader>e', function()
+map('n', '<leader>E', function()
   if vim.fn.exists ':Rex' == 1 then
     vim.cmd.Rex()
   else
     vim.cmd.Explore()
   end
-end, { desc = 'Toggle (R)Explorer' })
+end, { desc = 'Toggle (R)[E]xplorer' })
 
 -- HACK: Lazy
 --

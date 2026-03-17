@@ -98,9 +98,9 @@ vim.g.have_nerd_font = true
 require 'configs.lazy' -- See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 
 -- [[ Setting options ]]  -- See `:help vim.o`
-require 'opts'
+require 'options'
 -- [[ Basic Keymaps ]]  --  See `:help vim.keymap.set()`
-require 'maps'
+require 'mappings'
 -- [[ Basic Autocommands ]]  --  See `:help lua-guide-autocommands`
 require 'autocmd'
 
