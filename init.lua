@@ -94,17 +94,18 @@ vim.g.maplocalleader = ','
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
+-- TEST:
+require 'options' -- [[ Setting options ]]  -- See `:help vim.o`
+require 'mappings' -- [[ Basic Keymaps ]]  --  See `:help vim.keymap.set()`
+require 'autocmd' -- [[ Basic Autocommands ]]  --  See `:help lua-guide-autocommands`
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 require 'configs.lazy' -- See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 
--- [[ Setting options ]]  -- See `:help vim.o`
-require 'options'
--- [[ Basic Keymaps ]]  --  See `:help vim.keymap.set()`
-require 'mappings'
--- [[ plugin Keymaps ]]
+-- require 'options' -- [[ Setting options ]]  -- See `:help vim.o`
+-- require 'mappings' -- [[ Basic Keymaps ]]  --  See `:help vim.keymap.set()`
 require 'lazy-maps'
--- [[ Basic Autocommands ]]  --  See `:help lua-guide-autocommands`
-require 'autocmd'
+-- require 'autocmd' -- [[ Basic Autocommands ]]  --  See `:help lua-guide-autocommands`
 
 -- INFO: The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
