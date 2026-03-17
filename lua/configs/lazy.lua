@@ -85,13 +85,15 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- HACK: Enabled them:
-  require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint', -- may cause errors if default isnt installed
+  --  Enabled them:
+  --  HACK: Put `require('...')` in plugins/foobar.lua instead !!
+  --
+  -- require 'kickstart.plugins.debug',
+  -- require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.lint', -- may cause errors if default isnt installed
   -- require 'kickstart.plugins.autopairs', -- plugins.mini pairs instead
-  require 'kickstart.plugins.neo-tree',
-  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommended keymaps
+  -- require 'kickstart.plugins.neo-tree',
+  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommended keymaps
 
   -- NOTE The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
@@ -155,7 +157,7 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
 
         -- LazyVim optional
         --
-        -- 'netrwPlugin',
+        'netrwPlugin',
         -- 'matchit',
         -- 'matchparen',
 
