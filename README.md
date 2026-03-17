@@ -1,6 +1,4 @@
-# README?
-
-## GIGA-Chad README
+# GIGA-Chad README
 
 DO F READ ME (or else...)
 
