@@ -19,10 +19,7 @@ and 'build up from the ground'.
 
 ## TODO
 
-- [ ] Markdown (choose or all)
-  - [x] Markview
-  - [ ] Marksman
-- [ ] bufferline (or what it's called)
+- [ ] Never Goon.
 
 -----
 
