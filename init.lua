@@ -101,6 +101,8 @@ require 'configs.lazy' -- See `:help lazy.nvim.txt` or https://github.com/folke/
 require 'options'
 -- [[ Basic Keymaps ]]  --  See `:help vim.keymap.set()`
 require 'mappings'
+-- [[ plugin Keymaps ]]
+require 'lazy-maps'
 -- [[ Basic Autocommands ]]  --  See `:help lua-guide-autocommands`
 require 'autocmd'
 

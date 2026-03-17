@@ -2,6 +2,7 @@ return {
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`.
   -- See `:help gitsigns` to understand what the configuration keys do
+  require 'kickstart.plugins.gitsigns',
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     ---@module 'gitsigns'

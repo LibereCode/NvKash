@@ -37,6 +37,7 @@ map('n', '<leader>th', function()
   vim.cmd.terminal()
 end, { desc = 'term' })
 map('n', '<leader>tT', function() vim.cmd.terminal() end, { desc = 'Terminal buffer' })
+--
 --  floating terminal
 map('n', '<leader>tt', function() require('custom.toggle_term').float() end, { desc = 'Floating terminal' })
 -- map('n', '<leader>tv', function() require('custom.toggle_term').verti() end, { desc = 'Vertical terminal' })
@@ -95,24 +96,18 @@ map('n', ';', ':')
 -- remap required, becuase ?
 map('n', '<C-c>', 'gcc', { desc = 'toggle comment', remap = true })
 map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
+-- better jk
+map({ 'n', 'v' }, 'j', 'gj', { desc = 'better ↓j' })
+map({ 'n', 'v' }, 'k', 'gk', { desc = 'better ↑k' })
 
--- HACK: NAVIGATION
--- see also `kickstart.plugins.neo-tree` and
---
--- map('n', '<leader>e', '<cmd>Lex<CR>', { desc = 'Toggle Left Explorer' })
-map('n', '<leader>E', function()
-  if vim.fn.exists ':Rex' == 1 then
-    vim.cmd.Rex()
-  else
-    vim.cmd.Explore()
-  end
-end, { desc = 'Toggle (R)[E]xplorer' })
+-- HACK: UI
 
--- HACK: Lazy
---
-map('n', '<leader>ll', '<cmd>Lazy<CR>', { desc = 'Lazy󰒲 ' })
-map({ 'n', 't' }, '<leader>lg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
-map({ 'n', 't' }, '<leader>gg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
+-- TODO: create snacks like toggles
+-- - [ ] wrap
+-- - [ ] line nr
+-- - [ ] relative line
+-- - [ ] diagnostics
+-- - [ ] colorize
 
 -- HACK: Code
 
@@ -121,12 +116,6 @@ map({ 'n', 't' }, '<leader>gg', function() require('custom.lazygit').toggle() en
 -- config = function(_, opts)
 --   vim.keymap.set('n', '<leader>abc', function() require('plugin_name.foo').bar('do_some', 'normal') end, { desc = 'abc foobar' })
 -- end,
-
--- Dial -- Didn't work inside of plugin
-vim.keymap.set('n', '<C-a>', function() require('dial.map').manipulate('increment', 'normal') end, { desc = 'dial [a]dd' })
-vim.keymap.set('n', '<C-x>', function() require('dial.map').manipulate('decrement', 'normal') end, { desc = 'dial [a]dd' })
-vim.keymap.set('n', 'g<C-a>', function() require('dial.map').manipulate('increment', 'gnormal') end, { desc = 'dial [a]dd' })
-vim.keymap.set('n', 'g<C-x>', function() require('dial.map').manipulate('decrement', 'gnormal') end, { desc = 'dial [a]dd' })
 
 -- TEST: Test
 --

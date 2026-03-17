@@ -1,7 +1,5 @@
-return {
-  -- LSP Plugins
-  {
-    -- Main LSP Configuration
+return { -- INFO: CORE PLUGINS
+  { -- NOTE: LSP-conf
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
@@ -28,7 +26,7 @@ return {
 
   --
 
-  { -- Autoformat
+  { -- NOTE: Autoformat
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
@@ -38,7 +36,7 @@ return {
 
   --
 
-  { -- Autocompletion
+  { -- NOTE: Autocompletion
     'saghen/blink.cmp',
     event = 'VimEnter',
     version = '1.*',
@@ -69,5 +67,9 @@ return {
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = require('configs.blink').opt,
+  },
+
+  { -- NOTE: lint (kickstart)
+    require 'kickstart.plugins.lint',
   },
 }
