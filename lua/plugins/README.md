@@ -2,7 +2,9 @@
 
 ## ADD THESE PLUGS
 
-- [ ] `mdflow`
+- Markdown
+    1. [ ] `mdflow`
+    2. [ ] `Markmap`
 
 ### Ponder? to add?
 
