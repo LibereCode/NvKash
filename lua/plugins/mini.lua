@@ -95,58 +95,119 @@ return { -- Collection of various small independent plugins/modules
       symbol = '╎', -- Which character to use for drawing scope indicator
     }
 
-    require('mini.pairs').setup {
-      -- No need to copy this inside `setup()`. Will be used automatically.
-      {
-        -- In which modes mappings from this `config` should be created
-        modes = { insert = true, command = false, terminal = false },
-        -- Global mappings. Each right hand side should be a pair information, a
-        -- table with at least these fields (see more in |MiniPairs.map|):
-        -- - <action> - one of 'open', 'close', 'closeopen'.
-        -- - <pair> - two character string for pair to be used.
-        -- By default pair is not inserted after `\`, quotes are not recognized by
-        -- <CR>, `'` does not insert the pair after a letter.
-        -- Only parts of tables can be tweaked (others will use these defaults).
-        mappings = {
-          ['('] = { action = 'open', pair = '()', neigh_pattern = '^[^\\]' },
-          ['['] = { action = 'open', pair = '[]', neigh_pattern = '^[^\\]' },
-          ['{'] = { action = 'open', pair = '{}', neigh_pattern = '^[^\\]' },
+    require('mini.pairs').setup { -- No need to copy this inside `setup()`. Will be used automatically.
 
-          [')'] = { action = 'close', pair = '()', neigh_pattern = '^[^\\]' },
-          [']'] = { action = 'close', pair = '[]', neigh_pattern = '^[^\\]' },
-          ['}'] = { action = 'close', pair = '{}', neigh_pattern = '^[^\\]' },
+      -- In which modes mappings from this `config` should be created
+      modes = { insert = true, command = false, terminal = false },
+      -- Global mappings. Each right hand side should be a pair information, a
+      -- table with at least these fields (see more in |MiniPairs.map|):
+      -- - <action> - one of 'open', 'close', 'closeopen'.
+      -- - <pair> - two character string for pair to be used.
+      -- By default pair is not inserted after `\`, quotes are not recognized by
+      -- <CR>, `'` does not insert the pair after a letter.
+      -- Only parts of tables can be tweaked (others will use these defaults).
+      mappings = {
+        ['('] = { action = 'open', pair = '()', neigh_pattern = '^[^\\]' },
+        ['['] = { action = 'open', pair = '[]', neigh_pattern = '^[^\\]' },
+        ['{'] = { action = 'open', pair = '{}', neigh_pattern = '^[^\\]' },
 
-          ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '^[^\\]', register = { cr = false } },
-          ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '^[^%a\\]', register = { cr = false } },
-          ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '^[^\\]', register = { cr = false } },
-        },
+        [')'] = { action = 'close', pair = '()', neigh_pattern = '^[^\\]' },
+        [']'] = { action = 'close', pair = '[]', neigh_pattern = '^[^\\]' },
+        ['}'] = { action = 'close', pair = '{}', neigh_pattern = '^[^\\]' },
+
+        ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '^[^\\]', register = { cr = false } },
+        ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '^[^%a\\]', register = { cr = false } },
+        ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '^[^\\]', register = { cr = false } },
       },
     }
 
-    require('mini.move').setup {
-      -- No need to copy this inside `setup()`. Will be used automatically.
-      {
-        -- Module mappings. Use `''` (empty string) to disable one.
-        mappings = {
-          -- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
-          left = '<M-h>',
-          right = '<M-l>',
-          down = '<M-j>',
-          up = '<M-k>',
+    require('mini.move').setup { -- No need to copy this inside `setup()`. Will be used automatically.
 
-          -- Move current line in Normal mode
-          line_left = '<M-h>',
-          line_right = '<M-l>',
-          line_down = '<M-j>',
-          line_up = '<M-k>',
-        },
+      -- Module mappings. Use `''` (empty string) to disable one.
+      mappings = {
+        -- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
+        left = '<M-h>',
+        right = '<M-l>',
+        down = '<M-j>',
+        up = '<M-k>',
 
-        -- Options which control moving behavior
-        options = {
-          -- Automatically reindent selection during linewise vertical move
-          reindent_linewise = true,
-        },
+        -- Move current line in Normal mode
+        line_left = '<M-h>',
+        line_right = '<M-l>',
+        line_down = '<M-j>',
+        line_up = '<M-k>',
+      },
+
+      -- Options which control moving behavior
+      options = {
+        -- Automatically reindent selection during linewise vertical move
+        reindent_linewise = true,
       },
     }
+
+    -- require('mini.starter').setup { -- No need to copy this inside `setup()`. Will be used automatically.
+    --
+    --   autoopen = true, -- Whether to open starter buffer on VimEnter. Not opened if Neovim was started with intent to show something else.
+    --
+    --   evaluate_single = false, -- Whether to evaluate action of single active item
+    --
+    --   -- Items to be displayed. Should be an array with the following elements:
+    --   -- - Item: table with <action>, <name>, and <section> keys.
+    --   -- - Function: should return one of these three categories.
+    --   -- - Array: elements of these three types (i.e. item, array, function).
+    --   -- If `nil` (default), default items will be used (see |mini.starter|).
+    --   items = nil,
+    --
+    --   -- Header to be displayed before items. Converted to single string via
+    --   -- `tostring` (use `\n` to display several lines). If function, it is
+    --   -- evaluated first. If `nil` (default), polite greeting will be used.
+    --   header = nil,
+    --
+    --   -- Footer to be displayed after items. Converted to single string via
+    --   -- `tostring` (use `\n` to display several lines). If function, it is
+    --   -- evaluated first. If `nil` (default), default usage help will be shown.
+    --   footer = 'hello',
+    --
+    --   -- Array  of functions to be applied consecutively to initial content.
+    --   -- Each function should take and return content for 'Starter' buffer (see
+    --   -- |mini.starter| and |MiniStarter.content| for more details).
+    --   content_hooks = nil,
+    --
+    --   -- Characters to update query. Each character will have special buffer
+    --   -- mapping overriding your global ones. Be careful to not add `:` as it
+    --   -- allows you to go into command mode.
+    --   query_updaters = 'abcdefghijklmnopqrstuvwxyz0123456789_-.',
+    --
+    --   -- Whether to disable showing non-error feedback
+    --   silent = true,
+    -- }
+    -- -- # Similar to 'mhinz/vim-startify' ~
+    -- local starter = require 'mini.starter'
+    -- starter.setup {
+    --   evaluate_single = true,
+    --   items = {
+    --     starter.sections.builtin_actions(),
+    --     starter.sections.recent_files(10, false),
+    --     starter.sections.recent_files(10, true),
+    --     -- Use this if you set up 'mini.sessions'
+    --     starter.sections.sessions(5, true),
+    --   },
+    --   content_hooks = {
+    --     starter.gen_hook.adding_bullet(),
+    --     starter.gen_hook.indexing('all', { 'Builtin actions' }),
+    --     starter.gen_hook.padding(3, 2),
+    --   },
+    -- }
+    -- -- # Similar to 'glepnir/dashboard-nvim' ~
+    -- local starter = require 'mini.starter'
+    -- starter.setup {
+    --   items = {
+    --     starter.sections.telescope(),
+    --   },
+    --   content_hooks = {
+    --     starter.gen_hook.adding_bullet(),
+    --     starter.gen_hook.aligning('center', 'center'),
+    --   },
+    -- }
   end,
 }

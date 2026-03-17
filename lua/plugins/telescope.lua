@@ -32,7 +32,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
 
-    -- Useful for getting pretty icons, but requires a Nerd Font.
+    -- -- Useful for getting pretty icons, but requires a Nerd Font.
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
   config = function()
@@ -70,6 +70,11 @@ return { -- Fuzzy Finder (files, lsp, etc)
       extensions = {
         ['ui-select'] = { require('telescope.themes').get_dropdown() },
       },
+      pickers = {
+        colorscheme = {
+          enable_preview = true,
+        },
+      },
     }
 
     -- Enable Telescope extensions if they are installed
@@ -78,24 +83,30 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
     -- See `:help telescope.builtin`
 
+    local map = vim.keymap.set
+
     -- search/select
     local builtin = require 'telescope.builtin'
-    vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = 'select Telescope' })
-    vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = 'word' })
-    vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = 'grep' })
-    vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'diagnostics' })
-    vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = 'resume' })
+    map('n', '<leader>ss', builtin.builtin, { desc = 'select Telescope' })
+    map({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = 'word' })
+    map('n', '<leader>sg', builtin.live_grep, { desc = 'grep' })
+    map('n', '<leader>sd', builtin.diagnostics, { desc = 'diagnostics' })
+    map('n', '<leader>sr', builtin.resume, { desc = 'resume' })
 
     -- find/file
-    vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'help' })
-    vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = 'keymaps' })
-    vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'files' })
-    vim.keymap.set('n', '<leader>fr', builtin.oldfiles, { desc = 'recent Files' })
-    vim.keymap.set('n', '<leader>f:', builtin.commands, { desc = '[:]commands' })
-    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'buffers' })
-    vim.keymap.set('n', '<leader>fc', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = 'nvim [c]onfig' }) -- Shortcut for searching your Neovim configuration files
+    map('n', '<leader>fh', builtin.help_tags, { desc = 'help' })
+    map('n', '<leader>fk', builtin.keymaps, { desc = 'keymaps' })
+    map('n', '<leader>ff', builtin.find_files, { desc = 'files' })
+    map('n', '<leader>fr', builtin.oldfiles, { desc = 'recent Files' })
+    map('n', '<leader>f:', builtin.commands, { desc = '[:]commands' })
+    map('n', '<leader>fb', builtin.buffers, { desc = 'buffers' })
+    map('n', '<leader>fc', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = 'nvim [c]onfig' }) -- Shortcut for searching your Neovim configuration files
 
-    vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+    map('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+
+    -- ui
+
+    map('n', '<leader>uC', builtin.colorscheme, { desc = 'live preview Colorscheme' })
 
     -- This runs on LSP attach per buffer (see main LSP attach function in 'neovim/nvim-lspconfig' config for more info,
     -- it is better explained there). This allows easily switching between pickers if you prefer using something else!

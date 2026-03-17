@@ -14,5 +14,19 @@ return { -- INFO: put modifications of the kickstart/plugins/* plugins here
       -- { '<leader>e', ':Neotree toggle<CR>', desc = 'NeoTree toggle', silent = true },
       { '<C-e>', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
     },
+    opts = {
+      filesystem = {
+        window = {
+          mappings = {
+            ['<C-e>'] = 'close_window',
+            ['l'] = 'open',
+            ['h'] = 'close_node',
+            ['L'] = 'set_root',
+            ['H'] = 'navigate_up',
+            ['.'] = 'toggle_hidden',
+          },
+        },
+      },
+    },
   },
 }

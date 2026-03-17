@@ -48,3 +48,10 @@ autocmd('BufReadPost', { -- Restore cursor position
 --     if #bufs == 1 and vim.api.nvim_buf_get_name(bufs[1]) == '' then vim.cmd 'Nvdash' end
 --   end,
 -- })
+
+-- HACK: UI AUTOCMD specify all plugins to not show !!
+local ui_filetypes = { 'alpha', 'lazy', 'mason', 'help' }
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = ui_filetypes,
+  callback = function() vim.b.miniindentscope_disable = true end,
+})
