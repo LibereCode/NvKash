@@ -3,6 +3,8 @@
 **Do NOT edit this branch (beyond this README edit),
 because this serves as a reference to the default config !!**
 
+I changed the branch name btw (kickstart_default -> kickstart.default)
+
 # kickstart.nvim
 
 ## Introduction
