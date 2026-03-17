@@ -111,6 +111,11 @@ map({ 'n', 'v' }, 'k', 'gk', { desc = 'better ↑k' })
 
 -- HACK: Code
 
+-- HACK: Lazy
+map('n', '<leader>ll', '<cmd>Lazy<CR>', { desc = 'Lazy󰒲 ' })
+map({ 'n', 't' }, '<leader>lg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
+map({ 'n', 't' }, '<leader>gg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
+
 -- NOTE:: Have plugin bindings inside the plugins
 -- either put it in keys = {}, opts = {}, or config (example:)
 -- config = function(_, opts)
@@ -123,3 +128,4 @@ map('n', '<leader>it', ':echo "test?"') -- allows to write a cmd starting with '
 
 -- TODO:
 -- - buffer binds
+--
