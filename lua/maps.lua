@@ -36,7 +36,8 @@ map('n', '<leader>th', function()
   vim.cmd.new()
   vim.cmd.terminal()
 end, { desc = 'term' })
--- clankerGPT floating terminal
+map('n', '<leader>tT', function() vim.cmd.terminal() end, { desc = 'Terminal buffer' })
+--  floating terminal
 map('n', '<leader>tt', function() require('custom.toggle_term').float() end, { desc = 'Floating terminal' })
 -- map('n', '<leader>tv', function() require('custom.toggle_term').verti() end, { desc = 'Vertical terminal' })
 -- map('n', '<leader>th', function() require('custom.toggle_term').horiz() end, { desc = 'Horizontal terminal' })
@@ -73,12 +74,9 @@ map('n', '<C-A-h>', '<C-w>H', { desc = 'Move window to the left' })
 map('n', '<C-A-l>', '<C-w>L', { desc = 'Move window to the right' })
 map('n', '<C-A-j>', '<C-w>J', { desc = 'Move window to the lower' })
 map('n', '<C-A-k>', '<C-w>K', { desc = 'Move window to the upper' })
--- buffers
-map('n', '<leader>bl', '<cmd>buffers<CR>', { desc = 'buffer list' })
-map('n', '<leader>bb', '<cmd>enew<CR>', { desc = 'bygga' })
-map('n', '<leader>bd', '<cmd>bdel<CR>', { desc = 'delete' })
-map('n', '<leader>bp', '<cmd>bprev<CR>', { desc = 'prev' })
-map('n', '<leader>bn', '<cmd>bnext<CR>', { desc = 'next' })
+-- buffers -- INFO: see `plugins.barbar` for more
+map('n', '<leader>bb', '<cmd>buffers<CR>')
+map('n', '<leader>bn', '<cmd>enew<CR>')
 map('n', '<S-h>', '<cmd>bp<CR>', { desc = 'prev buffer' })
 map('n', '<S-l>', '<cmd>bn<CR>', { desc = 'next buffer' })
 -- tabs
@@ -99,7 +97,7 @@ map('n', '<C-c>', 'gcc', { desc = 'toggle comment', remap = true })
 map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
 
 -- HACK: NAVIGATION
--- see also `kickstart.plugins.neo-tree` and `plugins.kickstart_plugified`
+-- see also `kickstart.plugins.neo-tree` and
 --
 -- map('n', '<leader>e', '<cmd>Lex<CR>', { desc = 'Toggle Left Explorer' })
 map('n', '<leader>e', function()

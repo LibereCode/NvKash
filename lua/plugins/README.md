@@ -2,21 +2,16 @@
 
 ## ADD THESE PLUGS
 
-- [x] dial
-- [x] flash
-- [x] yazi
-- [ ] mdflow
-- mini
-    - [x] indentscope
+- [ ] `mdflow`
 
 ### Ponder? to add?
 
-- [ ] grug
-- [ ] lazydev
-- [ ] noice
-- [ ] orgmode
+- [ ] `grug`
+- [ ] `lazydev`
+- [ ] `noice`
+- [ ] `orgmode`
 
 ## TODO
 
-- [x] Move plugs from lazy.lua
 - [ ] Sort plugins in files by category (inspiration/follow _LazyVim_ structure, maybe with tweaks for major plugs)
+- [ ] Figure out if I can customize `NetRW` (and if so, replace `Neo-tree`)

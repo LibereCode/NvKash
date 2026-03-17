@@ -10,7 +10,8 @@ return {
   version = '*',
   dependencies = {
     'nvim-lua/plenary.nvim',
-    'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+    -- 'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+    'nvim-mini/mini.icons', -- HACK:
     'MunifTanjim/nui.nvim',
   },
   lazy = false,
@@ -23,15 +24,15 @@ return {
     filesystem = {
       window = {
         mappings = {
-          -- ['\\'] = 'close_window',   -- HACK:
+          -- ['\\'] = 'close_window',   -- HACK: most moved to plugins.kickstart_plugified
           -- ['<leader>e'] = 'close_window',
-          ['<C-e>'] = 'close_window',
+          -- ['<C-e>'] = 'close_window',
           ['q'] = 'close_window',
-          ['l'] = 'open',
-          ['h'] = 'close_node',
-          ['L'] = 'set_root',
-          ['H'] = 'navigate_up',
-          ['.'] = 'toggle_hidden',
+          -- ['l'] = 'open',
+          -- ['h'] = 'close_node',
+          -- ['L'] = 'set_root',
+          -- ['H'] = 'navigate_up',
+          -- ['.'] = 'toggle_hidden',
         },
       },
     },
