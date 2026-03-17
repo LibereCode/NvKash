@@ -1,0 +1,4 @@
+# PLUGIS
+- Flash
+- Noice
+- Lualine
