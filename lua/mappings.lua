@@ -99,6 +99,10 @@ map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
 -- better jk
 map({ 'n', 'v' }, 'j', 'gj', { desc = 'better ↓j' })
 map({ 'n', 'v' }, 'k', 'gk', { desc = 'better ↑k' })
+-- jump to local link  -- XXX: really weird why `g]` wasen't enough, especially the last esc?
+map('n', 'gl', 'g]1<CR><escape>', { desc = '[l]ocal link' }) -- NOTE: This disables the default
+-- Whichkey
+map('n', '<leader>W', '<CMD>WhichKey<CR>', { desc = 'WhichKey[W]all' })
 
 -- HACK: UI
 

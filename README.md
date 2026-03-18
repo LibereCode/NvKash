@@ -10,6 +10,8 @@ and 'build up from the ground'.
 
 - [ ] Never Goon.
 
+see `lua/plugins/TODO.md` for more
+
 -----
 
 **Original README**

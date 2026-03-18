@@ -69,44 +69,44 @@ return { -- Collection of various small independent plugins/modules
     --  Check out: https://github.com/nvim-mini/mini.nvim
     --  HACK: Add more here
 
-    require('mini.indentscope').setup { -- NOTE: INDENTSCOPE
-
-      -- creates highlight on the current ident
-      draw = { -- Draw options
-        delay = 100, -- Delay (in ms) between event and start of drawing scope indicator
-        -- Animation rule for scope's first drawing. A function which, given
-        -- next and total step numbers, returns wait time (in ms). See
-        -- |MiniIndentscope.gen_animation| for builtin options. To disable
-        -- animation, use `require('mini.indentscope').gen_animation.none()`.
-        -- animation = function() end, --<function: implements constant 20ms between steps>,
-        -- Whether to auto draw scope: return `true` to draw, `false` otherwise.
-        predicate = function(scope) return not scope.body.is_incomplete end, --  Default draws only fully computed scope (see `options.n_lines`).
-        priority = 2, -- Symbol priority. Increase to display on top of more symbols.
-      },
-
-      mappings = { -- Module mappings. Use `''` (empty string) to disable one.
-        -- Textobjects
-        object_scope = 'ii',
-        object_scope_with_border = 'ai',
-        -- Motions (jump to respective border line; if not present - body line)
-        goto_top = '[i',
-        goto_bottom = ']i',
-      },
-
-      options = { -- Options which control scope computation
-        -- Type of scope's border: which line(s) with smaller indent to categorize as border.
-        border = 'both', -- Can be one of: 'both', 'top', 'bottom', 'none'.
-        -- Whether to use cursor column when computing reference indent.
-        indent_at_cursor = true, -- Useful to see incremental scopes with horizontal cursor movements.
-        n_lines = 10000, -- Maximum number of lines above or below within which scope is computed
-        -- Whether to first check input line to be a border of adjacent scope.
-        try_as_border = true, -- Use it if you want to place cursor on function header to get scope of its body.
-      },
-      -- TODO: integrate with specific file.types
-      -- example: change python to border = 'top',
-
-      symbol = '╎', -- Which character to use for drawing scope indicator
-    }
+    -- require('mini.indentscope').setup { -- NOTE: INDENTSCOPE -- I WILL USE `kickstart.plugins.indent_line`(indent_blankline) INSTEAD
+    --
+    --   -- creates highlight on the current ident
+    --   draw = { -- Draw options
+    --     delay = 100, -- Delay (in ms) between event and start of drawing scope indicator
+    --     -- Animation rule for scope's first drawing. A function which, given
+    --     -- next and total step numbers, returns wait time (in ms). See
+    --     -- |MiniIndentscope.gen_animation| for builtin options. To disable
+    --     -- animation, use `require('mini.indentscope').gen_animation.none()`.
+    --     -- animation = function() end, --<function: implements constant 20ms between steps>,
+    --     -- Whether to auto draw scope: return `true` to draw, `false` otherwise.
+    --     predicate = function(scope) return not scope.body.is_incomplete end, --  Default draws only fully computed scope (see `options.n_lines`).
+    --     priority = 2, -- Symbol priority. Increase to display on top of more symbols.
+    --   },
+    --
+    --   mappings = { -- Module mappings. Use `''` (empty string) to disable one.
+    --     -- Textobjects
+    --     object_scope = 'ii',
+    --     object_scope_with_border = 'ai',
+    --     -- Motions (jump to respective border line; if not present - body line)
+    --     goto_top = '[i',
+    --     goto_bottom = ']i',
+    --   },
+    --
+    --   options = { -- Options which control scope computation
+    --     -- Type of scope's border: which line(s) with smaller indent to categorize as border.
+    --     border = 'both', -- Can be one of: 'both', 'top', 'bottom', 'none'.
+    --     -- Whether to use cursor column when computing reference indent.
+    --     indent_at_cursor = true, -- Useful to see incremental scopes with horizontal cursor movements.
+    --     n_lines = 10000, -- Maximum number of lines above or below within which scope is computed
+    --     -- Whether to first check input line to be a border of adjacent scope.
+    --     try_as_border = true, -- Use it if you want to place cursor on function header to get scope of its body.
+    --   },
+    --   -- TODO: integrate with specific file.types
+    --   -- example: change python to border = 'top',
+    --
+    --   symbol = '╎', -- Which character to use for drawing scope indicator
+    -- }
 
     require('mini.pairs').setup { -- NOTE:PAIRS
 
