@@ -100,9 +100,10 @@ return { -- Fuzzy Finder (files, lsp, etc)
     map('n', '<leader>fr', builtin.oldfiles, { desc = 'recent Files' })
     map('n', '<leader>f:', builtin.commands, { desc = '[:]commands' })
     map('n', '<leader>fb', builtin.buffers, { desc = 'buffers' })
+    map('n', '<leader>bf', builtin.buffers, { desc = 'find' })
     map('n', '<leader>fc', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = 'nvim [c]onfig' }) -- Shortcut for searching your Neovim configuration files
 
-    map('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+    map('n', '<leader><leader>', builtin.live_grep, { desc = 'live[ ]grep' })
 
     -- ui
 
@@ -143,26 +144,32 @@ return { -- Fuzzy Finder (files, lsp, etc)
     })
 
     -- Override default behavior and theme when searching
-    vim.keymap.set('n', '<leader>/', function()
+    vim.keymap.set('n', '<C-/>', function()
       -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-      builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+      builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown { -- INFO: theme like this
         winblend = 10,
         previewer = false,
       })
     end, { desc = 'Fzf [/] current buf' })
+    vim.keymap.set(
+      'n',
+      '<leader>/',
+      function()
+        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+          winblend = 10,
+          previewer = true,
+        })
+      end,
+      { desc = 'Fzf [/] current buf' }
+    )
 
     -- It's also possible to pass additional configuration options.
     --  See `:help telescope.builtin.live_grep()` for information about particular keys
-    vim.keymap.set(
-      'n',
-      '<leader>s/',
-      function()
-        builtin.live_grep {
-          grep_open_files = true,
-          prompt_title = 'Live Grep in Open Files',
-        }
-      end,
-      { desc = 'Fzf [/] current files' }
-    )
+    vim.keymap.set('n', '<leader>s/', function()
+      builtin.live_grep { -- INFO: without theme
+        grep_open_files = true,
+        prompt_title = 'Live Grep in Open Files',
+      }
+    end, { desc = 'Live grep[/] open files' })
   end,
 }
