@@ -40,6 +40,7 @@ return {
         butt('r', '  [r]ecent files', '<CMD>Telescope oldfiles<CR>'),
         butt('g', '󰈬  live [g]rep', '<CMD>Telescope live_grep<CR>'),
         butt('h', '󰋖  find [h]elp', '<CMD>Telescope help_tags<CR>'),
+        butt('c', ' find [c]onfig', function() require('telescope.builtin').find_files { cwd = vim.fn.stdpath 'config' } end), -- NOTE: ignore diagnose, it's wrong
         butt('C', '  [C]olorschemes', '<CMD>Telescope colorscheme<CR>'),
         butt('l', '󰒲  [l]azy', '<CMD>Lazy<CR>'),
         -- butt('SPC f m', '  Jump to bookmarks'),
@@ -145,8 +146,10 @@ return {
         -- tabline = {},
         tabline = { -- TODO: replace with bufferline (or barbar)
           lualine_a = { 'buffers' },
-          lualine_b = { 'branch' },
-          lualine_c = { 'filename' },
+          -- lualine_b = { 'branch' },
+          -- lualine_c = { 'filename' },
+          lualine_b = {},
+          lualine_c = {},
           lualine_x = {},
           lualine_y = {},
           lualine_z = { 'tabs' },
