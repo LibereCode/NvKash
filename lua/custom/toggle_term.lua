@@ -21,47 +21,28 @@ local function toggle_term(layout_fn)
       return -- XXX: for some reason, this enables toggle
    end
 
-   -- Create buffer if missing
-   if not term_buf or not vim.api.nvim_buf_is_valid(term_buf) then term_buf = vim.api.nvim_create_buf(false, true) end
+   if not term_buf or not vim.api.nvim_buf_is_valid(term_buf) then term_buf = vim.api.nvim_create_buf(false, true) end -- Create buffer if missing
 
-   -- Get layout details
-   local layout = layout_fn()
+   local layout = layout_fn() -- Get layout details
    term_win = vim.api.nvim_open_win(term_buf, true, layout)
 
-   -- Check if terminal buffer exists and is valid -- NOTE: improved/simplyfied with `mistral.ai`
-   local chan = vim.b[term_buf] and vim.b[term_buf].terminal_job_id
+   local chan = vim.b[term_buf] and vim.b[term_buf].terminal_job_id -- Check if terminal buffer exists and is valid -- NOTE: improved/simplyfied with `mistral.ai`
    if chan then
-      -- Focus existing terminal
-      vim.fn.bufwinid(term_buf)
-      -- Enter terminal mode
-      vim.cmd 'startinsert'
+      vim.fn.bufwinid(term_buf) -- Focus existing terminal
+      vim.cmd 'startinsert' -- Enter terminal mode
    else
-      -- Open new terminal
-      vim.cmd 'terminal'
-      -- Enter terminal mode
-      vim.cmd 'startinsert'
+      vim.cmd 'terminal' -- Open new terminal
+      vim.cmd 'startinsert' -- Enter terminal mode
    end
 end
 
--- Layout: floating terminal (centered)
-function M.float()
-   toggle_term(function()
-      local width = math.floor(vim.o.columns * 0.8)
-      local height = math.floor(vim.o.lines * 0.8)
-      local row = math.floor((vim.o.lines - height) / 2)
-      local col = math.floor((vim.o.columns - width) / 2)
-      return {
-         relative = 'laststatus', -- 'editor', -- maybe better?
-         width = math.floor(vim.o.columns * 0.8),
-         height = math.floor(vim.o.lines * 0.8),
-         col = math.floor(vim.o.columns * 0.1),
-         row = math.floor(vim.o.lines * 0.1),
-         border = 'rounded',
-      }
-   end)
+function M.float() -- Layout: floating terminal (centered)
+   toggle_term(function() return require 'custom.dimension'(0.8, 0.8) end)
 end
 
 -- FIXME: Below are trash: doesn't allow to use < C-hjkl > to refocus the window
+--
+-- INFO: becuase of nvim_open_buf or nvim_open_win? some say they create floating in :help
 
 -- -- Layout: horizontal terminal (bottom)
 -- function M.horiz()
@@ -103,6 +84,22 @@ return M
 
 -- XXX: Old (and replaced)
 --
+-- function M.float() -- Layout: floating terminal (centered)
+--    toggle_term(function()
+--       local width = math.floor(vim.o.columns * 0.8)
+--       local height = math.floor(vim.o.lines * 0.8)
+--       local row = math.floor((vim.o.lines - height) / 2)
+--       local col = math.floor((vim.o.columns - width) / 2)
+--       return {
+--          relative = 'laststatus', -- 'editor', -- maybe better?
+--          width = math.floor(vim.o.columns * 0.8),
+--          height = math.floor(vim.o.lines * 0.8),
+--          col = math.floor(vim.o.columns * 0.1),
+--          row = math.floor(vim.o.lines * 0.1),
+--          border = 'rounded',
+--       }
+--    end)
+-- end
 --
 -- if chan then
 --    -- Focus existing terminal
