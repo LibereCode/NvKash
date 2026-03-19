@@ -11,17 +11,17 @@ map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
 vim.diagnostic.config {
-  update_in_insert = false,
-  severity_sort = true,
-  float = { border = 'rounded', source = 'if_many' },
-  underline = { severity = { min = vim.diagnostic.severity.WARN } },
+   update_in_insert = false,
+   severity_sort = true,
+   float = { border = 'rounded', source = 'if_many' },
+   underline = { severity = { min = vim.diagnostic.severity.WARN } },
 
-  -- Can switch between these as you prefer
-  virtual_text = true, -- Text shows up at the end of the line
-  virtual_lines = false, -- Text shows up underneath the line, with virtual lines
+   -- Can switch between these as you prefer
+   virtual_text = true, -- Text shows up at the end of the line
+   virtual_lines = false, -- Text shows up underneath the line, with virtual lines
 
-  -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
-  jump = { float = true },
+   -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+   jump = { float = true },
 }
 
 map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -29,12 +29,12 @@ map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]ui
 -- HACK: TERMINAL
 --
 map('n', '<leader>tv', function()
-  vim.cmd.vnew()
-  vim.cmd.terminal()
+   vim.cmd.vnew()
+   vim.cmd.terminal()
 end, { desc = 'vterm' })
 map('n', '<leader>th', function()
-  vim.cmd.new()
-  vim.cmd.terminal()
+   vim.cmd.new()
+   vim.cmd.terminal()
 end, { desc = 'term' })
 map('n', '<leader>tT', function() vim.cmd.terminal() end, { desc = 'Terminal buffer' })
 --
