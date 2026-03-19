@@ -10,19 +10,20 @@ and 'build up from the ground'.
 
 - [ ] Never Goon.
 
-see `lua/plugins/TODO.md` for more
+- TODO: see `lua/plugins/TODO.md` for... guess
+- TODO: custom plugs README/TODO `lua/custom/README.md`
 
 -----
 
-**Original README**
+# OG README
 
 ## Introduction
 
 A starting point for Neovim that is:
 
-* Small
-* Single-file
-* Completely Documented
+- Small
+- Single-file
+- Completely Documented
 
 **NOT** a Neovim distribution, but instead a starting point for your configuration.
 
@@ -72,7 +73,7 @@ Neovim's configurations are located under the following paths, depending on your
 | OS | PATH |
 | :- | :--- |
 | Linux, MacOS | `$XDG_CONFIG_HOME/nvim`, `~/.config/nvim` |
-| Windows (cmd)| `%localappdata%\nvim\` |
+| Windows (cmd)| `%localappdata%\nvim\`    |
 | Windows (powershell)| `$env:LOCALAPPDATA\nvim\` |
 
 #### Recommended Step
