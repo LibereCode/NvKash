@@ -117,8 +117,14 @@ map('n', '<leader>W', '<CMD>WhichKey<CR>', { desc = 'WhichKey[W]all' })
 
 -- HACK: Lazy
 map('n', '<leader>ll', '<cmd>Lazy<CR>', { desc = 'Lazy󰒲 ' })
+
+-- HACK: Custom plugins
+--
+-- LazyGit
 map({ 'n', 't' }, '<leader>lg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
 map({ 'n', 't' }, '<leader>gg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
+-- Journal
+map({ 'n', 't' }, '<leader>mj', require 'custom.journal', { desc = 'Journal' })
 
 -- NOTE:: Have plugin bindings inside the plugins
 -- either put it in keys = {}, opts = {}, or config (example:)

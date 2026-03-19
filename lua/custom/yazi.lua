@@ -1,1 +1,1 @@
--- TODO: Rewrite plugin plugins.yazi like i did with custom.lazygit
+-- INFO: see `./README.md`

@@ -25,7 +25,7 @@ return { -- Useful plugin to show you pending keybinds.
          { '<leader>g', group = 'git', mode = { 'n' } },
          { '<leader>i', group = 'insert', mode = { 'n' } },
          { '<leader>l', group = 'lazy', mode = { 'n' } },
-         { '<leader>m', group = 'markdown', mode = { 'n' } },
+         { '<leader>m', group = 'text/[m]arkdown', mode = { 'n' } },
          { '<leader>t', group = 'terminal' },
          { '<leader>u', group = 'ui', mode = { 'n' } },
          { '<leader><tab>', group = 'tab', mode = { 'n' } },
