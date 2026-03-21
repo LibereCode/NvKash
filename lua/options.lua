@@ -71,9 +71,9 @@ o.cursorlineopt = 'both' -- default?
 
 -- Indenting
 o.expandtab = true -- makes tabes into spaces
-o.tabstop = 3 -- tab-character width -- default is 8... wtf?
-o.softtabstop = 3 -- tab key spaces
-o.shiftwidth = 3 -- ???
+o.tabstop = 2 -- tab-character width -- default is 8... wtf?
+o.softtabstop = 2 -- tab key spaces
+o.shiftwidth = 2 -- ???
 o.smartindent = true -- c like programs... ?
 
 opt.fillchars = { eob = '~' } -- default = '~' -- the filling of empty lines
