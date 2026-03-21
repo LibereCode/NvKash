@@ -32,16 +32,18 @@ return {
 
          -- dashboard-nvim
          local dash = require 'alpha.themes.dashboard' -- theme dashboard
+         local find_conf = function() require('telescope.builtin').find_files { cwd = vim.fn.stdpath 'config' } end
          --
          local butt = dash.button -- (sc, txt, keybind, keybind_opts)
          dash.section.buttons.val = {
-            butt('e', '  N[e]w buffer', '<cmd>enew<CR>'),
+            butt('n', '  [n]ew buffer', '<cmd>enew<CR>'),
             butt('f', '  Find [f]ile', '<CMD>Telescope find_files<CR>'),
             butt('r', '  [r]ecent files', '<CMD>Telescope oldfiles<CR>'),
             butt('g', '󰈬  live [g]rep', '<CMD>Telescope live_grep<CR>'),
             butt('h', '󰋖  find [h]elp', '<CMD>Telescope help_tags<CR>'),
-            butt('c', ' find [c]onfig', function() require('telescope.builtin').find_files { cwd = vim.fn.stdpath 'config' } end), -- NOTE: ignore diagnose, it's wrong
-            butt('C', '  [C]olorschemes', '<CMD>Telescope colorscheme<CR>'),
+            butt('m', '  find [m]an_pages', '<CMD>Telescope man_pages<CR>'),
+            butt('c', ' find [c]onfig', find_conf), -- NOTE: ignore diagnose, it's wrong
+            -- butt('C', '  [C]olorschemes', '<CMD>Telescope colorscheme<CR>'),
             butt('l', '󰒲  [l]azy', '<CMD>Lazy<CR>'),
             -- butt('SPC f m', '  Jump to bookmarks'),
             -- butt('SPC s l', '  Open last session'),
@@ -130,6 +132,8 @@ return {
                lualine_a = { 'mode' },
                lualine_b = { 'branch', 'diff', 'diagnostics' },
                lualine_c = { 'filename' },
+               -- lualine_b = { 'branch', 'diff' },
+               -- lualine_c = { 'diagnostics' },
                lualine_x = { 'encoding', 'fileformat', 'filetype' },
                lualine_y = { 'progress' },
                lualine_z = { 'location' },
@@ -148,31 +152,29 @@ return {
                lualine_a = { 'buffers' },
                -- lualine_b = { 'branch' },
                -- lualine_c = { 'filename' },
-               lualine_b = {},
-               lualine_c = {},
                lualine_x = {},
                lualine_y = {},
                lualine_z = { 'tabs' },
             },
 
-            -- winbar = {},
-            -- inactive_winbar = {},
-            winbar = {
-               lualine_a = {},
-               lualine_b = {},
-               lualine_c = { 'filename' },
-               lualine_x = {},
-               lualine_y = {},
-               lualine_z = {},
-            },
-            inactive_winbar = {
-               lualine_a = {},
-               lualine_b = {},
-               lualine_c = { 'filename' },
-               lualine_x = {},
-               lualine_y = {},
-               lualine_z = {},
-            },
+            winbar = {},
+            inactive_winbar = {},
+            -- winbar = {
+            --    lualine_a = {},
+            --    lualine_b = {},
+            -- lualine_c = { 'filename' },
+            --    lualine_x = {},
+            --    lualine_y = {},
+            --    lualine_z = {},
+            -- },
+            -- inactive_winbar = {
+            --    lualine_a = {},
+            --    lualine_b = {},
+            -- lualine_c = { 'filename' },
+            --    lualine_x = {},
+            --    lualine_y = {},
+            --    lualine_z = {},
+            -- },
 
             extensions = {
                'neo-tree',
