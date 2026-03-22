@@ -1,7 +1,6 @@
 # GIGA-Chad README
 
-DO F READ ME (or else...)
-
+**DO F READ ME (or else...)**
 I will use the `NvChad` ecosystem as much as possible,
 ie do not change it's core plugins and config them in `chadrc.lua`
 I will also keep the (horrendous...) original style of keymaps.
@@ -18,4 +17,4 @@ I will also keep the (horrendous...) original style of keymaps.
 
 ## Credits
 
-1) Lazyvim starter https://github.com/LazyVim/starter as nvchad's starter was inspired by Lazyvim's . It made a lot of things easier!
+1. Lazyvim starter <https://github.com/LazyVim/starter> as nvchad's starter was inspired by Lazyvim's . It made a lot of things easier!
