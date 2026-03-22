@@ -6,13 +6,13 @@
 local M = {}
 
 M.base46 = {
-  theme = "doomchad",
+  theme = "obsidian_ember2",
 
   hl_override = {
     Comment = { italic = true },
     ["@comment"] = { italic = true },
   },
-  transparency = true,
+  transparency = false,
 }
 
 M.ui = {
