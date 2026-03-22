@@ -101,6 +101,8 @@ require 'autocmd' -- [[ Basic Autocommands ]]  --  See `:help lua-guide-autocomm
 -- [[ Install `lazy.nvim` plugin manager ]]
 require 'configs.lazy' -- See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 
+require 'custom.toggle_term'
+
 -- INFO: The line beneath this is called `modeline`. See `:help modeline`
 --
 -- vim: ts=2 sts=2 sw=2 et
