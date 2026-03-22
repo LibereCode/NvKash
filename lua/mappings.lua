@@ -11,17 +11,17 @@ map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
 vim.diagnostic.config {
-   update_in_insert = false,
-   severity_sort = true,
-   float = { border = 'rounded', source = 'if_many' },
-   underline = { severity = { min = vim.diagnostic.severity.WARN } },
+  update_in_insert = false,
+  severity_sort = true,
+  float = { border = 'rounded', source = 'if_many' },
+  underline = { severity = { min = vim.diagnostic.severity.WARN } },
 
-   -- Can switch between these as you prefer
-   virtual_text = true, -- Text shows up at the end of the line
-   virtual_lines = false, -- Text shows up underneath the line, with virtual lines
+  -- Can switch between these as you prefer
+  virtual_text = true, -- Text shows up at the end of the line
+  virtual_lines = false, -- Text shows up underneath the line, with virtual lines
 
-   -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
-   jump = { float = true },
+  -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+  jump = { float = true },
 }
 
 map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -29,21 +29,14 @@ map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]ui
 -- HACK: TERMINAL
 --
 map('n', '<leader>tv', function()
-   vim.cmd.vnew()
-   vim.cmd.terminal()
+  vim.cmd.vnew()
+  vim.cmd.terminal()
 end, { desc = 'vterm' })
 map('n', '<leader>th', function()
-   vim.cmd.new()
-   vim.cmd.terminal()
+  vim.cmd.new()
+  vim.cmd.terminal()
 end, { desc = 'term' })
 map('n', '<leader>tT', function() vim.cmd.terminal() end, { desc = 'Terminal buffer' })
---
---  floating terminal
-map('n', '<leader>tt', function() require('custom.toggle_term').float() end, { desc = 'Floating terminal' })
--- map('n', '<leader>tv', function() require('custom.toggle_term').verti() end, { desc = 'Vertical terminal' })
--- map('n', '<leader>th', function() require('custom.toggle_term').horiz() end, { desc = 'Horizontal terminal' })
-map({ 'n', 't' }, '<M-t>', function() require('custom.toggle_term').float() end, { desc = 'Toggle Term' })
--- map({ 'n', 't' }, '<C-/>', function() require('custom.toggle_term').horiz() end, { desc = 'Toggle HTerm' })
 --
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -76,8 +69,10 @@ map('n', '<C-A-l>', '<C-w>L', { desc = 'Move window to the right' })
 map('n', '<C-A-j>', '<C-w>J', { desc = 'Move window to the lower' })
 map('n', '<C-A-k>', '<C-w>K', { desc = 'Move window to the upper' })
 -- buffers -- INFO: see `plugins.barbar` for more
-map('n', '<leader>bb', '<cmd>buffers<CR>')
+map('n', '<leader>bb', '<cmd>e #<cr>', { desc = 'Switch to other' })
+map('n', '<leader>bs', '<cmd>buffers<CR>', { desc = 'buffer[s]' })
 map('n', '<leader>bn', '<cmd>enew<CR>')
+-- map('n', '<leader>bD', '<cmd>bn<BAR>bd #<CR>')
 map('n', '<S-h>', '<cmd>bp<CR>', { desc = 'prev buffer' })
 map('n', '<S-l>', '<cmd>bn<CR>', { desc = 'next buffer' })
 -- tabs
@@ -135,6 +130,7 @@ map({ 'n', 't' }, '<leader>mj', require 'custom.journal', { desc = 'Journal' })
 -- TEST: Test
 --
 map('n', '<leader>it', ':echo "test?"') -- allows to write a cmd starting with 'echo("test?")' (so you can finish it)
+map('n', '<leader>ib', '<cmd>echo "hello world 1"<Bar>echo "hello world 2"<CR>', { desc = '<bar> allows multiple commands' })
 
 -- TODO:
 -- - buffer binds

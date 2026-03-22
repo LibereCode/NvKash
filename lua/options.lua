@@ -24,7 +24,8 @@ vim.schedule(function() o.clipboard = 'unnamedplus' end) -- TEST: disable and us
 
 o.breakindent = true -- Enable break indent
 
-o.undofile = true -- Enable undo/redo changes even after closing and reopening a file
+o.udf = true -- Enable undo/redo changes even after closing and reopening a file
+opt.ul = 1723 -- higher level=more memory (1000 default)
 
 o.ignorecase = true -- Case-insensitive searching
 o.smartcase = true --  UNLESS \C or one or more capital letters in the search term
@@ -62,9 +63,20 @@ o.confirm = true
 
 -- HACK: Add more down below
 
-opt.foldenable = false -- toggle off folds by default
+-- opt.foldenable = false -- toggle off folds by default -- foldlevel is better
+opt.fillchars = {
+  foldopen = '',
+  foldclose = '',
+  fold = '·', -- ' ',
+  foldsep = ' ',
+  diff = '╱',
+  eob = '~', -- ' ', -- default = '~' -- the filling of empty lines
+}
+opt.foldlevel = 99 -- Threshold before fold
+opt.foldmethod = 'indent'
+opt.foldtext = ''
 
-o.ls = 2 -- laststatus
+o.ls = 2 -- laststatus -- foldlevel is better -- foldlevel is better
 o.splitkeep = 'screen'
 
 o.cursorlineopt = 'both' -- default?
@@ -76,24 +88,28 @@ o.softtabstop = 2 -- tab key spaces
 o.shiftwidth = 2 -- ???
 o.smartindent = true -- c like programs... ?
 
-opt.fillchars = { eob = '~' } -- default = '~' -- the filling of empty lines
-
-o.ruler = true -- default?
+-- o.ruler = truae -- default?
 
 -- -- disable nvim intro
 -- opt.shortmess:append 'sI'
 
 -- go to previous/next line with h,l,left arrow and right arrow when cursor reaches end/beginning of line
-opt.whichwrap:append '<>[]hl' -- OP !! -- wrapoff, see below
+opt.ww:append '<>[]hl' -- OP !! -- wrapoff, see below -- '<>'=left/right in N+V and '[]' in I+R mode; 'hl'=h/l in N+V
 opt.wrap = false -- toggles off wrap by default
+
+opt.ve = 'block' -- allows selecting on empty space in visual-block mode
+
+opt.wim = 'longest:full,list' -- Command-line completion mode -- see also: `:h wildchar` `:h wildmenu`
+opt.wop = 'fuzzy,pum,tagfile' -- `:h wildoptions`
 
 -- -- disable some default providers
 -- g.loaded_node_provider = 0
 -- g.loaded_python3_provider = 0
 -- g.loaded_perl_provider = 0
 -- g.loaded_ruby_provider = 0
+g.markdown_recommended_style = 0 -- Fix markdown indentation settings
 
-opt.swapfile = true -- swapfile -- default stored in local/state/nvim/swap
+opt.swapfile = true -- swapfile -- default stored in local/state/nvim/swap -- enabled by default?
 -- opt.directory = "." -- store in same dir
 -- opt.directory = vim.fn.stdpath 'data' .. '/swap//' -- store in local/share
 -- opt.backup = true -- bakkupp -- default stored nowhere ?? nowhere ? -- HACK: no reason for auto-backup. Swap and undo exist
