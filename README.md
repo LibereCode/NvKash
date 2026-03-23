@@ -1,6 +1,6 @@
 # NvChad.nvim
 
-Merged from branch `kickkash 2.0`
+Merged from branch `kickstart.2`
 
 ## NOTE
 
