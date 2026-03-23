@@ -26,7 +26,7 @@ vim.diagnostic.config {
 
 map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
--- HACK: TERMINAL
+-- TERMINAL
 --
 map('n', '<leader>tv', function()
   vim.cmd.vnew()
@@ -52,13 +52,11 @@ map('t', '<C-Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 -- map('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 -- map('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
--- HACK: Windows/buffers/tabs
+-- Windows/buffers/tabs
 --
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
 -- windows
+-- Keybinds to make split navigation easier. Use CTRL+<hjkl> to switch between windows
+--  See `:help wincmd` for a list of all window commands
 map('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 map('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 map('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
@@ -68,13 +66,7 @@ map('n', '<C-A-h>', '<C-w>H', { desc = 'Move window to the left' })
 map('n', '<C-A-l>', '<C-w>L', { desc = 'Move window to the right' })
 map('n', '<C-A-j>', '<C-w>J', { desc = 'Move window to the lower' })
 map('n', '<C-A-k>', '<C-w>K', { desc = 'Move window to the upper' })
--- buffers -- INFO: see `plugins.barbar` for more
-map('n', '<leader>bb', '<cmd>e #<cr>', { desc = 'Switch to other' })
-map('n', '<leader>bs', '<cmd>buffers<CR>', { desc = 'buffer[s]' })
-map('n', '<leader>bn', '<cmd>enew<CR>')
--- map('n', '<leader>bD', '<cmd>bn<BAR>bd #<CR>')
-map('n', '<S-h>', '<cmd>bp<CR>', { desc = 'prev buffer' })
-map('n', '<S-l>', '<cmd>bn<CR>', { desc = 'next buffer' })
+-- buffers -- INFO: see `plugins.ui`.bufferline&lualine for more
 -- tabs
 map('n', '<leader><tab>l', '<cmd>tabs<CR>', { desc = 'tab list' })
 map('n', '<leader><tab><tab>', '<cmd>tabnew<CR>', { desc = 'new' })
@@ -82,8 +74,7 @@ map('n', '<leader><tab>d', '<cmd>tabclose<CR>', { desc = 'delete' })
 map('n', '<leader><tab>p', '<cmd>tabprev<CR>', { desc = 'prev' })
 map('n', '<leader><tab>n', '<cmd>tabnext<CR>', { desc = 'next' })
 
--- HACK: QOL
---
+-- QOL
 map('n', '<C-s>', '<cmd>w<CR>', { desc = 'save' })
 map('n', '<C-A-s>', '<cmd>w<CR><cmd>so<CR><cmd>echo("write + sauced")<CR>', { desc = 'Save' }) -- NOTE: 'macros' (multiple cmd chained) are possible like this
 map('n', '<C-q>', '<cmd>q<CR>', { desc = 'quit' })
@@ -99,21 +90,10 @@ map('n', 'gl', 'g]1<CR><escape>', { desc = '[l]ocal link' }) -- NOTE: This disab
 -- Whichkey
 map('n', '<leader>W', '<CMD>WhichKey<CR>', { desc = 'WhichKey[W]all' })
 
--- HACK: UI
-
--- TODO: create snacks like toggles
--- - [ ] wrap
--- - [ ] line nr
--- - [ ] relative line
--- - [ ] diagnostics
--- - [ ] colorize
-
--- HACK: Code
-
--- HACK: Lazy
+-- Lazy
 map('n', '<leader>ll', '<cmd>Lazy<CR>', { desc = 'Lazy󰒲 ' })
 
--- HACK: Custom plugins
+-- Custom plugins
 --
 -- LazyGit
 map({ 'n', 't' }, '<leader>lg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })

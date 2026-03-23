@@ -10,7 +10,7 @@ local cset = vim.cmd.set
 
 o.number = true -- Make line numbers default
 o.relativenumber = true -- You can also add relative line numbers, to help with jumping. Experiment for yourself to see if you like it!
-o.numberwidth = 2
+o.numberwidth = 3
 
 o.mouse = 'nv' -- 'nv' = normal+visual, 'a' = all -- Enable mouse mode, can be useful for resizing splits for example!
 
