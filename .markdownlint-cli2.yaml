@@ -1,0 +1,14 @@
+# INFO: https://github.com/DavidAnson/markdownlint-cli2/blob/main/test/markdownlint-cli2-yaml-example/.markdownlint-cli2.yaml
+
+# Disable some built-in rules
+config:
+  no-trailing-spaces: false
+  no-multiple-blanks: false
+  # INFO: MD033 https://github.com/DavidAnson/markdownlint/blob/v0.40.0/doc/md033.md
+  no-inline-html: false
+
+# Fix any fixable errors
+fix: true
+
+# Disable inline config comments
+# noInlineConfig: true
