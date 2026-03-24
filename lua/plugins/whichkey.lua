@@ -5,9 +5,9 @@ return { -- Useful plugin to show you pending keybinds.
   ---@type wk.Opts
   ---@diagnostic disable-next-line: missing-fields
   opts = {
-    preset = 'helix', -- false|"classic"|"modern"|"helix"
+    preset = 'modern', -- false|"classic"|"modern"|"helix"
     -- delay between pressing a key and opening which-key (milliseconds)
-    delay = 0,
+    delay = 69,
     icons = { mappings = vim.g.have_nerd_font },
 
     -- Document existing key chains
