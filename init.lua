@@ -103,6 +103,7 @@ require 'configs.lazy' -- See `:help lazy.nvim.txt` or https://github.com/folke/
 
 require 'custom.toggle_term'
 require 'custom.lazygit'
+require 'custom.journal'
 
 vim.cmd [[
 source ~/.config/nvim/nvim.vim

@@ -26,9 +26,9 @@ opt.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus'
 
 o.breakindent = true -- Enable break indent
 
-opt.sw = 2 -- 2 -- Size of an indent
-opt.ts = 2 -- Number of spaces tabs count for
-opt.sts = 2 -- softtabstop
+opt.sw = 4 -- 2 -- Size of an indent
+opt.ts = 4 -- Number of spaces tabs count for
+opt.sts = 4 -- softtabstop
 -- opt.shm:append({ W = true, I = true, c = true, C = true }) -- append to shortmess, which is truncation of terms
 -- -- disable nvim intro
 -- opt.shortmess:append 'sI'
