@@ -35,9 +35,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     --
     -- In this case, we create a function that lets us more easily define mappings specific
     -- for LSP related items. It sets the mode, buffer and description for us each time.
-    local map = function(keys, func, desc, mode)
+    local map = function(keys, cmd, desc, mode)
       mode = mode or 'n'
-      vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+      vim.keymap.set(mode, keys, cmd, { buffer = event.buf, desc = 'LSP: ' .. desc })
     end
 
     -- Rename the variable under your cursor.
@@ -51,6 +51,21 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- WARN: This is not Goto Definition, this is Goto Declaration.
     --  For example, in C this would take you to the header.
     map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+
+    -- INFO: Custom plugs
+    local function leadmap(keys, cmd, desc, mode) -- fn because I am lazy...
+      mode = mode or 'n'
+      vim.keymap.set(mode, '<leader>' .. keys, cmd, { buffer = event.buf, desc = desc })
+    end
+    leadmap('cI', '<CMD>LspInfo<CR>', 'LSP: [I]nfo')
+    leadmap('cL', '<CMD>LspLog<CR>', 'LSP: [L]og')
+    leadmap('ct', vim.show_pos, 'TS: position') -- Treesitter inspect
+    leadmap('cT', function()
+      vim.treesitter.inspect_tree()
+      vim.api.nvim_input 'I'
+    end, 'TS: [T]ree')
+    leadmap('cm', '<CMD>Mason<CR>', '[m]ason')
+    leadmap('ci', '<CMD>ConformInfo<CR>', 'Conform [i]nfo')
 
     -- The following two autocommands are used to highlight references of the
     -- word under your cursor when your cursor rests there for a little while.

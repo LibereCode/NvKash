@@ -1,3 +1,6 @@
+-- INFO: this file is clean, and
+-- and can be exported to whatever config
+--
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -31,7 +34,7 @@ vim.diagnostic.config {
 }
 
 leadmap('cq', vim.diagnostic.setloclist, '[q]Quickfix')
-map('n', ';', ':')
+map('n', ';', ':', { desc = 'cmd :' })
 
 -- TERMINAL
 --
@@ -95,19 +98,6 @@ map({ 'n', 'v' }, 'k', 'gk', { desc = 'better ↑k' })
 -- jump to local link  -- XXX: really weird why `g]` wasen't enough, especially the last esc?
 map('n', 'gl', 'g]1<CR><escape>', { desc = '[l]ocal link' }) -- NOTE: This disables the default
 
--- Whichkey -- TODO: move
--- leadmap('W', '<CMD>WhichKey<CR>', 'WhichKey[W]all')
-
--- Lazy -- TODO: move
--- leadmap('ll', '<cmd>Lazy<CR>', 'Lazy󰒲 ')
-
--- INFO: Custom plugins
-
--- LazyGit -- TODO: move
---
--- map({ 'n', 't' }, '<leader>lg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
--- map({ 'n', 't' }, '<leader>gg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
-
 -- sessions[<leader>q]
 leadmap('qw', '<CMD>wa<CR>', '[w]rite all')
 leadmap('qs', '<CMD>w <BAR> so | echo "written & sauced"<CR>', 'save & sauce') -- figure out why I can't sauce this file
@@ -115,20 +105,7 @@ map('n', '<C-A-s>', '<cmd>w<CR><cmd>so<CR><cmd>echo("written & sauced")<CR>', { 
 map('n', '<C-s>', '<cmd>w<CR>', { desc = 'save' })
 map('n', '<C-q>', '<cmd>q<CR>', { desc = 'quit' })
 
--- code[<leader>c] -- TODO: move (most)
-leadmap('cI', '<CMD>LspInfo<CR>')
-leadmap('cL', '<CMD>LspLog<CR>')
-leadmap('ct', vim.show_pos, 'TS Inspect') -- Treesitter inspect
-leadmap('cT', function()
-  vim.treesitter.inspect_tree()
-  vim.api.nvim_input 'I'
-end, 'TS Inspect Tree')
-leadmap('cm', '<CMD>Mason<CR>')
-leadmap('ci', '<CMD>ConformInfo<CR>')
 -- TODO: trouble on [s]ymbols
-
--- Journal -- TODO: move
-leadmap('oj', require 'custom.journal', '[j]ournal')
 
 -- TEST: Test
 --
