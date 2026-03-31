@@ -3,7 +3,13 @@ return { -- Highlight, edit, and navigate code
   lazy = false,
   build = ':TSUpdate',
   branch = 'main',
+  -- opts = {
+  --   enable = true, -- false => disables extension
+  --   disable = { 'norg' },
+  -- },  -- XXX: fuck this
+  --
   -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
+  -- config = function(_, opts)
   config = function()
     local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'zsh', 'python' }
     require('nvim-treesitter').install(parsers)
@@ -28,5 +34,6 @@ return { -- Highlight, edit, and navigate code
         vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
       end,
     })
+    -- require('nvim-treesitter').setup(opts)
   end,
 }

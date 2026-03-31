@@ -1,4 +1,4 @@
-return {
+return { -- file-managers/explorers
   {
     ---@type LazySpec
     'mikavilpas/yazi.nvim',
@@ -10,13 +10,13 @@ return {
     keys = { -- 👇 in this section, choose your own keymappings!
       { -- Open in the current working directory
         '<leader>y',
-        '<cmd>Yazi cwd<cr>',
-        desc = 'Yazi cwd',
+        '<cmd>Yazi toggle<cr>',
+        desc = 'toggle [y]azi',
       },
       { -- "<C-->", -- "<c-up>",
-        '<c-y>',
-        '<cmd>Yazi toggle<cr>',
-        desc = 'Resume the last yazi session',
+        '<C-y>',
+        '<cmd>Yazi cwd<cr>',
+        desc = '[y]azi',
       },
     },
     ---@type YaziConfig | {}
@@ -29,6 +29,10 @@ return {
       },
       -- 👇 if you want to open yazi instead of netrw
       open_for_directories = true,
+      -- cd on quit
+      change_neovim_cwd_on_close = true,
+      yazi_floating_window_winblend = 10, -- 0-100
+      -- yazi_floating_window_border =
     },
     init = function() -- 👇 if you use `open_for_directories=true`, this is recommended
       -- mark netrw as loaded so it's not loaded at all. -- https://github.com/mikavilpas/yazi.nvim/issues/802
@@ -36,11 +40,11 @@ return {
     end,
   },
 
-  -- { 'stevearc/oil.nvim', keys = { { '<leader>o', '<CMD>Oil<CR>' } }, opts = { default_file_explorer = false } }, -- NOTE: oil🦅 -- good, but doesn't fit
-
   { -- NOTE: Neo-Tree (This is best way)
     require 'kickstart.plugins.neo-tree',
   },
+
+  -- { 'stevearc/oil.nvim', keys = { { '<leader>o', '<CMD>Oil<CR>' } }, opts = { default_file_explorer = false } }, -- NOTE: oil🦅 -- good, but doesn't fit
 
   -- { 'luukvbaal/nnn.nvim', opts = {} }, -- NOTE: nnn -- pretty good, but doesnt fit this config
 }

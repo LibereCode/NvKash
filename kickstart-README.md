@@ -204,7 +204,7 @@ choco install -y neovim git ripgrep wget fd unzip gzip mingw make tree-sitter
 </details>
 <details><summary>WSL (Windows Subsystem for Linux)</summary>
 
-```
+```bash
 wsl --install
 wsl
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
@@ -218,7 +218,7 @@ sudo apt install make gcc ripgrep fd-find tree-sitter-cli unzip git xclip neovim
 
 <details><summary>Ubuntu Install Steps</summary>
 
-```
+```bash
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt update
 sudo apt install make gcc ripgrep fd-find tree-sitter-cli unzip git xclip neovim
@@ -227,7 +227,7 @@ sudo apt install make gcc ripgrep fd-find tree-sitter-cli unzip git xclip neovim
 </details>
 <details><summary>Debian Install Steps</summary>
 
-```
+```bash
 sudo apt update
 sudo apt install make gcc ripgrep fd-find tree-sitter-cli unzip git xclip curl
 
@@ -245,7 +245,7 @@ sudo ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/
 </details>
 <details><summary>Fedora Install Steps</summary>
 
-```
+```bash
 sudo dnf install -y gcc make git ripgrep fd-find tree-sitter-cli unzip neovim
 ```
 
@@ -253,7 +253,7 @@ sudo dnf install -y gcc make git ripgrep fd-find tree-sitter-cli unzip neovim
 
 <details><summary>Arch Install Steps</summary>
 
-```
+```bash
 sudo pacman -S --noconfirm --needed gcc make git ripgrep fd tree-sitter-cli unzip neovim
 ```
 
@@ -265,9 +265,9 @@ For some systems it is not unexpected that the [package manager installation
 method](https://github.com/neovim/neovim/blob/master/INSTALL.md#install-from-package)
 recommended by neovim is significantly behind. If that is the case for you,
 pick one of the following methods that are known to deliver fresh neovim versions very quickly.
-They have been picked for their popularity and because they make installing and updating
-neovim to the latest versions easy. You can also find more detail about the
-available methods being discussed
+They have been picked for their popularity and because they make installing and
+updating neovim to the latest versions easy. You can also find more detail about
+the available methods being discussed
 [here](https://github.com/nvim-lua/kickstart.nvim/issues/1583).
 
 <details><summary>Bob</summary>
@@ -295,17 +295,22 @@ Simply install using [`brew install`](https://formulae.brew.sh/formula/neovim).
 
 <details><summary>Flatpak</summary>
 
-Flatpak is a package manager for applications that allows developers to package their applications
-just once to make it available on all Linux systems. Simply [install flatpak](https://flatpak.org/setup/)
-and setup [flathub](https://flathub.org/setup) to [install neovim](https://flathub.org/apps/io.neovim.nvim).
+Flatpak is a package manager for applications that
+allows developers to package their applications<br />
+just once to make it available on all Linux systems.
+Simply [install flatpak](https://flatpak.org/setup/)
+and setup [flathub](https://flathub.org/setup) to
+[install neovim](https://flathub.org/apps/io.neovim.nvim).<br />
 
 </details>
 
 <details><summary>asdf and mise-en-place</summary>
 
-[asdf](https://asdf-vm.com/) and [mise](https://mise.jdx.dev/) are tool version managers,
-mostly aimed towards project-specific tool versioning. However both support managing tools
-globally in the user-space as well:
+[asdf](https://asdf-vm.com/) and [mise](https://mise.jdx.dev/)
+    are tool version managers,
+    mostly aimed towards project-specific tool versioning.<br />
+    However both support managing tools
+    globally in the user-space as well:<br />
 
 <details><summary>mise</summary>
 

@@ -12,7 +12,7 @@ local toggle_term = function()
   if vim.api.nvim_win_is_valid(state.floating.win) then -- if visible
     vim.api.nvim_win_hide(state.floating.win) -- hide
   else
-    state.floating = require('custom.toggle_float').toggle_float { buf = state.floating.buf } -- tells it to use the same buffer
+    state.floating = require('custom.toggle_float').toggle_float { x = 0.8, y = 0.8, buf = state.floating.buf } -- tells it to use the same buffer
     if vim.bo[state.floating.buf].buftype ~= 'terminal' then -- if buftype isn't terminal
       vim.cmd.terminal() -- enter terminal
     end

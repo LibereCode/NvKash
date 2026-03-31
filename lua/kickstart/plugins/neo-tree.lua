@@ -10,15 +10,17 @@ return {
   version = '*',
   dependencies = {
     'nvim-lua/plenary.nvim',
-    -- 'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
-    'nvim-mini/mini.icons', -- HACK:
+    'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+    -- 'nvim-mini/mini.icons', -- HACK:
     'MunifTanjim/nui.nvim',
     -- '3rd/image.nvim', -- allows image view in preview
   },
   lazy = false,
   keys = {
-    { '<leader>e', ':Neotree float reveal toggle<CR>', desc = 'float-N[e]oTree toggle', silent = true },
-    { '<C-e>', ':Neotree left reveal<CR>', desc = 'left N[e]oTree reveal', silent = true },
+    -- { '<C-e>', ':Neotree left reveal_force_cwd toggle<CR>', desc = 'left N[e]oTree', silent = true },
+    -- { '<leader>e', ':Neotree float reveal_force_cwd toggle<CR>', desc = 'float N[e]oTree', silent = true },
+    { '<leader>e', ':Neotree left reveal_force_cwd toggle<CR>', desc = 'left N[e]oTree', silent = true },
+    { '<leader>E', ':Neotree current reveal_force_cwd toggle<CR>', desc = 'N[E]O-NetRC', silent = true },
   },
   ---@module 'neo-tree'
   ---@type neotree.Config
@@ -46,7 +48,7 @@ return {
           },
         },
       },
-      hijack_netrw_behavior = 'disabled', -- weird ass name -- allows to open yazi by default
+      hijack_netrw_behavior = 'disabled', -- 'disabled'|'open_default'|'open_current' -- weird ass name -- 'disabled' = allows to open yazi by default
     },
   },
 }

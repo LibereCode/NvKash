@@ -5,17 +5,49 @@
 return {
   'mfussenegger/nvim-lint',
   event = { 'BufReadPre', 'BufNewFile' },
-  config = function()
+  -- opts = { -- inspired by https://www.lazyvim.org/plugins/linting
+  --   ft_linters = {
+  --     -- clojure = { "clj-kondo" },
+  --     dockerfile = { "hadolint" },
+  --     -- inko = { "inko" },
+  --     -- janet = { "janet" },
+  --     json = { "jsonlint" },
+  --     markdown = { "markdownlint-cli2" },
+  --     -- rst = { "vale" },
+  --     -- ruby = { "ruby" },
+  --     -- terraform = { "tflint" },
+  --     text = { "vale" }
+  -- },
+  -- config = function(_, opts)
+  config = function(_, opts)
     local lint = require 'lint'
-    lint.linters_by_ft = {
-      markdown = { 'markdownlint' },
-    }
 
+    -- lint.linters_by_ft = { -- to allow only the following
+    --   markdown = { 'markdownlint' },
+    -- }
     -- To allow other plugins to add linters to require('lint').linters_by_ft,
-    -- instead set linters_by_ft like this: -- HACK:
+    -- INSTEAD set linters_by_ft like this:
+    -- lint.linters_by_ft = lint.linters_by_ft or {}
+    -- lint.linters_by_ft['markdown'] = { 'markdownlint' }
+
+    -- for name, linter in pairs(opts.ft_linters) do -- WARN: this with opts.ft_linters didn't work D:
+    --   lbf(name, linter)
+    -- end
+
     lint.linters_by_ft = lint.linters_by_ft or {}
-    lint.linters_by_ft['markdown'] = { 'markdownlint' }
-    --
+    local function lbf(ft, linter) lint.linters_by_ft[ft] = { linter } end
+    -- NOTE:: or do this in funtion (kashnomo)
+    -- lbf('clojure', 'clj-kondo')
+    lbf('dockerfile', 'hadolint')
+    -- lbf('inko', 'inko')
+    -- lbf('janet', 'janet')
+    lbf('json', 'jsonlint')
+    lbf('markdown', 'markdownlint-cli2')
+    -- lbf('rst', 'vale')
+    -- lbf('ruby', 'ruby')
+    -- lbf('terraform', 'tflint')
+    lbf('text', 'vale')
+
     -- However, note that this will enable a set of default linters,
     -- which will cause errors unless these tools are available:
     -- {
@@ -30,7 +62,7 @@ return {
     --   terraform = { "tflint" },
     --   text = { "vale" }
     -- }
-    --
+
     -- You can disable the default linters by setting their filetypes to nil:
     -- lint.linters_by_ft['clojure'] = nil
     -- lint.linters_by_ft['dockerfile'] = nil

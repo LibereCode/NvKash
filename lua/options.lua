@@ -13,6 +13,7 @@ o.relativenumber = true -- You can also add relative line numbers, to help with 
 o.numberwidth = 3
 
 o.mouse = 'nv' -- 'nv' = normal+visual, 'a' = all -- Enable mouse mode, can be useful for resizing splits for example!
+opt.slm = 'mouse' -- select mode instead of visual with mouse
 
 o.showmode = false -- Don't show the mode, since it's already in the status line
 
@@ -20,9 +21,20 @@ o.showmode = false -- Don't show the mode, since it's already in the status line
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function() o.clipboard = 'unnamedplus' end) -- TEST: disable and use `"+y` to manually copy to clipboard
+-- vim.schedule(function() o.clipboard = 'unnamedplus' end) -- TEST: disable this and use `"+y` to manually copy to clipboard
+opt.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus'
 
 o.breakindent = true -- Enable break indent
+
+opt.sw = 2 -- 2 -- Size of an indent
+opt.ts = 2 -- Number of spaces tabs count for
+opt.sts = 2 -- softtabstop
+-- opt.shm:append({ W = true, I = true, c = true, C = true }) -- append to shortmess, which is truncation of terms
+-- -- disable nvim intro
+-- opt.shortmess:append 'sI'
+opt.shortmess:append 'sIa' -- a=lmrw (:h shortmess)
+opt.so = 10 -- 4 -- Lines of context (scrolloff)
+opt.siso = 21 -- 8 723 -- Columns of context (sidescrolloff) -- very big(723)=always centered(unless at left)
 
 o.udf = true -- Enable undo/redo changes even after closing and reopening a file
 opt.ul = 1723 -- higher level=more memory (1000 default)
@@ -54,8 +66,6 @@ o.inccommand = 'split' -- Preview substitutions live, as you type!
 
 o.cursorline = true -- Show which line your cursor is on
 
-o.scrolloff = 15 -- Minimal number of screen lines to keep above and below the cursor.
-
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
@@ -64,13 +74,13 @@ o.confirm = true
 -- HACK: Add more down below
 
 -- opt.foldenable = false -- toggle off folds by default -- foldlevel is better
-opt.fillchars = {
+opt.fcs = {
   foldopen = '',
-  foldclose = '',
-  fold = '·', -- ' ',
-  foldsep = ' ',
+  foldclose = '', -- "",
+  fold = '·', -- " ", ' ',
+  foldsep = '', -- " ",
   diff = '╱',
-  eob = '~', -- ' ', -- default = '~' -- the filling of empty lines
+  eob = ' ',
 }
 opt.foldlevel = 99 -- Threshold before fold
 opt.foldmethod = 'indent'
@@ -80,18 +90,6 @@ o.ls = 2 -- laststatus -- foldlevel is better -- foldlevel is better
 o.splitkeep = 'screen'
 
 o.cursorlineopt = 'both' -- default?
-
--- Indenting
-o.expandtab = true -- makes tabes into spaces
-o.tabstop = 2 -- tab-character width -- default is 8... wtf?
-o.softtabstop = 2 -- tab key spaces
-o.shiftwidth = 2 -- ???
-o.smartindent = true -- c like programs... ?
-
--- o.ruler = truae -- default?
-
--- -- disable nvim intro
--- opt.shortmess:append 'sI'
 
 -- go to previous/next line with h,l,left arrow and right arrow when cursor reaches end/beginning of line
 opt.ww:append '<>[]hl' -- OP !! -- wrapoff, see below -- '<>'=left/right in N+V and '[]' in I+R mode; 'hl'=h/l in N+V

@@ -4,23 +4,22 @@ return {
   {
     'OXY2DEV/markview.nvim',
     lazy = false,
-
-    -- Completion for `blink.cmp`
-    dependencies = { 'saghen/blink.cmp' },
-
+    dependencies = { 'saghen/blink.cmp' }, -- Completion for `blink.cmp`
     keys = function() -- NOTE: see keybinds in config/keymaps.lua
       return {
         { -- map('n', '<leader>ms', '<CMD>Markview splitToggle<CR>', { desc = 'toggle split' })
-          '<leader>ms',
+          '<localleader>s',
           mode = 'n',
           '<CMD>Markview splitToggle<CR>',
           desc = 'toggle [s]plit',
+          ft = 'markdown',
         },
         { -- map('n', '<leader>mt', '<CMD>Markview Toggle<CR>', { desc = 'toggle markview' })
-          '<leader>mt',
+          '<localleader>m',
           mode = 'n',
           '<CMD>Markview Toggle<CR>',
-          desc = 'toggle[t] markview',
+          desc = 'toggle [m]arkview',
+          ft = 'markdown',
         },
       }
     end,
@@ -33,9 +32,42 @@ return {
       },
     },
   },
+  { -- https://github.com/jakewvincent/mkdnflow.nvim?tab=readme-ov-file#-installation
+    'jakewvincent/mkdnflow.nvim',
+    ft = { 'markdown', 'rmd' },
+    opts = {
+      modules = { completion = true },
+      tables = {
+        auto_extend_rows = true,
+        -- auto_extend_cols = true,
+      },
+    },
+    keys = function() -- replace with new table of mappings
+      local function mmap(keys, cmd, desc) return { keys, cmd, ft = 'markdown', desc = desc } end
+      return { -- TEST: <leader>m --> <localleader>
+        mmap('<localleader>l', '<Cmd>MkdnFollowLink<CR>', 'Follow link'),
+        mmap('<CR>', '<Cmd>MkdnEnter<CR>', 'Mkdn enter'),
+        mmap('<localleader>y', '', 'yank'),
+        mmap('<localleader>ya', '<Cmd>MkdnYankAnchorLink<CR>', 'Yank Anchorlink'),
+        mmap('<localleader>yf', '<Cmd>MkdnYankFileAnchorLink<CR>', 'Yank FileAnchorlink'),
+        mmap('<localleader>t', '<Cmd>MkdnToggleToDo<CR>', 'Toggle TODO'),
+        mmap('<localleader>n', '<Cmd>MkdnUpdateNumbering<CR>', 'Update Numbering'),
+        mmap('<localleader>i', '', 'insert table'),
+        mmap('<localleader>ir', '<Cmd>MkdnTableNewRowBelow<CR>', 'Table new Row Down'),
+        mmap('<localleader>iR', '<Cmd>MkdnTableNewRowAbove<CR>', 'Table new Row Up'),
+        mmap('<localleader>ic', '<Cmd>MkdnTableNewColAfter<CR>', 'Table new Column Right'),
+        mmap('<localleader>iC', '<Cmd>MkdnTableNewColBefore<CR>', 'Table new Column Left'),
+        mmap('<localleader>d', '', 'table delete...'),
+        mmap('<localleader>dr', '<Cmd>MkdnTableDeleteRow<CR>', 'Table Delete Row'),
+        mmap('<localleader>dc', '<Cmd>MkdnTableDeleteCol<CR>', 'Table Delete Column'),
+        mmap('<localleader>f', '<Cmd>MkdnFoldSection<CR>', 'md Fold'),
+        mmap('<localleader>F', '<Cmd>MkdnUnfoldSection<CR>', 'md UnFold'),
+        mmap('<localleader>L', '<Cmd>MkdnCreateLinkFromClipboard<CR>', 'Create [L]ink Clipboard'),
+      }
+    end,
+  },
 
-  -- todo comments -- Highlight todo, notes, etc in comments
-  {
+  { -- todo comments -- Highlight todo, notes, etc in comments
     'folke/todo-comments.nvim',
     event = 'VimEnter',
     dependencies = { 'nvim-lua/plenary.nvim' },
@@ -43,5 +75,24 @@ return {
     ---@type TodoOptions
     ---@diagnostic disable-next-line: missing-fields
     opts = { signs = true }, -- HACK: false -> true
+  },
+
+  -- orgmode.org
+  --
+  -- 'nvim-neorg/neorg', -- I fucking hate neorg -- https://github.com/nvim-neorg/neorg
+  --
+  { -- https://nvim-orgmode.github.io/
+    'nvim-orgmode/orgmode',
+    event = 'VeryLazy',
+    ft = { 'org' },
+    keys = { -- INFO: default: https://nvim-orgmode.github.io/configuration#mappings
+      { '<leader>oh', mode = 'n', '<CMD>Org help<CR>', desc = '[h]elp' },
+      { '<leader>oH', mode = 'n', '<CMD>Org helpgrep<CR>', desc = '[H]elpgrep' },
+    },
+    opts = {
+      -- Setup orgmode
+      org_agenda_files = '~/Notes/Org/**/*',
+      org_default_notes_file = '~/Notes/Org/refile.org',
+    },
   },
 }

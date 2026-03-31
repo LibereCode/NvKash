@@ -3,6 +3,12 @@
 
 local map = vim.keymap.set
 local nomap = vim.keymap.del -- disable (default) mappings
+local function leadmap(keys, cmd, description, modes)
+  modes = modes or 'n'
+  cmd = cmd or '<CMD>lua print("forgor to write cmd...")'
+  description = description or 'forgor to add💀'
+  map(modes, '<leader>' .. keys, cmd, { desc = description })
+end
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
@@ -24,19 +30,20 @@ vim.diagnostic.config {
   jump = { float = true },
 }
 
-map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+leadmap('cq', vim.diagnostic.setloclist, '[q]Quickfix')
+map('n', ';', ':')
 
 -- TERMINAL
 --
-map('n', '<leader>tv', function()
+leadmap('tv', function()
   vim.cmd.vnew()
   vim.cmd.terminal()
-end, { desc = 'vterm' })
-map('n', '<leader>th', function()
+end, 'vterm')
+leadmap('th', function()
   vim.cmd.new()
   vim.cmd.terminal()
-end, { desc = 'term' })
-map('n', '<leader>tT', function() vim.cmd.terminal() end, { desc = 'Terminal buffer' })
+end, 'term')
+leadmap('tT', function() vim.cmd.terminal() end, 'Terminal buffer')
 --
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -66,52 +73,70 @@ map('n', '<C-A-h>', '<C-w>H', { desc = 'Move window to the left' })
 map('n', '<C-A-l>', '<C-w>L', { desc = 'Move window to the right' })
 map('n', '<C-A-j>', '<C-w>J', { desc = 'Move window to the lower' })
 map('n', '<C-A-k>', '<C-w>K', { desc = 'Move window to the upper' })
+
+leadmap('|', '<C-w>v', 'vertical[|]split')
+leadmap('_', '<C-w>s', 'horizontal[_]split')
 -- buffers -- INFO: see `plugins.ui`.bufferline&lualine for more
 -- tabs
-map('n', '<leader><tab>l', '<cmd>tabs<CR>', { desc = 'tab list' })
-map('n', '<leader><tab><tab>', '<cmd>tabnew<CR>', { desc = 'new' })
-map('n', '<leader><tab>d', '<cmd>tabclose<CR>', { desc = 'delete' })
-map('n', '<leader><tab>p', '<cmd>tabprev<CR>', { desc = 'prev' })
-map('n', '<leader><tab>n', '<cmd>tabnext<CR>', { desc = 'next' })
+leadmap('<tab>l', '<cmd>tabs<CR>', 'tab list')
+leadmap('<tab><tab>', '<cmd>tabnew<CR>', 'new')
+leadmap('<tab>d', '<cmd>tabclose<CR>', 'delete')
+leadmap('<tab>p', '<cmd>tabprev<CR>', 'prev')
+leadmap('<tab>n', '<cmd>tabnext<CR>', 'next')
 
--- QOL
-map('n', '<C-s>', '<cmd>w<CR>', { desc = 'save' })
-map('n', '<C-A-s>', '<cmd>w<CR><cmd>so<CR><cmd>echo("write + sauced")<CR>', { desc = 'Save' }) -- NOTE: 'macros' (multiple cmd chained) are possible like this
-map('n', '<C-q>', '<cmd>q<CR>', { desc = 'quit' })
-map('n', ';', ':')
--- remap required, becuase ?
-map('n', '<C-c>', 'gcc', { desc = 'toggle comment', remap = true })
+-- quick comments
+map('n', '<C-c>', 'gcc', { desc = 'toggle comment', remap = true }) -- remap required, becuase ?
 map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
+
 -- better jk
 map({ 'n', 'v' }, 'j', 'gj', { desc = 'better ↓j' })
 map({ 'n', 'v' }, 'k', 'gk', { desc = 'better ↑k' })
+
 -- jump to local link  -- XXX: really weird why `g]` wasen't enough, especially the last esc?
 map('n', 'gl', 'g]1<CR><escape>', { desc = '[l]ocal link' }) -- NOTE: This disables the default
--- Whichkey
-map('n', '<leader>W', '<CMD>WhichKey<CR>', { desc = 'WhichKey[W]all' })
 
--- Lazy
-map('n', '<leader>ll', '<cmd>Lazy<CR>', { desc = 'Lazy󰒲 ' })
+-- Whichkey -- TODO: move
+-- leadmap('W', '<CMD>WhichKey<CR>', 'WhichKey[W]all')
 
--- Custom plugins
+-- Lazy -- TODO: move
+-- leadmap('ll', '<cmd>Lazy<CR>', 'Lazy󰒲 ')
+
+-- INFO: Custom plugins
+
+-- LazyGit -- TODO: move
 --
--- LazyGit
-map({ 'n', 't' }, '<leader>lg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
-map({ 'n', 't' }, '<leader>gg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
--- Journal
-map({ 'n', 't' }, '<leader>mj', require 'custom.journal', { desc = 'Journal' })
+-- map({ 'n', 't' }, '<leader>lg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
+-- map({ 'n', 't' }, '<leader>gg', function() require('custom.lazygit').toggle() end, { desc = 'LazyGit' })
 
--- NOTE:: Have plugin bindings inside the plugins
--- either put it in keys = {}, opts = {}, or config (example:)
--- config = function(_, opts)
---   vim.keymap.set('n', '<leader>abc', function() require('plugin_name.foo').bar('do_some', 'normal') end, { desc = 'abc foobar' })
--- end,
+-- sessions[<leader>q]
+leadmap('qw', '<CMD>wa<CR>', '[w]rite all')
+leadmap('qs', '<CMD>w <BAR> so | echo "written & sauced"<CR>', 'save & sauce') -- figure out why I can't sauce this file
+map('n', '<C-A-s>', '<cmd>w<CR><cmd>so<CR><cmd>echo("written & sauced")<CR>', { desc = 'Save&sauce' }) -- NOTE: 'macros' (multiple cmd chained) are possible like this
+map('n', '<C-s>', '<cmd>w<CR>', { desc = 'save' })
+map('n', '<C-q>', '<cmd>q<CR>', { desc = 'quit' })
+
+-- code[<leader>c] -- TODO: move (most)
+leadmap('cI', '<CMD>LspInfo<CR>')
+leadmap('cL', '<CMD>LspLog<CR>')
+leadmap('ct', vim.show_pos, 'TS Inspect') -- Treesitter inspect
+leadmap('cT', function()
+  vim.treesitter.inspect_tree()
+  vim.api.nvim_input 'I'
+end, 'TS Inspect Tree')
+leadmap('cm', '<CMD>Mason<CR>')
+leadmap('ci', '<CMD>ConformInfo<CR>')
+-- TODO: trouble on [s]ymbols
+
+-- Journal -- TODO: move
+leadmap('oj', require 'custom.journal', '[j]ournal')
 
 -- TEST: Test
 --
-map('n', '<leader>it', ':echo "test?"') -- allows to write a cmd starting with 'echo("test?")' (so you can finish it)
-map('n', '<leader>ib', '<cmd>echo "hello world 1"<Bar>echo "hello world 2"<CR>', { desc = '<bar> allows multiple commands' })
+leadmap('it', ':echo "test?"') -- allows to write a cmd starting with 'echo("test?")' (so you can finish it)
+leadmap('ib', '<cmd>echo "hello world 1"<Bar>echo "hello world 2"<CR>', '<bar> allows multiple commands')
+-- <localleader>
+map('n', '<localleader>,', '<cmd>echo "localleader"<Bar>echo "btw"<CR>', { desc = 'localleader mapping' })
 
--- TODO:
--- - buffer binds
+-- INFO: see ~/.config/nvim/after/ftplugin/ for spicy stuff !!
 --
+-- INFO: see also `configs.lazy` 'custom_keys' (allows lazy keys, but global) https://lazy.folke.io/configuration

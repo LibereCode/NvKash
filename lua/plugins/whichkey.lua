@@ -7,10 +7,10 @@ return { -- Useful plugin to show you pending keybinds.
   opts = {
     preset = 'modern', -- false|"classic"|"modern"|"helix"
     -- delay between pressing a key and opening which-key (milliseconds)
-    delay = 69,
+    delay = 21,
     icons = { mappings = vim.g.have_nerd_font },
 
-    -- Document existing key chains
+    -- Document existing key chainswhic
     spec = {
       -- { '<leader>s', group = 'search', mode = { 'n', 'v' } },
       -- { '<leader>t', group = 'toggle' },
@@ -25,7 +25,8 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>g', group = 'git', mode = { 'n' } },
       { '<leader>i', group = 'insert', mode = { 'n' } },
       { '<leader>l', group = 'lazy', mode = { 'n' } },
-      { '<leader>m', group = 'text/[m]arkdown', mode = { 'n' } },
+      -- { '<leader>m', group = 'text/[m]arkdown', mode = { 'n' } }, -- I use <localleader> instead
+      { '<leader>o', group = 'open/[o]rganize', mode = { 'n' } }, -- includes my `custom.journal`
       { '<leader>t', group = 'terminal' },
       { '<leader>u', group = 'ui', mode = { 'n' } },
       { '<leader><tab>', group = 'tab', mode = { 'n' } },
@@ -51,4 +52,5 @@ return { -- Useful plugin to show you pending keybinds.
       },
     },
   },
+  config = function() vim.keymap.set('n', 'W', '<CMD>WhichKey<CR>', { desc = 'WhichKey[W]all' }) end,
 }

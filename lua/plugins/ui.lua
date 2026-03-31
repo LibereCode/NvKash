@@ -32,16 +32,20 @@ return {
 
       -- dashboard-nvim
       local dash = require 'alpha.themes.dashboard' -- theme dashboard
-      local find_conf = function() require('telescope.builtin').find_files { cwd = vim.fn.stdpath 'config' } end
+      local find_conf = function()
+        vim.cmd('cd ' .. vim.fn.stdpath 'config')
+        -- require('telescope.builtin').find_files { cwd = vim.fn.stdpath 'config' }
+        require('telescope.builtin').find_files()
+      end
       --
       local butt = dash.button -- (sc, txt, keybind, keybind_opts)
       dash.section.buttons.val = {
         butt('n', '  [n]ew buffer', '<cmd>enew<CR>'),
         butt('f', '  Find [f]ile', '<CMD>Telescope find_files<CR>'),
         butt('r', '  [r]ecent files', '<CMD>Telescope oldfiles<CR>'),
-        butt('g', '󰈬  live [g]rep', '<CMD>Telescope live_grep<CR>'),
+        -- butt('g', '󰈬  live [g]rep', '<CMD>Telescope live_grep<CR>'),
         butt('h', '󰋖  find [h]elp', '<CMD>Telescope help_tags<CR>'),
-        butt('m', '  find [m]an_pages', '<CMD>Telescope man_pages<CR>'),
+        -- butt('m', '  find [m]an_pages', '<CMD>Telescope man_pages<CR>'),
         butt('c', ' find [c]onfig', find_conf), -- NOTE: ignore diagnose, it's wrong
         -- butt('C', '  [C]olorschemes', '<CMD>Telescope colorscheme<CR>'),
         butt('l', '󰒲  [l]azy', '<CMD>Lazy<CR>'),
@@ -268,6 +272,9 @@ return {
             text_align = 'left',
           },
         },
+        custom_filter = function(buf_number, buf_numbers)
+          if vim.bo[buf_number].buftype ~= 'terminal' then return true end -- this hides terminal (buftype and not filetype, for some reason)
+        end,
       },
     },
   },

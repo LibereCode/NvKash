@@ -1,5 +1,5 @@
 return {
-  key = {
+  key = { -- =keys
     {
       '<leader>cf', -- HACK: >f --> >cf
       function() require('conform').format { async = true, lsp_format = 'fallback' } end,
@@ -9,7 +9,7 @@ return {
   },
   ---@module 'conform'
   ---@type conform.setupOpts
-  opt = {
+  opt = { -- =opts
     notify_on_error = false,
     format_on_save = function(bufnr)
       -- Disable "format_on_save lsp_fallback" for languages that don't
@@ -28,14 +28,30 @@ return {
     formatters_by_ft = {
       lua = { 'stylua' },
       -- Conform can also run multiple formatters sequentially
-      python = { 'isort', 'black' },
+      -- python = { 'isort', 'black' },
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
 
       -- HACK: Add more here
 
-      --
+      -- inspired by lazyvim https://www.lazyvim.org/plugins/formatting#conformnvim
+      fish = { 'fish_indent' },
+      sh = { 'beautysh' },
+      bash = { 'beautysh' },
+      zsh = { 'beautysh' },
+      python = function(bufnr) -- runs ruff if I have it, else isort+black
+        if require('conform').get_formatter_info('ruff_format', bufnr).available then
+          return { 'ruff_format' } -- config in ~/.config/ruff/ruff.toml
+        else
+          return { 'isort', 'black' }
+        end
+      end,
+      -- kdl = { "kdlfmt" }, -- fucks up niri config, and I can't get `.kdlfmtignore` to work -- https://github.com/hougesen/kdlfmt
+      markdown = { 'prettierd', 'markdownlint-cli2', 'markdown-toc' }, -- "markdownlint-cli2" -- TEST:
+      yaml = { 'prettierd' },
+
+      nix = { 'alejandra', 'nixfmt', stop_after_first = true },
     },
   },
 }

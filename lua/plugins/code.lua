@@ -9,7 +9,7 @@ return {
     -- -- stylua: ignore -- comment(ignore) the comment that says to ignore formatting
     keys = {
       { '<C-a>', function() require('dial.map').manipulate('increment', 'normal') end, desc = 'dial [a]dd', silent = true },
-      { '<C-x>', function() require('dial.map').manipulate('decrement', 'normal') end, desc = 'dial [a]dd', silent = true },
+      { '<C-x>', function() require('dial.map').manipulate('decrement', 'normal') end, desc = 'dial sub[x]act', silent = true },
       { 'g<C-a>', function() require('dial.map').manipulate('increment', 'gnormal') end, desc = 'dial [a]dd', silent = true },
       { 'g<C-x>', function() require('dial.map').manipulate('decrement', 'gnormal') end, desc = 'dial [a]dd', silent = true },
     },
