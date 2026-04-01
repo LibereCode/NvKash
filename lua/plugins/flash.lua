@@ -3,9 +3,7 @@ return {
   event = 'VeryLazy',
   vscode = true,
   ---@type Flash.Config
-  opts = {}, -- omg, jag glömde denna och det fucka mig så länge
-  -- keys = function() -- NOTE: see keybinds in config/keymaps.lua
-  --   return {
+  opts = {}, -- HACK: omg, jag glömde denna och det fucka mig så länge (den fixa att `f` och `t` keys ej använde flash)
   keys = {
     { -- wtf, detta fungerade superenkelt? flyttade hit ifrån config/keymaps.lua
       's',

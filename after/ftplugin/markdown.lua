@@ -5,3 +5,5 @@ local function localmap(keys, cmd, opts, modes)
 end
 
 -- localmap('t', 'o| h1 | h2 |<Escape>o| -- | -- |<Escape>o| i1 | i2 |<Escape>"')
+
+vim.opt.wrap = true

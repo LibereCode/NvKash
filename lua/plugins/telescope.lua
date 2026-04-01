@@ -91,35 +91,35 @@ return { -- Fuzzy Finder (files, lsp, etc)
     end
 
     -- search/select
-    mapbuilt('<leader>ss', function() --  See `:help telescope.builtin.live_grep()` for information about particular keys
+    mapbuilt('ss', function() --  See `:help telescope.builtin.live_grep()` for information about particular keys
       builtin.live_grep {
         grep_open_files = true,
         prompt_title = 'Live_[s]earch open_bufs',
       }
     end, 'Live grep[/] open files')
     map({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = 'word' })
-    mapbuilt('<leader>sg', builtin.live_grep, 'grep')
-    mapbuilt('<leader>sd', builtin.diagnostics, 'diagnostics')
-    mapbuilt('<leader>sr', builtin.resume, 'resume')
-    mapbuilt('<leader>sb', builtin.builtin, 'Telescope-[b]uiltins')
-    mapbuilt('<leader>sy', builtin.treesitter, 'Treesitter s[y]mbols')
+    mapbuilt('sg', builtin.live_grep, 'grep')
+    mapbuilt('sd', builtin.diagnostics, 'diagnostics')
+    mapbuilt('sr', builtin.resume, 'resume')
+    mapbuilt('sb', builtin.builtin, 'Telescope-[b]uiltins')
+    mapbuilt('sy', builtin.treesitter, 'Treesitter s[y]mbols')
 
-    -- find/file
-    mapbuilt('<leader>fb', builtin.buffers, 'buffers')
-    mapbuilt('<leader>fc', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, 'nvim [c]onfig') -- Shortcut for searching your Neovim configuration files
-    mapbuilt('<leader>ff', builtin.fd, 'files') -- fd=find_files
-    mapbuilt('<leader>fh', builtin.help_tags, 'help')
-    mapbuilt('<leader>fk', builtin.keymaps, 'keymaps')
-    mapbuilt('<leader>fr', builtin.oldfiles, 'recent Files')
-    mapbuilt('<leader>f:', builtin.commands, '[:]commands')
+    -- find/fi
+    mapbuilt('fb', builtin.buffers, 'buffers')
+    mapbuilt('fc', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, 'nvim [c]onfig') -- Shortcut for searching your Neovim configuration files
+    mapbuilt('ff', builtin.fd, 'files') -- fd=find_files
+    mapbuilt('fh', builtin.help_tags, 'help')
+    mapbuilt('fk', builtin.keymaps, 'keymaps')
+    mapbuilt('fr', builtin.oldfiles, 'recent Files')
+    mapbuilt('f:', builtin.commands, '[:]commands')
 
-    mapbuilt('<leader>bf', builtin.buffers, 'find')
+    mapbuilt('bf', builtin.buffers, 'find')
 
-    mapbuilt('<leader><leader>', builtin.live_grep, 'live[ ]grep')
+    mapbuilt('<leader>', builtin.live_grep, 'live[ ]grep')
 
     -- ui
 
-    mapbuilt('<leader>uC', builtin.colorscheme, 'live preview Colorscheme')
+    mapbuilt('uC', builtin.colorscheme, 'live preview Colorscheme')
 
     -- This runs on LSP attach per buffer (see main LSP attach function in 'neovim/nvim-lspconfig' config for more info,
     -- it is better explained there). This allows easily switching between pickers if you prefer using something else!

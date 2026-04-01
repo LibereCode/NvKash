@@ -33,5 +33,13 @@ Moved from plugins/ to ./, now working as a united TODO.md
 
 ## General conf
 
-- [ ] Move plugin specific mappings to the plugins themself
+- [-] Move plugin specific mappings to the plugins themself
       under `config = function() ... end`
+- [ ] BAD IDEA: IT DISABLED `opts = {}`. Instead do:
+    ```lua
+    opts = function(_, opts)
+      -- any command
+      return {
+        -- opts
+      }
+    ```

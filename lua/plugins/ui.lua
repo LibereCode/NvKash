@@ -13,6 +13,7 @@ return {
   { -- NOTE: Colorizer (give color to #ff7200 hex codes) https://github.com/norcalli/nvim-colorizer.lua
     'norcalli/nvim-colorizer.lua',
     config = function() require('colorizer').setup() end,
+    -- opts = {}, -- didn't work?
   },
 
   { -- NOTE: DASHBOARD https://github.com/goolord/alpha-nvim/blob/main/lua/alpha/themes/dashboard.lua

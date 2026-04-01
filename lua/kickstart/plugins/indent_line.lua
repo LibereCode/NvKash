@@ -23,15 +23,21 @@ return {
       scope = { -- INFO: `:h ibl.config.scope`
         include = {
           node_type = {
-            -- { ['*'] = { '*' } }, -- adds all nodes for all file-types. WARN: BAD
-            lua = { -- Adds some nodes to lua
+            ['*'] = {
               'return_statement', -- return {}
               'table_constructor', -- { tables },
-            },
-            python = { -- adds to python
               'if_statement', -- add the node 'if'
               'while_statement', -- add the node 'if'
             },
+            -- { ['*'] = { '*' } }, -- adds all nodes for all file-types. WARN: BAD
+            -- lua = { -- Adds some nodes to lua
+            --   'return_statement', -- return {}
+            --   'table_constructor', -- { tables },
+            -- },
+            -- python = { -- adds to python
+            --   'if_statement', -- add the node 'if'
+            --   'while_statement', -- add the node 'if'
+            -- },
           },
         },
         -- exclude = { language = { 'lua' } } -- Disables scope for lua
