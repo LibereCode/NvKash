@@ -35,6 +35,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- -- Useful for getting pretty icons, but requires a Nerd Font.
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
+  keys = {},
   config = function()
     -- Telescope is a fuzzy finder that comes with a lot of different things that
     -- it can fuzzy find! It's more than just a "file finder", it can search
@@ -85,85 +86,22 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
     local map = vim.keymap.set
     local builtin = require 'telescope.builtin'
-    local function mapbuilt(keys, cmd, description, modes)
+    local function leadmap(keys, cmd, description, modes)
       modes = modes or 'n'
       map(modes, '<leader>' .. keys, cmd, { desc = description })
     end
 
-    -- search/select
-    mapbuilt('ss', function() --  See `:help telescope.builtin.live_grep()` for information about particular keys
-      builtin.live_grep {
-        grep_open_files = true,
-        prompt_title = 'Live_[s]earch open_bufs',
-      }
-    end, 'Live grep[/] open files')
-    map({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = 'word' })
-    mapbuilt('sg', builtin.live_grep, 'grep')
-    mapbuilt('sd', builtin.diagnostics, 'diagnostics')
-    mapbuilt('sr', builtin.resume, 'resume')
-    mapbuilt('sb', builtin.builtin, 'Telescope-[b]uiltins')
-    mapbuilt('sy', builtin.treesitter, 'Treesitter s[y]mbols')
-
-    -- find/fi
-    mapbuilt('fb', builtin.buffers, 'buffers')
-    mapbuilt('fc', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, 'nvim [c]onfig') -- Shortcut for searching your Neovim configuration files
-    mapbuilt('ff', builtin.fd, 'files') -- fd=find_files
-    mapbuilt('fh', builtin.help_tags, 'help')
-    mapbuilt('fk', builtin.keymaps, 'keymaps')
-    mapbuilt('fr', builtin.oldfiles, 'recent Files')
-    mapbuilt('f:', builtin.commands, '[:]commands')
-
-    mapbuilt('bf', builtin.buffers, 'find')
-
-    mapbuilt('<leader>', builtin.live_grep, 'live[ ]grep')
-
-    -- ui
-
-    mapbuilt('uC', builtin.colorscheme, 'live preview Colorscheme')
-
-    -- This runs on LSP attach per buffer (see main LSP attach function in 'neovim/nvim-lspconfig' config for more info,
-    -- it is better explained there). This allows easily switching between pickers if you prefer using something else!
-    vim.api.nvim_create_autocmd('LspAttach', {
-      group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }),
-      callback = function(event)
-        local buf = event.buf
-
-        -- Find references for the word under your cursor.
-        map('n', 'grr', builtin.lsp_references, { buffer = buf, desc = 'references' })
-
-        -- Jump to the implementation of the word under your cursor.
-        -- Useful when your language has ways of declaring types without an actual implementation.
-        map('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = 'implementation' })
-
-        -- Jump to the definition of the word under your cursor.
-        -- This is where a variable was first declared, or where a function is defined, etc.
-        -- To jump back, press <C-t>.
-        map('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = 'definition' })
-
-        -- Fuzzy find all the symbols in your current document.
-        -- Symbols are things like variables, functions, types, etc.
-        map('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = '[O]pen document Symbols' })
-
-        -- Fuzzy find all the symbols in your current workspace.
-        -- Similar to document symbols, except searches over your entire project.
-        map('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'open [W]orkspace Symbols' })
-
-        -- Jump to the type of the word under your cursor.
-        -- Useful when you're not sure what type a variable is and you want to see
-        -- the definition of its *type*, not where it was *defined*.
-        map('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = 'type definition' })
-      end,
-    })
-
-    -- Override default behavior and theme when searching
-    map('n', '<C-/>', function()
+    -- Quick access
+    leadmap('<leader>', builtin.live_grep, 'live[ ]grep')
+    leadmap(':', builtin.command_history, '[:]command_history') -- maybe in find instead?
+    map('n', '<C-/>', function() -- Override default behavior and theme when searching
       -- You can pass additional configuration to Telescope to change the theme, layout, etc.
       builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown { -- INFO: theme like this
         winblend = 10,
         previewer = false,
       })
     end, { desc = 'Fzf [/] current buf' })
-    mapbuilt(
+    leadmap(
       '/',
       function()
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -173,5 +111,66 @@ return { -- Fuzzy Finder (files, lsp, etc)
       end,
       'Fzf [/] current buf'
     )
+
+    -- search/select
+    leadmap('sb', builtin.builtin, 'Telescope-[b]uiltins')
+    leadmap('sd', builtin.diagnostics, 'diagnostics')
+    leadmap('sg', builtin.live_grep, 'live [g]rep')
+    leadmap('sr', builtin.resume, 'resume')
+    leadmap('ss', function() --  See `:help telescope.builtin.live_grep()` for information about particular keys
+      builtin.live_grep {
+        grep_open_files = true,
+        prompt_title = 'Live_[s]earch open_bufs',
+      }
+    end, 'Live grep[/] open files')
+    leadmap('sw', function() builtin.grep_string { grep_open_files = true } end, '[w]ord (bufs)', { 'n', 'v' })
+    -- mapbuilt('sW', function() builtin.grep_string { search = vim.fn.expand '<cword>' } end, 'current [W]ord', { 'n' }) -- this is default...
+    leadmap('sW', builtin.grep_string, '[W]ord', { 'n', 'v' })
+    leadmap('sy', builtin.treesitter, 'Treesitter s[y]mbols')
+
+    -- find/files
+    leadmap('fb', builtin.buffers, 'buffers')
+    leadmap('fc', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, 'nvim [c]onfig') -- Shortcut for searching your Neovim configuration files
+    leadmap('ff', builtin.fd, 'files') -- fd=find_files
+    leadmap('fh', builtin.help_tags, 'help')
+    leadmap('fk', builtin.keymaps, 'keymaps')
+    leadmap('fr', builtin.oldfiles, 'recent Files')
+    leadmap('ft', builtin.builtin, '[t]elescopes')
+    leadmap('f:', builtin.commands, '[:]commands')
+
+    -- buffer
+    leadmap('bf', builtin.buffers, 'find')
+
+    -- ui
+    leadmap('uC', builtin.colorscheme, 'live preview Colorscheme')
+
+    -- This runs on LSP attach per buffer (see main LSP attach function in 'neovim/nvim-lspconfig' config for more info,
+    -- it is better explained there). This allows easily switching between pickers if you prefer using something else!
+    vim.api.nvim_create_autocmd('LspAttach', {
+      group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }),
+      callback = function(event)
+        local buf = event.buf
+        local function lspmap(key, cmd, descript) map('n', 'gr' .. key, cmd, { buffer = buf, desc = descript }) end
+        local function leadlspmap(key, cmd, descript) map('n', '<leader>sl' .. key, cmd, { buffer = buf, desc = descript }) end
+
+        lspmap('r', builtin.lsp_references, '[r]eferences') -- Find references for the word under your cursor.
+        leadlspmap('r', builtin.lsp_references, 'references')
+        -- Jump to the implementation of the word under your cursor.
+        lspmap('i', builtin.lsp_implementations, '[i]mplementation') -- Useful when your language has ways of declaring types without an actual implementation.
+        leadlspmap('i', builtin.lsp_implementations, 'implementation')
+        -- Jump to the definition of the word under your cursor. This is where a variable was first declared, or where a function is defined, etc.
+        lspmap('d', builtin.lsp_definitions, '[d]efinition') -- To jump back, press <C-t>.
+        leadlspmap('d', builtin.lsp_definitions, '[d]efinition')
+        -- Fuzzy find all the symbols in your current document.
+        lspmap('s', builtin.lsp_document_symbols, 'document [s]ymbols') -- Symbols are things like variables, functions, types, etc.
+        leadlspmap('s', builtin.lsp_document_symbols, 'document [s]ymbols')
+        -- Fuzzy find all the symbols in your current workspace.
+        lspmap('S', builtin.lsp_dynamic_workspace_symbols, 'Workspace [S]ymbols') -- Similar to document symbols, except searches over your entire project.
+        leadlspmap('S', builtin.lsp_dynamic_workspace_symbols, 'Workspace [S]ymbols')
+        -- Jump to the type of the word under your cursor.
+        lspmap('y', builtin.lsp_type_definitions, 't[y]pe definition') -- Useful when you're not sure what type a variable is and you want to see the definition of its *type*, not where it was *defined*.
+        leadlspmap('y', builtin.lsp_type_definitions, 't[y]pe definition')
+      end,
+    })
   end,
 }

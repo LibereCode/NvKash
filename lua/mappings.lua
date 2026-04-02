@@ -77,8 +77,14 @@ map('n', '<C-A-l>', '<C-w>L', { desc = 'Move window to the right' })
 map('n', '<C-A-j>', '<C-w>J', { desc = 'Move window to the lower' })
 map('n', '<C-A-k>', '<C-w>K', { desc = 'Move window to the upper' })
 
+map('n', '<C-A-->', '<C-w>2-', { desc = '[-] win-height' })
+map('n', '<C-A-=>', '<C-w>2+', { desc = '[+] win-height' }) -- same key as +
+map('n', '<C-A-,>', '<C-w>2<', { desc = 'widgth less [<]' }) -- lower-case <
+map('n', '<C-A-.>', '<C-w>2>', { desc = 'width more [>]' }) -- lower-case >
+
 leadmap('|', '<C-w>v', 'vertical[|]split')
 leadmap('_', '<C-w>s', 'horizontal[_]split')
+
 -- buffers -- INFO: see `plugins.ui`.bufferline&lualine for more
 -- tabs
 leadmap('<tab>l', '<cmd>tabs<CR>', 'tab list')
@@ -103,6 +109,7 @@ map('n', 'gl', 'g]1<CR><escape>', { desc = '[l]ocal link' }) -- NOTE: This disab
 -- sessions[<leader>q]
 leadmap('qw', '<CMD>wa<CR>', '[w]rite all')
 leadmap('qs', '<CMD>w <BAR> so | echo "written & sauced"<CR>', 'save & sauce') -- figure out why I can't sauce this file
+leadmap('qq', '<CMD>qa<CR>', '[q]uit all')
 map('n', '<C-A-s>', '<cmd>w<CR><cmd>so<CR><cmd>echo("written & sauced")<CR>', { desc = 'Save&sauce' }) -- NOTE: 'macros' (multiple cmd chained) are possible like this
 map('n', '<C-s>', '<cmd>w<CR>', { desc = 'save' })
 map('n', '<C-q>', '<cmd>q<CR>', { desc = 'quit' })

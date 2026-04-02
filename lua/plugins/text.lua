@@ -28,7 +28,7 @@ return {
         enable = true,
         icon_provider = 'devicons', -- "mini" or "devicons"
         hybrid_modes = { 'n' },
-        linewise_hybrid_mode = true,
+        -- linewise_hybrid_mode = true, -- default is basically a better version
       },
     },
   },

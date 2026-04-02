@@ -20,7 +20,7 @@ Moved from plugins/ to ./, now working as a united TODO.md
   3. [ ] [touble](https://github.com/folke/trouble.nvim)
 - Notes
   1. [x] [Orgmode](https://github.com/nvim-orgmode/orgmode)
-  2. [ ] [Telekasten](https://github.com/nvim-telekasten/telekasten.nvim)
+  2. [-] [Telekasten](https://github.com/nvim-telekasten/telekasten.nvim)
   3. [ ] [Venn](https://github.com/jbyuki/venn.nvim)
   4. [ ] [marp](https://github.com/mpas/marp-nvim)
 
@@ -34,12 +34,13 @@ Moved from plugins/ to ./, now working as a united TODO.md
 ## General conf
 
 - [-] Move plugin specific mappings to the plugins themself
-      under `config = function() ... end`
+  under `config = function() ... end`
 - [ ] BAD IDEA: IT DISABLED `opts = {}`. Instead do:
-    ```lua
-    opts = function(_, opts)
-      -- any command
-      return {
-        -- opts
-      }
-    ```
+
+```lua
+opts = function(_, opts)
+  -- any command
+  return {
+    -- opts
+  }
+```

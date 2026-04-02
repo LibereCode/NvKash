@@ -2,7 +2,7 @@ return { -- Useful plugin to show you pending keybinds.
   'folke/which-key.nvim',
   event = 'VimEnter',
   ---@module 'which-key'
-  ---@type wk.Opts
+  -- ---@type wk.Opts
   ---@diagnostic disable-next-line: missing-fields
   opts = function(_, opts)
     vim.keymap.set('n', 'W', '<CMD>WhichKey<CR>', { desc = 'WhichKey[W]all' })
@@ -22,7 +22,7 @@ return { -- Useful plugin to show you pending keybinds.
         -- HACK: add more groups below
 
         -- <leader>
-        { '<leader>c', group = 'code', mode = { 'n' } },
+        { '<leader>c', group = 'code', mode = { 'n', 'v' } },
         { '<leader>d', group = 'debug', mode = { 'n' } },
         { '<leader>g', group = 'git', mode = { 'n' } },
         { '<leader>i', group = 'insert', mode = { 'n' } },
@@ -33,10 +33,12 @@ return { -- Useful plugin to show you pending keybinds.
         { '<leader>u', group = 'ui', mode = { 'n' } },
         { '<leader><tab>', group = 'tab', mode = { 'n' } },
         { '<leader>s', group = 'search/[s]elect', mode = { 'n', 'v' } },
-        { '<leader>f', group = 'find/[f]iles', mode = { 'n', 'v' } },
+        { '<leader>f', group = 'find/[f]iles', mode = { 'n' } },
+        { '<leader>q', group = 'session/[q]uit', mode = { 'n' } },
 
         -- <leader> subgroups
         { '<leader>bo', group = 'order', mode = { 'n' } },
+        { '<leader>sl', group = 'LSP actions', mode = { 'n' } },
 
         -- goto
         { 'gs', group = 'surround', mode = { 'n', 'v' } },

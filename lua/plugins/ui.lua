@@ -33,11 +33,7 @@ return {
 
       -- dashboard-nvim
       local dash = require 'alpha.themes.dashboard' -- theme dashboard
-      local find_conf = function()
-        vim.cmd('cd ' .. vim.fn.stdpath 'config')
-        -- require('telescope.builtin').find_files { cwd = vim.fn.stdpath 'config' }
-        require('telescope.builtin').find_files()
-      end
+      local find_conf = '<CMD>lua confdir = vim.fn.stdpath("config") ; vim.cmd("cd" .. confdir) ; require("telescope.builtin").find_files({cwd = confdir})<CR>'
       --
       local butt = dash.button -- (sc, txt, keybind, keybind_opts)
       dash.section.buttons.val = {
@@ -47,11 +43,12 @@ return {
         -- butt('g', '󰈬  live [g]rep', '<CMD>Telescope live_grep<CR>'),
         butt('h', '󰋖  find [h]elp', '<CMD>Telescope help_tags<CR>'),
         -- butt('m', '  find [m]an_pages', '<CMD>Telescope man_pages<CR>'),
-        butt('c', ' find [c]onfig', find_conf), -- NOTE: ignore diagnose, it's wrong
+        butt('c', '  cd+find [c]onfig', find_conf),
         -- butt('C', '  [C]olorschemes', '<CMD>Telescope colorscheme<CR>'),
         butt('l', '󰒲  [l]azy', '<CMD>Lazy<CR>'),
-        -- butt('SPC f m', '  Jump to bookmarks'),
-        -- butt('SPC s l', '  Open last session'),
+        -- butt('m', '󰒐  [m]ason', '<CMD>Mason<CR>'),
+        -- butt('b', '  Jump to bookmarks'),
+        -- butt('r', '  Open last session'),
         butt('q', '󰩈  [q]uit', '<cmd>q<CR>'),
       }
       dash.section.header.val = {

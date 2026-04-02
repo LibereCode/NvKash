@@ -1,14 +1,23 @@
 --  Journal 
 
--- Rewritten version of `~/.local/scripts/journal`(.zsh) to lua
+-- Rewritten version of `~/.local/scripts/shell/journal`(.zsh) to lua
 
 -- version 2.0
 -- Don't `return` no more, instead
 -- instead handle commands within script
 
 -- local M = {}
-local buf_jrnl = require('custom.window').buf
-local win_jrnl = require('custom.window').win
+-- local buf_jrnl = require('custom.modules.window').buf
+-- local win_jrnl = require('custom.modules.window').win
+
+local state = {
+  floating = {
+    buffer = -1,
+    window = -1,
+  },
+}
+local sfbuf = state.floating.buffer
+local sfwin = state.floating.window
 
 local function jrnl()
   local target_dir = vim.fn.expand('$HOME/Notes/Journal/' .. os.date '%Y/%m/') -- Calculate target file path
@@ -26,17 +35,17 @@ end
 
 -- function M.main()
 local toggle_jrnl = function()
-  if win_jrnl and vim.api.nvim_win_is_valid(win_jrnl) then -- Hide if visible
-    vim.api.nvim_win_close(win_jrnl, true)
-    win_jrnl = nil
+  if vim.api.nvim_win_is_valid(sfwin) then -- Hide if visible
+    vim.api.nvim_win_close(sfwin, true)
+    -- sfwin = nil -- not needed?
     return -- enables toggle... why?
   end
 
-  if not buf_jrnl or not vim.api.nvim_buf_is_valid(buf_jrnl) then -- if no buf then
-    buf_jrnl = jrnl()
+  if not sfbuf or not vim.api.nvim_buf_is_valid(sfbuf) then -- if no buf then
+    sfbuf = jrnl()
   end
 
-  win_jrnl = vim.api.nvim_open_win(buf_jrnl, true, require 'custom.dimension'(0.9))
+  sfwin = vim.api.nvim_open_win(sfbuf, true, require 'custom.modules.dimension'(0.9))
 end
 
 vim.api.nvim_create_user_command('Journal', toggle_jrnl, {})

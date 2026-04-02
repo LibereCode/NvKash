@@ -1,0 +1,2 @@
+x 2026-04-02 Fix/tweak +Telescope +Mappings @Plugs
+x 2026-04-02 tweak +Todo_sh ui @Custom

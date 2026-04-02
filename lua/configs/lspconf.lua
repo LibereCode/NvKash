@@ -62,9 +62,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     leadmap('ct', vim.show_pos, 'TS: position') -- Treesitter inspect
     leadmap('cT', function()
       vim.treesitter.inspect_tree()
-      vim.api.nvim_input 'I'
+      vim.api.nvim_input 'I' -- INFO: THIS IS HOW YOU INSERT TEXT !!
     end, 'TS: [T]ree')
     leadmap('cm', '<CMD>Mason<CR>', '[m]ason')
+    leadmap('cM', '<CMD>MasonLog<CR>', '[M]asonLog')
     leadmap('ci', '<CMD>ConformInfo<CR>', 'Conform [i]nfo')
     leadmap('cd', '<CMD>lua vim.diagnostic.open_float()<CR>', 'float [d]iagnostics')
 

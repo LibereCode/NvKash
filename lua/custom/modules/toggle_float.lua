@@ -12,7 +12,7 @@ function M.toggle_float(opts)
     buf = vim.api.nvim_create_buf(false, true) -- buffer be like
   end
 
-  local win_conf = require 'custom.dimension'(x, y) -- use custom.dimension to get window stats
+  local win_conf = require 'custom.modules.dimension'(x, y) -- use custom.dimension to get window stats
   local win = vim.api.nvim_open_win(buf, true, win_conf)
 
   return { buf = buf, win = win }

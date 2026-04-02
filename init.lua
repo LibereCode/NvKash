@@ -98,12 +98,10 @@ require 'options' -- [[ Setting options ]]  -- See `:help vim.o`
 require 'mappings' -- [[ Basic Keymaps ]]  --  See `:help vim.keymap.set()`
 require 'autocmd' -- [[ Basic Autocommands ]]  --  See `:help lua-guide-autocommands`
 
+require 'custom' -- NOTE: sauce all custom in this file
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 require 'configs.lazy' -- See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
-
-require 'custom.toggle_term'
-require 'custom.lazygit'
-require 'custom.journal'
 
 vim.cmd [[
 source ~/.config/nvim/nvim.vim
