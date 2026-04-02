@@ -10,3 +10,24 @@ Do check it out, if you would fancy.
 
 I will redo kickstart, but this time import less stuff (unless it is simple
 simple native configs)
+
+## Dependencies
+
+### CORE
+
+- tree-sitter-cli
+- nerd font
+
+TODO:
+
+### LSP/similar
+
+TODO:
+
+### Other
+
+- chafa
+- kitty (terminal)
+- ImageMagick
+
+TODO:
