@@ -1,15 +1,18 @@
-return {
-  key = { -- =keys
+return { -- NOTE: Autoformat
+  'stevearc/conform.nvim',
+  event = { 'BufWritePre' },
+  cmd = { 'ConformInfo' },
+  keys = {
     {
-      '<leader>cf', -- HACK: >f --> >cf
+      '<leader>cf',
       function() require('conform').format { async = true, lsp_format = 'fallback' } end,
       mode = '',
       desc = '[F]ormat buffer',
     },
   },
   ---@module 'conform'
-  ---@type conform.setupOpts
-  opt = { -- =opts
+  -- ---@type conform.setupOpts
+  opts = {
     notify_on_error = false,
     format_on_save = function(bufnr)
       -- Disable "format_on_save lsp_fallback" for languages that don't
@@ -48,10 +51,10 @@ return {
         end
       end,
       -- kdl = { "kdlfmt" }, -- fucks up niri config, and I can't get `.kdlfmtignore` to work -- https://github.com/hougesen/kdlfmt
-      markdown = { 'prettierd', 'markdownlint-cli2', 'markdown-toc' }, -- "markdownlint-cli2" -- TEST:
+      markdown = { 'markdownlint-cli2', 'markdown-toc' }, -- "markdownlint-cli2" -- TEST:
       yaml = { 'prettierd' },
 
-      nix = { 'alejandra', 'nixfmt', stop_after_first = true },
+      nix = { 'nixfmt' },
     },
   },
 }

@@ -63,12 +63,10 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
   --
   -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
-  require 'configs.core',
+  require 'configs', -- will sauce configs/init.lua
   -- lspconf
   -- conform
   -- blink
-
-  require 'configs.theme', -- Change colortheme here !!
 
   -- Todo comments (plugins.text)
 
