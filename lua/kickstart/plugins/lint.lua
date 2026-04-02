@@ -36,17 +36,24 @@ return {
 
     lint.linters_by_ft = lint.linters_by_ft or {}
     local function lbf(ft, linter) lint.linters_by_ft[ft] = { linter } end
-    -- NOTE:: or do this in funtion (kashnomo)
     -- lbf('clojure', 'clj-kondo')
     lbf('dockerfile', 'hadolint')
     -- lbf('inko', 'inko')
     -- lbf('janet', 'janet')
-    lbf('json', 'jsonlint')
+    -- lbf('json', 'jsonlint')
     lbf('markdown', 'markdownlint-cli2')
     -- lbf('rst', 'vale')
     -- lbf('ruby', 'ruby')
     -- lbf('terraform', 'tflint')
     lbf('text', 'vale')
+
+    -- INFO: Add more here
+    lbf('python', 'ruff')
+    lbf('json', 'biome')
+    lbf('javascript', 'biome')
+    lbf('typescript', 'biome')
+    lbf('go', 'nilaway')
+    lbf('bash', 'shellcheck')
 
     -- However, note that this will enable a set of default linters,
     -- which will cause errors unless these tools are available:

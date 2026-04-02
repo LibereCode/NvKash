@@ -5,8 +5,7 @@ return { -- Highlight, edit, and navigate code
   branch = 'main',
   -- opts = {
   --   enable = true, -- false => disables extension
-  --   disable = { 'norg' },
-  -- },  -- XXX: fuck this
+  -- },
   --
   -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
   -- config = function(_, opts)
@@ -25,8 +24,7 @@ return { -- Highlight, edit, and navigate code
         -- enables syntax highlighting and other treesitter features
         vim.treesitter.start(buf, language)
 
-        -- NOTE: enables treesitter based folds
-        -- for more info on folds see `:help folds` -- HACK:
+        -- NOTE: enables treesitter based folds -- see `:help folds`
         vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
         vim.wo.foldmethod = 'expr'
 

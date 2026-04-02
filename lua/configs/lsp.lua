@@ -92,6 +92,8 @@ return { -- NOTE: LSP-conf
         leadmap('ci', '<CMD>ConformInfo<CR>', 'Conform [i]nfo')
         leadmap('cd', '<CMD>lua vim.diagnostic.open_float()<CR>', 'float [d]iagnostics')
 
+        -- TODO: Move the mappings not directlt LSP (example: Mason) to respective config files
+
         -- The following two autocommands are used to highlight references of the
         -- word under your cursor when your cursor rests there for a little while.
         --    See `:help CursorHold` for information about when this is executed
@@ -145,13 +147,14 @@ return { -- NOTE: LSP-conf
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`ts_ls`) will work just fine
-      ts_ls = {}, -- typescripts etc
+      -- ts_ls = {}, -- typescripts etc
 
       stylua = {}, -- Used to format Lua code
 
       -- NOTE: Add languages here
 
-      ruff = {}, -- python
+      biome = {}, -- replace ts_ls
+      ruff = {}, -- replace pyright
 
       -- Special Lua Config, as recommended by neovim help docs
       lua_ls = {
@@ -192,7 +195,41 @@ return { -- NOTE: LSP-conf
     -- You can press `g?` for help in this menu.
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, { -- MASON "ensure_installed" IS HERE
-      -- NOTE: You can add other tools here that you want Mason to install
+      -- You can add other tools here that you want Mason to install
+      -- NOTE: This table is merged with `servers = { see above }`
+      --
+      -- 'bash-debug-adapter',
+      'bash-language-server',
+      'beautysh',
+      -- 'black',
+      -- 'codebook',
+      -- 'codelldb',
+      -- 'css-lsp',
+      -- 'debugpy',
+      -- 'delve',
+      -- 'eslint-lsp',
+      'fish-lsp',
+      -- 'gopls',
+      -- 'hadolint',
+      -- 'html-lsp',
+      -- 'js-debug-adapter',
+      -- 'json-lsp',
+      -- 'kdlfmt',
+      -- 'markdown-toc',
+      'markdownlint-cli2',
+      -- 'markmap-cli',
+      -- 'marksman',
+      -- 'nilaway',
+      -- 'nixfmt',
+      -- 'nixpkgs-fmt',
+      -- 'prettier',
+      'prettierd',
+      'shellcheck',
+      -- 'taplo',
+      -- 'texlab',
+      'vale',
+      -- 'vale-ls',
+      -- 'yaml-language-server',
     })
 
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }

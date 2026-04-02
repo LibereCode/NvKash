@@ -47,7 +47,7 @@ return { -- NOTE: Autoformat
         if require('conform').get_formatter_info('ruff_format', bufnr).available then
           return { 'ruff_format' } -- config in ~/.config/ruff/ruff.toml
         else
-          return { 'isort', 'black' }
+          return { 'black' } -- 'isort'
         end
       end,
       -- kdl = { "kdlfmt" }, -- fucks up niri config, and I can't get `.kdlfmtignore` to work -- https://github.com/hougesen/kdlfmt
