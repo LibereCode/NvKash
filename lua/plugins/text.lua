@@ -74,7 +74,12 @@ return {
     ---@module 'todo-comments'
     ---@type TodoOptions
     ---@diagnostic disable-next-line: missing-fields
-    opts = { signs = true }, -- HACK: false -> true
+    opts = function(_, opts)
+      vim.keymap.set('n', '<leader>xt', '<CMD>TodoQuickFix<CR>', { desc = '[t]odo quickfix' })
+      return {
+        signs = true, -- HACK: false -> true
+      }
+    end,
   },
 
   -- orgmode.org

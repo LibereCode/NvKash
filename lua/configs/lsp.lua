@@ -184,6 +184,11 @@ return { -- NOTE: LSP-conf
           Lua = {},
         },
       },
+      fish_lsp = {},
+      vale_ls = {},
+      bashls = {},
+      jsonls = {},
+      yamlls = {},
     }
 
     -- Ensure the servers and tools above are installed
@@ -197,23 +202,17 @@ return { -- NOTE: LSP-conf
     vim.list_extend(ensure_installed, { -- MASON "ensure_installed" IS HERE
       -- You can add other tools here that you want Mason to install
       -- NOTE: This table is merged with `servers = { see above }`
+      -- INSTALL LSP ABOVE (and Linters, and Formatters here)
       --
-      -- 'bash-debug-adapter',
-      'bash-language-server',
+      -- NOTE: put DAP with plugins.code `nvim-dap` !!
+      --
       'beautysh',
       -- 'black',
       -- 'codebook',
-      -- 'codelldb',
       -- 'css-lsp',
-      -- 'debugpy',
-      -- 'delve',
       -- 'eslint-lsp',
-      'fish-lsp',
-      -- 'gopls',
       -- 'hadolint',
-      -- 'html-lsp',
-      -- 'js-debug-adapter',
-      -- 'json-lsp',
+      -- 'html-lsp'
       -- 'kdlfmt',
       -- 'markdown-toc',
       'markdownlint-cli2',
@@ -228,8 +227,6 @@ return { -- NOTE: LSP-conf
       -- 'taplo',
       -- 'texlab',
       'vale',
-      -- 'vale-ls',
-      -- 'yaml-language-server',
     })
 
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }

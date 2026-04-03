@@ -1,6 +1,5 @@
 (A) +Conf Tabs - format, opts, lsp @nvim
 (C) +Plugs Markmap @nvim
-(C) +Plugs Grug @nvim
 (D) +Plugs LazyDev @nvim
 (B) +Plugs Trouble @nvim
 (B) +Plugs Marp @nvim

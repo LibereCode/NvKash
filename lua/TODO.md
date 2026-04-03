@@ -15,7 +15,6 @@ Moved from plugins/ to ./, now working as a united TODO.md
 #### Ponder? ToAdd?
 
 - code
-  1. [ ] [grug](https://github.com/MagicDuck/grug-far.nvim)
   2. [ ] [lazydev](https://github.com/folke/lazydev.nvim)
   3. [ ] [touble](https://github.com/folke/trouble.nvim)
 - Notes
@@ -35,7 +34,7 @@ Moved from plugins/ to ./, now working as a united TODO.md
 
 - [-] Move plugin specific mappings to the plugins themself
   under `config = function() ... end`
-- [ ] BAD IDEA: IT DISABLED `opts = {}`. Instead do:
+- [X] BAD IDEA: IT DISABLED `opts = {}`. Instead do:
 
 ```lua
 opts = function(_, opts)
