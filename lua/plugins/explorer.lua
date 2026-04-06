@@ -14,23 +14,15 @@ return { -- file-managers/explorers
         },
         opts = {},
       },
-      { -- disables neo-tree open-directory
-        'nvim-neo-tree/neo-tree.nvim',
-        opts = {
-          filesystem = {
-            hijack_netrw_behavior = 'disabled', -- 'disabled'|'open_default'|'open_current' -- weird ass name -- 'disabled' = allows to open yazi by default
-          },
-        },
-      },
     },
     keys = { -- 👇 in this section, choose your own keymappings!
       { -- Open in the current working directory
-        '<leader>E',
+        '<leader>y',
         '<cmd>Yazi toggle<cr>',
         desc = 'toggle [y]azi',
       },
       { -- 1000iq move -- smoort (I can toogle noow)
-        '<leader>E',
+        '<leader>y',
         'q',
         mode = { 't' },
       },
@@ -40,7 +32,6 @@ return { -- file-managers/explorers
         desc = '[y]azi',
       },
     },
-    ---@type YaziConfig | {}
     opts = {
       keymaps = {
         show_help = '<f1>',
@@ -49,16 +40,16 @@ return { -- file-managers/explorers
         cycle_open_buffers = '<S-Tab>',
       },
       -- 👇 if you want to open yazi instead of netrw
-      open_for_directories = true,
+      -- open_for_directories = true,
       -- cd on quit
       change_neovim_cwd_on_close = true,
       yazi_floating_window_winblend = 10, -- 0-100
       -- yazi_floating_window_border =
     },
-    init = function() -- 👇 if you use `open_for_directories=true`, this is recommended
-      -- mark netrw as loaded so it's not loaded at all. -- https://github.com/mikavilpas/yazi.nvim/issues/802
-      vim.g.loaded_netrwPlugin = 1
-    end,
+    -- init = function() -- 👇 if you use `open_for_directories=true`, this is recommended
+    --   -- mark netrw as loaded so it's not loaded at all. -- https://github.com/mikavilpas/yazi.nvim/issues/802
+    --   vim.g.loaded_netrwPlugin = 1
+    -- end,
   },
 
   -- Neo-tree is a Neovim plugin to browse the file system
@@ -107,11 +98,49 @@ return { -- file-managers/explorers
             },
           },
         },
+        hijack_netrw_behavior = 'disabled', -- 'disabled'|'open_default'|'open_current' -- weird ass name -- 'disabled' = allows to open yazi by default
       },
     },
   },
 
   -- { 'stevearc/oil.nvim', keys = { { '<leader>o', '<CMD>Oil<CR>' } }, opts = { default_file_explorer = false } }, -- NOTE: oil🦅 -- good, but doesn't fit
 
-  -- { 'luukvbaal/nnn.nvim', opts = {} }, -- NOTE: nnn -- pretty good, but doesnt fit this config
+  { -- nnn -- https://github.com/luukvbaal/nnn.nvim?tab=readme-ov-file
+    'luukvbaal/nnn.nvim',
+    opts = function(_, opts) -- conf options: https://github.com/luukvbaal/nnn.nvim?tab=readme-ov-file
+      local nnnmap = function(key, cmd, opts) vim.keymap.set('n', key, cmd, opts) end
+      nnnmap('<leader>n', '<CMD>NnnPicker<CR>', {})
+
+      local nbn = require('nnn').builtin
+      return {
+        explorer = {
+          cmd = 'nnn -Ure',
+        },
+        picker = {
+          -- cmd = 'tmux new-session nnn -Pp', -- What?
+          cmd = 'nnn -Pp -Urde',
+          style = { border = 'shadow' },
+          session = 'shared',
+          -- fullscreen = false,
+        },
+        auto_close = true,
+        replace_netrw = 'picker',
+        mappings = {
+          { '<C-t>', nbn.open_in_tab }, -- open file(s) in tab
+          { '<C-s>', nbn.open_in_split }, -- open file(s) in split
+          { '<C-v>', nbn.open_in_vsplit }, -- open file(s) in vertical split
+          { '<C-p>', nbn.open_in_preview }, -- open file in preview split keeping nnn focused
+          { '<C-y>', nbn.copy_to_clipboard }, -- copy file(s) to clipboard
+          { '<C-w>', nbn.cd_to_path }, -- cd to file directory
+          { '<C-e>', nbn.populate_cmdline }, -- populate cmdline (:) with file(s)
+        },
+        windownav = {
+          left = '<C-h>',
+          right = '<C-l>',
+        },
+        quitcd = 'cd',
+        -- offset = true,
+      }
+    end,
+  },
 }

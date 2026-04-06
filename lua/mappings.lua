@@ -96,8 +96,10 @@ leadmap('<tab>n', '<cmd>tabnext<CR>', 'next')
 -- quick commands
 map('n', '<C-c>', 'gcc', { desc = 'toggle comment', remap = true }) -- remap required, becuase ?
 map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
-map({ 'i', 's' }, '<C-v>', '<C-o>p', { desc = 'Paste in S/I-mode', remap = true })
-map('s', '<C-c>', '<C-o>y', { desc = 'Copy in S-mode', remap = true })
+
+map('s', '<C-v>', '<C-o>"cp', { desc = 'Paste in S/I-mode', remap = true })
+map('s', '<C-c>', '<C-o>"cy', { desc = 'Copy in S-mode', remap = true })
+map('s', '<C-x>', '<C-o>"cd', { desc = 'Cut in S-mode', remap = true })
 
 -- better jk
 map({ 'n', 'v' }, 'j', 'gj', { desc = 'better ↓j' })
