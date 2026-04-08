@@ -23,7 +23,20 @@ return { -- NOTE: Autocompletion
           config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
         },
       },
-      opts = {},
+      opts = function(_, opts)
+        local lsmap = function(key, cmd, opts, mode)
+          mode = mode or 'n'
+          vim.keymap.set(mode, key, cmd, opts)
+        end
+        local ls = require 'luasnip'
+
+        lsmap('<C-k>', function() ls.expand() end, { silent = true }, 'i')
+        lsmap('<C-l>', function() ls.jump(1) end, { silent = true }, { 'i', 's' })
+        lsmap('<C-j>', function() ls.jump(-1) end, { silent = true }, { 'i', 's' })
+        lsmap('<C-e>', function() -- What is this? Change-active-choice?
+          if ls.choice_active() then ls.change_choice(1) end
+        end, { silent = true }, { 'i', 's' })
+      end,
     },
   },
   ---@module 'blink.cmp'
@@ -90,12 +103,18 @@ return { -- NOTE: Autocompletion
     },
 
     sources = {
-      default = { 'lsp', 'path', 'snippets' }, -- 'buffer' "buffer" show autocomplete of buffer text
+      default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' }, -- "buffer" show autocomplete of buffer text
       -- HACK: If I figure out how to give low prio, then maybe add 'buffer'
       providers = {
         mkdnflow = {
           name = 'Mkdnflow',
           module = 'mkdnflow.completion.blink',
+        },
+        lazydev = {
+          name = 'LazyDev',
+          module = 'lazydev.integrations.blink',
+          -- make lazydev completions top priority (see `:h blink.cmp`)
+          score_offset = 100,
         },
       },
     },

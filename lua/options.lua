@@ -30,16 +30,15 @@ o.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus'
 
 o.breakindent = true -- Enable break indent
 
--- TEST:
-o.shiftwidth = 3 --  . :h 'sw'
-o.tabstop = 3 -- . :h 'ts'
-o.softtabstop = 3 -- . :h 'sts'
-o.smartindent = true
+o.shiftwidth = 4 --  . :h 'sw'
+o.tabstop = 4 -- . :h 'ts'
+o.softtabstop = 4 -- . :h 'sts'
+-- o.smartindent = true -- maybe not so smart...
 o.expandtab = true
 
 -- o.shm:append({ W = true, I = true, c = true, C = true }) -- append to shortmess, which is truncation of terms
--- o.shortmess:append 'sI' -- disable nvim intro
-o.shortmess:append 'sIa' -- a=lmrw (:h shortmess)
+-- o.shortmess:append 'sI' -- disable nvim intro(default dashboard)
+o.shortmess:append 'sa' -- a=lmrw (:h shortmess) -- alpha.nvim appends I (replaces :intro)
 o.so = 10 -- 4 -- Lines of context (scrolloff)
 o.siso = 21 -- 8 723 -- Columns of context (sidescrolloff) -- very big(723)=always centered(unless at left)
 

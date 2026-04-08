@@ -19,6 +19,21 @@ return { -- NOTE: LSP-conf
 
     -- Useful status updates for LSP.
     { 'j-hui/fidget.nvim', opts = {} },
+
+    {
+      'folke/lazydev.nvim',
+      ft = 'lua', -- only load on lua files
+      opts = {
+        library = {
+          -- See the configuration section for more details
+          -- Load luvit types when the `vim.uv` word is found
+          { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+          -- { path = '${3rd}/busted/library', words = { 'vim%.uv' } },
+        },
+      },
+      -- enabled = function(root_dir) return not vim.uv.fs_stat(root_dir .. '/.luarc.json') end, -- WARN: bricks config
+    },
+    { 'folke/neodev.nvim', enabled = false }, -- make sure to uninstall or disable neodev.nvim
   },
   config = function()
     -- Brief aside: **What is LSP?**
@@ -58,41 +73,24 @@ return { -- NOTE: LSP-conf
         --
         -- In this case, we create a function that lets us more easily define mappings specific
         -- for LSP related items. It sets the mode, buffer and description for us each time.
-        local map = function(keys, cmd, desc, mode)
+
+        local lspmap = function(keys, cmd, desc, mode)
           mode = mode or 'n'
           vim.keymap.set(mode, keys, cmd, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
 
         -- Rename the variable under your cursor.
         --  Most Language Servers support renaming across files, etc.
-        map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
-
+        lspmap('grn', vim.lsp.buf.rename, '[R]e[n]ame')
         -- Execute a code action, usually your cursor needs to be on top of an error
         -- or a suggestion from your LSP for this to activate.
-        map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
-
+        lspmap('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
         -- WARN: This is not Goto Definition, this is Goto Declaration.
         --  For example, in C this would take you to the header.
-        map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+        lspmap('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
-        -- INFO: Custom plugs
-        local function leadmap(keys, cmd, desc, mode) -- fn because I am lazy...
-          mode = mode or 'n'
-          vim.keymap.set(mode, '<leader>' .. keys, cmd, { buffer = event.buf, desc = desc })
-        end
-        leadmap('cI', '<CMD>LspInfo<CR>', 'LSP: [I]nfo')
-        leadmap('cL', '<CMD>LspLog<CR>', 'LSP: [L]og')
-        leadmap('ct', vim.show_pos, 'TS: position') -- Treesitter inspect
-        leadmap('cT', function()
-          vim.treesitter.inspect_tree()
-          vim.api.nvim_input 'I' -- INFO: THIS IS HOW YOU INSERT TEXT !!
-        end, 'TS: [T]ree')
-        leadmap('cm', '<CMD>Mason<CR>', '[m]ason')
-        leadmap('cM', '<CMD>MasonLog<CR>', '[M]asonLog')
-        leadmap('ci', '<CMD>ConformInfo<CR>', 'Conform [i]nfo')
-        leadmap('cd', '<CMD>lua vim.diagnostic.open_float()<CR>', 'float [d]iagnostics')
-
-        -- TODO: Move the mappings not directlt LSP (example: Mason) to respective config files
+        lspmap('<leader>cI', '<CMD>LspInfo<CR>', '[I]nfo')
+        lspmap('<leader>cL', '<CMD>LspLog<CR>', '[L]og')
 
         -- The following two autocommands are used to highlight references of the
         -- word under your cursor when your cursor rests there for a little while.
@@ -128,10 +126,30 @@ return { -- NOTE: LSP-conf
         --
         -- This may be unwanted, since they displace some of your code
         if client and client:supports_method('textDocument/inlayHint', event.buf) then
-          map('<leader>uH', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'Toggle Inlay [H]ints') -- HACK: <leader>th --> <leader>uH
+          lspmap('<leader>uH', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'toggle Inlay [H]ints') -- HACK: <leader>th --> <leader>uH
+          lspmap('<leader>cH', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'toggle Inlay [H]ints') -- and --> <leader>cH
         end
       end,
     })
+
+    local function leadmap(keys, cmd, desc, mode) -- NOTE: Mappings that doesn't require LspAttach
+      mode = mode or 'n'
+      vim.keymap.set(mode, '<leader>' .. keys, cmd, { desc = desc })
+    end
+
+    -- local function leadmap(keys, cmd, desc, mode) -- NOTE: Mappings that doesn't require LspAttach
+    --   mode = mode or 'n'
+    --   vim.keymap.set(mode, '<leader>' .. keys, cmd, { desc = desc })
+    -- end
+    -- leadmap('ct', vim.show_pos, 'TS: position') -- Treesitter inspect
+    -- leadmap('cT', function()
+    --   vim.treesitter.inspect_tree()
+    --   vim.api.nvim_input 'I' -- INFO: THIS IS HOW YOU INSERT TEXT !!
+    -- end, 'TS: [T]ree')
+    leadmap('cm', '<CMD>Mason<CR>', '[m]ason')
+    leadmap('cM', '<CMD>MasonLog<CR>', '[M]asonLog')
+    leadmap('ci', '<CMD>ConformInfo<CR>', 'Conform [i]nfo')
+    leadmap('cd', '<CMD>lua vim.diagnostic.open_float()<CR>', 'float [d]iagnostics')
 
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -157,12 +175,14 @@ return { -- NOTE: LSP-conf
       ruff = {}, -- replace pyright
 
       -- Special Lua Config, as recommended by neovim help docs
-      lua_ls = {
+      lua_ls = { -- What is even this? TODO: (change to?) Lazydev.nvim
         on_init = function(client)
           if client.workspace_folders then
             local path = client.workspace_folders[1].name
             if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
           end
+
+          vim.keymap.set('n', '<leader>ld', '<CMD>LazyDev lsp<CR>')
 
           client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
             runtime = {
@@ -185,7 +205,6 @@ return { -- NOTE: LSP-conf
         },
       },
       fish_lsp = {},
-      vale_ls = {},
       bashls = {},
       jsonls = {},
       yamlls = {},
@@ -226,7 +245,6 @@ return { -- NOTE: LSP-conf
       'shellcheck',
       -- 'taplo',
       -- 'texlab',
-      'vale',
     })
 
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }

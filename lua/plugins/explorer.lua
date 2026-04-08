@@ -8,6 +8,7 @@ return { -- file-managers/explorers
       { 'nvim-lua/plenary.nvim', lazy = true },
       { -- Image preview (chafa is yazi fallback)
         'princejoogie/chafa.nvim', -- funkar... typ... (pretty badly)
+        -- lazy = true, -- needed?
         dependencies = {
           'nvim-lua/plenary.nvim',
           'm00qek/baleia.nvim',
@@ -40,16 +41,16 @@ return { -- file-managers/explorers
         cycle_open_buffers = '<S-Tab>',
       },
       -- 👇 if you want to open yazi instead of netrw
-      -- open_for_directories = true,
+      open_for_directories = true,
       -- cd on quit
       change_neovim_cwd_on_close = true,
       yazi_floating_window_winblend = 10, -- 0-100
       -- yazi_floating_window_border =
     },
-    -- init = function() -- 👇 if you use `open_for_directories=true`, this is recommended
-    --   -- mark netrw as loaded so it's not loaded at all. -- https://github.com/mikavilpas/yazi.nvim/issues/802
-    --   vim.g.loaded_netrwPlugin = 1
-    -- end,
+    init = function() -- 👇 if you use `open_for_directories=true`, this is recommended
+      -- mark netrw as loaded so it's not loaded at all. -- https://github.com/mikavilpas/yazi.nvim/issues/802
+      vim.g.loaded_netrwPlugin = 1
+    end,
   },
 
   -- Neo-tree is a Neovim plugin to browse the file system
@@ -108,8 +109,7 @@ return { -- file-managers/explorers
   { -- nnn -- https://github.com/luukvbaal/nnn.nvim?tab=readme-ov-file
     'luukvbaal/nnn.nvim',
     opts = function(_, opts) -- conf options: https://github.com/luukvbaal/nnn.nvim?tab=readme-ov-file
-      local nnnmap = function(key, cmd, opts) vim.keymap.set('n', key, cmd, opts) end
-      nnnmap('<leader>n', '<CMD>NnnPicker<CR>', {})
+      vim.keymap.set('n', '<leader>n', '<CMD>NnnPicker<CR>')
 
       local nbn = require('nnn').builtin
       return {
@@ -123,8 +123,8 @@ return { -- file-managers/explorers
           session = 'shared',
           -- fullscreen = false,
         },
-        auto_close = true,
-        replace_netrw = 'picker',
+        -- auto_close = true, -- fucked me
+        -- replace_netrw = 'picker',
         mappings = {
           { '<C-t>', nbn.open_in_tab }, -- open file(s) in tab
           { '<C-s>', nbn.open_in_split }, -- open file(s) in split

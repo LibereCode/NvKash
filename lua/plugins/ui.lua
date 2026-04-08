@@ -18,6 +18,7 @@ return {
 
   { -- NOTE: DASHBOARD https://github.com/goolord/alpha-nvim/blob/main/lua/alpha/themes/dashboard.lua
     'goolord/alpha-nvim',
+    enabled = false, -- HACK:
     dependencies = {
       -- 'nvim-mini/mini.icons',
       'nvim-tree/nvim-web-devicons',
@@ -30,6 +31,8 @@ return {
       --
       -- dash.file_icons.provider = 'devicons'
       -- require('alpha').setup(theta.config)
+
+      vim.opt.shortmess:append 'I' -- disables default dashboard/:intro
 
       -- dashboard-nvim
       local dash = require 'alpha.themes.dashboard' -- theme dashboard

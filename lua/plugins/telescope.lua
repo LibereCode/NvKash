@@ -17,6 +17,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
   -- instead of just disabling it here, to keep your config clean.
   enabled = true,
   event = 'VimEnter',
+  lazy = true, -- dont think this does anything
   dependencies = {
     'nvim-lua/plenary.nvim',
     { -- If encountering errors, see telescope-fzf-native README for installation instructions

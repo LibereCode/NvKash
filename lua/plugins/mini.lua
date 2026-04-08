@@ -3,9 +3,9 @@
 -- > ai
 -- > surround
 -- > indentscope
--- > pairs
 -- > move
 -- DISABLED
+-- > pairs
 -- > statusline
 -- > starter
 
@@ -108,42 +108,42 @@ return { -- Collection of various small independent plugins/modules
     --   symbol = '╎', -- Which character to use for drawing scope indicator
     -- }
 
-    require('mini.pairs').setup { -- NOTE:PAIRS
-
-      -- No need to copy this inside `setup()`. Will be used automatically.
-
-      -- In which modes mappings from this `config` should be created
-      modes = { insert = true, command = false, terminal = false },
-      -- Global mappings. Each right hand side should be a pair information, a
-      -- table with at least these fields (see more in |MiniPairs.map|):
-      -- - <action> - one of 'open', 'close', 'closeopen'.
-      -- - <pair> - two character string for pair to be used.
-      -- By default pair is not inserted after `\`, quotes are not recognized by
-      -- <CR>, `'` does not insert the pair after a letter.
-      -- Only parts of tables can be tweaked (others will use these defaults).
-      --
-      -- INFO: WTF IS THIS INSANE SYNTAX?
-      -- ^[^x]    = if prev char is NOT x  -- These two are reversed
-      -- ^[x]     = if prev char is x       -- because of neigh_pattern
-      -- ^[x][^y] = merge the two
-      -- %s       = any whitespace
-      -- %a       = any alphabetic
-      -- %w       = any word char (%a + numbers)
-      -- %g       = any non-whitespace
-      mappings = {
-        ['('] = { action = 'open', pair = '()', neigh_pattern = '^[^\\]' },
-        ['['] = { action = 'open', pair = '[]', neigh_pattern = '^[^\\e]' }, -- e for printf
-        ['{'] = { action = 'open', pair = '{}', neigh_pattern = '^[^\\]' },
-
-        [')'] = { action = 'close', pair = '()', neigh_pattern = '^[^\\]' },
-        [']'] = { action = 'close', pair = '[]', neigh_pattern = '^[^\\]' },
-        ['}'] = { action = 'close', pair = '{}', neigh_pattern = '^[^\\]' },
-
-        ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '^[= ]', register = { cr = false } }, -- "^[^\\]" -- only after:
-        ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '^[= ]', register = { cr = false } }, -- '^[^%a\\]' -- '=' or ' '
-        ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '^[^\\]', register = { cr = false } },
-      },
-    }
+    -- require('mini.pairs').setup { -- NOTE:PAIRS -- REPLACED WITH nvim-autopairs (because they have way better docs) -- Or if they use same syntax, maybe revert
+    --
+    --   -- No need to copy this inside `setup()`. Will be used automatically.
+    --
+    --   -- In which modes mappings from this `config` should be created
+    --   modes = { insert = true, command = false, terminal = false },
+    --   -- Global mappings. Each right hand side should be a pair information, a
+    --   -- table with at least these fields (see more in |MiniPairs.map|):
+    --   -- - <action> - one of 'open', 'close', 'closeopen'.
+    --   -- - <pair> - two character string for pair to be used.
+    --   -- By default pair is not inserted after `\`, quotes are not recognized by
+    --   -- <CR>, `'` does not insert the pair after a letter.
+    --   -- Only parts of tables can be tweaked (others will use these defaults).
+    --   --
+    --   -- INFO: WTF IS THIS INSANE SYNTAX?
+    --   -- ^[^x]    = if prev char is NOT x  -- These two are reversed
+    --   -- ^[x]     = if prev char is x       -- because of neigh_pattern
+    --   -- ^[x][^y] = merge the two
+    --   -- %s       = any whitespace
+    --   -- %a       = any alphabetic
+    --   -- %w       = any word char (%a + numbers)
+    --   -- %g       = any non-whitespace
+    --   mappings = {
+    --     ['('] = { action = 'open', pair = '()', neigh_pattern = '^[^\\]' },
+    --     ['['] = { action = 'open', pair = '[]', neigh_pattern = '^[^\\e]' }, -- e for printf
+    --     ['{'] = { action = 'open', pair = '{}', neigh_pattern = '^[^\\]' },
+    --
+    --     [')'] = { action = 'close', pair = '()', neigh_pattern = '^[^\\]' },
+    --     [']'] = { action = 'close', pair = '[]', neigh_pattern = '^[^\\]' },
+    --     ['}'] = { action = 'close', pair = '{}', neigh_pattern = '^[^\\]' },
+    --
+    --     ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '^[= ]', register = { cr = false } }, -- "^[^\\]" -- only after:
+    --     ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '^[= ]', register = { cr = false } }, -- '^[^%a\\]' -- '=' or ' '
+    --     ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '^[^\\]', register = { cr = false } },
+    --   },
+    -- }
 
     require('mini.move').setup { -- NOTE: MOVE
 

@@ -157,4 +157,14 @@ return {
       vim.g.dials_by_ft = opts.dials_by_ft
     end,
   },
+
+  -- autopairs
+  -- https://github.com/windwp/nvim-autopairs
+  ---@module 'lazy'
+  ---@type LazySpec
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    opts = {},
+  },
 }

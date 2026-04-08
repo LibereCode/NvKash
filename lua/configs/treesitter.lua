@@ -20,7 +20,14 @@ return { -- Highlight, edit, and navigate code
         if not language then return end
 
         -- check if parser exists and load it
-        if not vim.treesitter.language.add(language) then return end
+        if not vim.treesitter.language.add(language) then
+          vim.keymap.set('n', '<leader>ct', vim.show_pos, { desc = 'TS: position' }) -- Treesitter inspect
+          vim.keymap.set('n', 'cT', function()
+            vim.treesitter.inspect_tree()
+            vim.api.nvim_input 'I' -- INFO: THIS IS HOW YOU INSERT TEXT !!
+          end, { desc = 'TS: [T]ree' })
+          return
+        end
         -- enables syntax highlighting and other treesitter features
         vim.treesitter.start(buf, language)
 

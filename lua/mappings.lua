@@ -116,6 +116,12 @@ map('n', '<C-A-s>', '<cmd>w<CR><cmd>so<CR><cmd>echo("written & sauced")<CR>', { 
 map('n', '<C-s>', '<cmd>w<CR>', { desc = 'save' })
 map('n', '<C-q>', '<cmd>q<CR>', { desc = 'quit' })
 
+-- UI toggles (builtin)
+leadmap('uw', '<CMD>set wrap!<CR>', 'toggles [w]rap')
+leadmap('ul', '<CMD>set nu!<CR>', 'toggle [l]ine-nr')
+leadmap('ur', '<CMD>set rnu!<CR>', 'toggle [r]elative-line-nr')
+leadmap('uc', '<CMD>set cul!<CR>', 'toggle [c]cursor-line')
+
 -- TODO: trouble on [s]ymbols
 
 -- TEST: Test
