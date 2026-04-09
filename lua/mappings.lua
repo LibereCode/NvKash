@@ -6,11 +6,10 @@
 
 local map = vim.keymap.set
 local nomap = vim.keymap.del -- disable (default) mappings
-local function leadmap(keys, cmd, description, modes)
+local function leadmap(keys, cmd, opts, modes) -- better leadmap (allows { opts })
   modes = modes or 'n'
-  cmd = cmd or '<CMD>lua print("forgor to write cmd...")'
-  description = description or 'forgor to add💀'
-  map(modes, '<leader>' .. keys, cmd, { desc = description })
+  opts = opts or {}
+  map(modes, '<leader>' .. keys, cmd, opts)
 end
 
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -33,7 +32,7 @@ vim.diagnostic.config {
   jump = { float = true },
 }
 
-leadmap('cq', vim.diagnostic.setloclist, '[q]Quickfix')
+leadmap('cq', vim.diagnostic.setloclist, { desc = '[q]Quickfix' })
 map('n', ';', ':', { desc = 'cmd :' })
 
 -- TERMINAL
@@ -41,12 +40,12 @@ map('n', ';', ':', { desc = 'cmd :' })
 leadmap('tv', function()
   vim.cmd.vnew()
   vim.cmd.terminal()
-end, 'vterm')
+end, { desc = 'vterm' })
 leadmap('th', function()
   vim.cmd.new()
   vim.cmd.terminal()
-end, 'term')
-leadmap('tT', function() vim.cmd.terminal() end, 'Terminal buffer')
+end, { desc = 'term' })
+leadmap('tT', function() vim.cmd.terminal() end, { desc = 'Terminal buffer' })
 --
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -82,24 +81,29 @@ map('n', '<C-A-=>', '<C-w>2+', { desc = '[+] win-height' }) -- same key as +
 map('n', '<C-A-,>', '<C-w>2<', { desc = 'widgth less [<]' }) -- lower-case <
 map('n', '<C-A-.>', '<C-w>2>', { desc = 'width more [>]' }) -- lower-case >
 
-leadmap('|', '<C-w>v', 'vertical[|]split')
-leadmap('_', '<C-w>s', 'horizontal[_]split')
+leadmap('|', '<C-w>v', { desc = 'vertical[|]split' })
+leadmap('_', '<C-w>s', { desc = 'horizontal[_]split' })
 
 -- buffers -- INFO: see `plugins.ui`.bufferline&lualine for more
 -- tabs
-leadmap('<tab>l', '<cmd>tabs<CR>', 'tab list')
-leadmap('<tab><tab>', '<cmd>tabnew<CR>', 'new')
-leadmap('<tab>d', '<cmd>tabclose<CR>', 'delete')
-leadmap('<tab>p', '<cmd>tabprev<CR>', 'prev')
-leadmap('<tab>n', '<cmd>tabnext<CR>', 'next')
+leadmap('<tab>l', '<cmd>tabs<CR>', { desc = 'tab list' })
+leadmap('<tab><tab>', '<cmd>tabnew<CR>', { desc = 'new' })
+leadmap('<tab>d', '<cmd>tabclose<CR>', { desc = 'delete' })
+leadmap('<tab>p', '<cmd>tabprev<CR>', { desc = 'prev' })
+leadmap('<tab>n', '<cmd>tabnext<CR>', { desc = 'next' })
 
 -- quick commands
 map('n', '<C-c>', 'gcc', { desc = 'toggle comment', remap = true }) -- remap required, becuase ?
 map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
+leadmap('ic', function()
+  local insert = vim.api.nvim_input
+  insert '80i=<ESCAPE>gcc"cyy"cpO' -- if not work (no auto comment), add to:
+  -- insert '<ESCAPE>ccHEADER_HERE<ESCAPE>gcc' -- Need tweaking though...
+end, { desc = 'Header separater' })
 
-map('s', '<C-v>', '<C-o>"cp', { desc = 'Paste in S/I-mode', remap = true })
-map('s', '<C-c>', '<C-o>"cy', { desc = 'Copy in S-mode', remap = true })
-map('s', '<C-x>', '<C-o>"cd', { desc = 'Cut in S-mode', remap = true })
+map('s', '<C-v>', '<C-o>"sp', { desc = 'Paste in S/I-mode', remap = true })
+map('s', '<C-c>', '<C-o>"sy', { desc = 'Copy in S-mode', remap = true })
+map('s', '<C-x>', '<C-o>"sd', { desc = 'Cut in S-mode', remap = true })
 
 -- better jk
 map({ 'n', 'v' }, 'j', 'gj', { desc = 'better ↓j' })
@@ -109,25 +113,25 @@ map({ 'n', 'v' }, 'k', 'gk', { desc = 'better ↑k' })
 map('n', 'gl', 'g]1<CR><escape>', { desc = '[l]ocal link' }) -- NOTE: This disables the default
 
 -- sessions[<leader>q]
-leadmap('qw', '<CMD>wa<CR>', '[w]rite all')
-leadmap('qs', '<CMD>w <BAR> so | echo "written & sauced"<CR>', 'save & sauce') -- figure out why I can't sauce this file
-leadmap('qq', '<CMD>qa<CR>', '[q]uit all')
+leadmap('qw', '<CMD>wa<CR>', { desc = '[w]rite all' })
+leadmap('qs', '<CMD>w <BAR> so | echo "written & sauced"<CR>', { desc = 'save & sauce' }) -- figure out why I can't sauce this file
+leadmap('qq', '<CMD>qa<CR>', { desc = '[q]uit all' })
 map('n', '<C-A-s>', '<cmd>w<CR><cmd>so<CR><cmd>echo("written & sauced")<CR>', { desc = 'Save&sauce' }) -- NOTE: 'macros' (multiple cmd chained) are possible like this
 map('n', '<C-s>', '<cmd>w<CR>', { desc = 'save' })
 map('n', '<C-q>', '<cmd>q<CR>', { desc = 'quit' })
 
 -- UI toggles (builtin)
-leadmap('uw', '<CMD>set wrap!<CR>', 'toggles [w]rap')
-leadmap('ul', '<CMD>set nu!<CR>', 'toggle [l]ine-nr')
-leadmap('ur', '<CMD>set rnu!<CR>', 'toggle [r]elative-line-nr')
-leadmap('uc', '<CMD>set cul!<CR>', 'toggle [c]cursor-line')
+leadmap('uw', '<CMD>set wrap!<CR>', { desc = 'toggles [w]rap' })
+leadmap('ul', '<CMD>set nu!<CR>', { desc = 'toggle [l]ine-nr' })
+leadmap('ur', '<CMD>set rnu!<CR>', { desc = 'toggle [r]elative-line-nr' })
+leadmap('uc', '<CMD>set cul!<CR>', { desc = 'toggle [c]cursor-line' })
 
 -- TODO: trouble on [s]ymbols
 
 -- TEST: Test
 --
 leadmap('it', ':echo "test?"') -- allows to write a cmd starting with 'echo("test?")' (so you can finish it)
-leadmap('ib', '<cmd>echo "hello world 1"<Bar>echo "hello world 2"<CR>', '<bar> allows multiple commands')
+leadmap('ib', '<cmd>echo "hello world 1"<Bar>echo "hello world 2"<CR>', { desc = '<bar> allows multiple commands' })
 -- <localleader>
 map('n', '<localleader>,', '<cmd>echo "localleader"<Bar>echo "btw"<CR>', { desc = 'localleader mapping' })
 

@@ -69,6 +69,9 @@ return { -- NOTE: Autocompletion
       ['<S-TAB>'] = { 'snippet_backward', 'select_prev', 'show', 'fallback' }, -- fallback will prolly never happen
       ['<C-y>'] = { 'select_and_accept', 'show' },
       ['<CR>'] = { 'accept', 'fallback' },
+      -- ['<C-space>'] = { function(cmp) cmp.show { providers = { 'snippets' } } end }, -- show only specific cmp
+      ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+      ['<C-c>'] = { 'cancel', 'fallback' }, -- C-e also cancels (somehow?)
 
       -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps

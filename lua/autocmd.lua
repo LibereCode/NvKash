@@ -73,5 +73,6 @@ vim.api.nvim_create_autocmd('FileType', {
 local cr_cmd = vim.api.nvim_create_user_command -- ('name', 'command', {})
 local cmd = vim.cmd -- (':cmd')
 
-cr_cmd('W', 'SudaWrite', {})
+-- cr_cmd('W', 'SudaWrite', {})
+cr_cmd('W', 'echo "Just type :SudaWrite"', {})
 -- cmd 'cd %:h' -- fucks up if not entering file

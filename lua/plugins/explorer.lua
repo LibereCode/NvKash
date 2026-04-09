@@ -6,15 +6,14 @@ return { -- file-managers/explorers
     event = 'VeryLazy',
     dependencies = {
       { 'nvim-lua/plenary.nvim', lazy = true },
-      { -- Image preview (chafa is yazi fallback)
-        'princejoogie/chafa.nvim', -- funkar... typ... (pretty badly)
-        -- lazy = true, -- needed?
-        dependencies = {
-          'nvim-lua/plenary.nvim',
-          'm00qek/baleia.nvim',
-        },
-        opts = {},
-      },
+      -- {
+      --   'princejoogie/chafa.nvim', -- Image preview fallback -- funkar... typ... (pretty badly)
+      --   dependencies = {
+      --     'nvim-lua/plenary.nvim',
+      --     'm00qek/baleia.nvim',
+      --   },
+      --   opts = {},
+      -- },
     },
     keys = { -- 👇 in this section, choose your own keymappings!
       { -- Open in the current working directory
@@ -109,7 +108,8 @@ return { -- file-managers/explorers
   { -- nnn -- https://github.com/luukvbaal/nnn.nvim?tab=readme-ov-file
     'luukvbaal/nnn.nvim',
     opts = function(_, opts) -- conf options: https://github.com/luukvbaal/nnn.nvim?tab=readme-ov-file
-      vim.keymap.set('n', '<leader>n', '<CMD>NnnPicker<CR>')
+      vim.keymap.set('n', '<leader>p', '<CMD>NnnPicker<CR>')
+      vim.keymap.set('n', '<leader>n', '<CMD>NnnExplorer<CR>')
 
       local nbn = require('nnn').builtin
       return {
