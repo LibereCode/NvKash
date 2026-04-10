@@ -46,24 +46,8 @@ return { -- NOTE: Autocompletion
       -- For an understanding of why the 'default' preset is recommended,
       -- you will need to read `:help ins-completion`
       -- No, but seriously. Please read `:help ins-completion`, it is really good!
+      -- NOTE: See :h blink-cmp-config-keymap for defining your own keymap
       --
-      -- All presets have the following mappings:
-      -- <tab>/<s-tab>: move to right/left of your snippet expansion
-      -- <c-space>: Open menu or open docs if already open
-      -- <c-n>/<c-p> or <up>/<down>: Select next/previous item
-      -- <c-e>: Hide menu
-      -- <c-k>: Toggle signature help
-      --
-      -- and presets also have:
-      -- {default}
-      -- <C-y>: select_and_accept
-      -- {super-tab}
-      -- <TAB>: function accept else select_and_accept ?
-      -- {enter}(CR=enter)
-      -- <CR>: accept
-      --
-      -- See :h blink-cmp-config-keymap for defining your own keymap
-      -- NOTE: see: presets under `:h blink-cmp-config-keymap`
       preset = 'default', -- "default" | 'super-tab' | 'enter' | 'none'
       ['<TAB>'] = { 'snippet_forward', 'select_next', 'fallback' },
       ['<S-TAB>'] = { 'snippet_backward', 'select_prev', 'show', 'fallback' }, -- fallback will prolly never happen
@@ -71,7 +55,7 @@ return { -- NOTE: Autocompletion
       ['<CR>'] = { 'accept', 'fallback' },
       -- ['<C-space>'] = { function(cmp) cmp.show { providers = { 'snippets' } } end }, -- show only specific cmp
       ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-      ['<C-c>'] = { 'cancel', 'fallback' }, -- C-e also cancels (somehow?)
+      ['<C-c>'] = { 'cancel', 'fallback' }, -- Similar to <C-e> ?
 
       -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -107,7 +91,7 @@ return { -- NOTE: Autocompletion
 
     sources = {
       default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' }, -- "buffer" show autocomplete of buffer text
-      -- HACK: If I figure out how to give low prio, then maybe add 'buffer'
+      -- TODO: Find out how to Lower prio of 'buffer'
       providers = {
         mkdnflow = {
           name = 'Mkdnflow',
@@ -141,7 +125,6 @@ return { -- NOTE: Autocompletion
     snippets = { preset = 'luasnip' },
 
     -- See :h blink-cmp-config-fuzzy for more information
-    -- fuzzy = { implementation = 'lua' },
     fuzzy = { implementation = 'prefer_rust_with_warning' },
 
     -- Shows a signature help window while you type arguments for a function

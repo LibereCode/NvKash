@@ -26,7 +26,7 @@ o.showmode = false -- Don't show the mode, since it's already in the status line
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 -- vim.schedule(function() o.clipboard = 'unnamedplus' end) -- TEST: disable this and use `"+y` to manually copy to clipboard
-o.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus'
+-- o.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus' -- together with the new V/S-mode mappings
 
 o.breakindent = true -- Enable break indent
 

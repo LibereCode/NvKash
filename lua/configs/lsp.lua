@@ -157,7 +157,7 @@ return { -- NOTE: LSP-conf
     ---@type table<string, vim.lsp.Config>
     local servers = {
       clangd = {}, -- c
-      gopls = {}, -- go
+      -- gopls = {}, -- go
       -- pyright = {}, -- python -- replaced with ruff
       rust_analyzer = {}, -- rust
       --
@@ -171,7 +171,7 @@ return { -- NOTE: LSP-conf
 
       -- NOTE: Add languages here
 
-      biome = {}, -- replace ts_ls
+      -- biome = {}, -- replace ts_ls
       ruff = {}, -- replace pyright
 
       -- Special Lua Config, as recommended by neovim help docs
@@ -222,22 +222,17 @@ return { -- NOTE: LSP-conf
       -- You can add other tools here that you want Mason to install
       -- NOTE: This table is merged with `servers = { see above }`
       -- INSTALL LSP ABOVE (and Linters, and Formatters here)
+      -- put DAP with plugins.code `nvim-dap` !!
       --
-      -- NOTE: put DAP with plugins.code `nvim-dap` !!
-      --
+      -- NOTE: Add only LSP that I use actaully use (and not 'potentially will use someday, maybe')
       'beautysh',
       -- 'black',
-      -- 'codebook',
-      -- 'css-lsp',
-      -- 'eslint-lsp',
-      -- 'hadolint',
       -- 'html-lsp'
-      -- 'kdlfmt',
+      'jsonlint',
       -- 'markdown-toc',
       'markdownlint-cli2',
       -- 'markmap-cli',
       -- 'marksman',
-      -- 'nilaway',
       -- 'nixfmt',
       -- 'nixpkgs-fmt',
       -- 'prettier',

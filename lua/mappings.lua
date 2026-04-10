@@ -1,7 +1,8 @@
--- INFO: this file is clean, and
+-- NOTE: this file is clean, and
 -- and can be exported to whatever config
+-- Will use `INFO` as marking headers
 --
--- [[ Basic Keymaps ]]
+-- INFO: [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
 local map = vim.keymap.set
@@ -16,7 +17,7 @@ end
 --  See `:help hlsearch`
 map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- Diagnostic Config & Keymaps
+-- INFO: Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
 vim.diagnostic.config {
   update_in_insert = false,
@@ -35,7 +36,7 @@ vim.diagnostic.config {
 leadmap('cq', vim.diagnostic.setloclist, { desc = '[q]Quickfix' })
 map('n', ';', ':', { desc = 'cmd :' })
 
--- TERMINAL
+-- INFO: TERMINAL
 --
 leadmap('tv', function()
   vim.cmd.vnew()
@@ -61,7 +62,7 @@ map('t', '<C-Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 -- map('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 -- map('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
--- Windows/buffers/tabs
+-- INFO: Windows/buffers/tabs
 --
 -- windows
 -- Keybinds to make split navigation easier. Use CTRL+<hjkl> to switch between windows
@@ -70,7 +71,7 @@ map('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 map('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 map('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 map('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
--- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
+-- NOTE Some terminals have colliding keymaps or are not able to send distinct keycodes
 map('n', '<C-A-h>', '<C-w>H', { desc = 'Move window to the left' })
 map('n', '<C-A-l>', '<C-w>L', { desc = 'Move window to the right' })
 map('n', '<C-A-j>', '<C-w>J', { desc = 'Move window to the lower' })
@@ -84,7 +85,8 @@ map('n', '<C-A-.>', '<C-w>2>', { desc = 'width more [>]' }) -- lower-case >
 leadmap('|', '<C-w>v', { desc = 'vertical[|]split' })
 leadmap('_', '<C-w>s', { desc = 'horizontal[_]split' })
 
--- buffers -- INFO: see `plugins.ui`.bufferline&lualine for more
+-- buffers -- see `plugins.ui` bufferline & lualine for more
+
 -- tabs
 leadmap('<tab>l', '<cmd>tabs<CR>', { desc = 'tab list' })
 leadmap('<tab><tab>', '<cmd>tabnew<CR>', { desc = 'new' })
@@ -92,27 +94,41 @@ leadmap('<tab>d', '<cmd>tabclose<CR>', { desc = 'delete' })
 leadmap('<tab>p', '<cmd>tabprev<CR>', { desc = 'prev' })
 leadmap('<tab>n', '<cmd>tabnext<CR>', { desc = 'next' })
 
--- quick commands
+-- INFO: quick commands / QOL
+--
 map('n', '<C-c>', 'gcc', { desc = 'toggle comment', remap = true }) -- remap required, becuase ?
 map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
 leadmap('ic', function()
   local insert = vim.api.nvim_input
-  insert '80i=<ESCAPE>gcc"cyy"cpO' -- if not work (no auto comment), add to:
-  -- insert '<ESCAPE>ccHEADER_HERE<ESCAPE>gcc' -- Need tweaking though...
+  insert '80i=<ESC>gcc"cyy"cpO' -- if not work (no auto comment), add to:
+  -- insert '<ESC>ccHEADER_HERE<ESC>gcc' -- Need tweaking though...
 end, { desc = 'Header separater' })
 
-map('s', '<C-v>', '<C-o>"sp', { desc = 'Paste in S/I-mode', remap = true })
-map('s', '<C-c>', '<C-o>"sy', { desc = 'Copy in S-mode', remap = true })
-map('s', '<C-x>', '<C-o>"sd', { desc = 'Cut in S-mode', remap = true })
+-- Selection-mode
+map({ 's', 'i' }, '<C-v>', '<C-o>"+p', { desc = 'Paste in S/I-mode', remap = true }) -- '<C-o>"sp'
+map('s', '<C-c>', '<C-o>"+y', { desc = 'Copy in S-mode', remap = true }) -- '<C-o>"sy'
+map('s', '<C-x>', '<C-o>"+d', { desc = 'Cut in S-mode', remap = true }) -- '<C-o>"sd'
+-- NGL, pretty peak (even if it is mouse-based)
+-- TODO: Make this instead copy/cut/paste using sys-Clip (<C-o>"+y) and disable `o.clipboard = 'unnamedplus'`
+
+-- Visual-mode
+leadmap('y', '"+y', { desc = '[y]ank 2 Sys' }, 'v')
+leadmap('p', '"+p', { desc = '[p]aste from Sys' }, 'v')
+map('v', '<C-y>', '"+y', { desc = '[y]ank 2 Sys' }) -- Really usefull, so I made it appear  multiple ...
+map('v', '<C-p>', '"+p', { desc = '[p]aste from Sys' }) -- ... places (either <leader>y/p or <C-y/p>)
+
+-- Insert-mode
+-- map('i', '<C-v>', '<C-o>p') -- Merged with Selection-mode -- NOTE: Use  (^Q = <C-q>) Instead of (<C-v>) to do the thing
 
 -- better jk
 map({ 'n', 'v' }, 'j', 'gj', { desc = 'better ↓j' })
 map({ 'n', 'v' }, 'k', 'gk', { desc = 'better ↑k' })
 
--- jump to local link  -- XXX: really weird why `g]` wasen't enough, especially the last esc?
+-- jump to local link  -- really weird why `g]` wasen't enough, especially the last esc?
 map('n', 'gl', 'g]1<CR><escape>', { desc = '[l]ocal link' }) -- NOTE: This disables the default
 
--- sessions[<leader>q]
+-- INFO: sessions[<leader>q]
+--
 leadmap('qw', '<CMD>wa<CR>', { desc = '[w]rite all' })
 leadmap('qs', '<CMD>w <BAR> so | echo "written & sauced"<CR>', { desc = 'save & sauce' }) -- figure out why I can't sauce this file
 leadmap('qq', '<CMD>qa<CR>', { desc = '[q]uit all' })
@@ -120,13 +136,12 @@ map('n', '<C-A-s>', '<cmd>w<CR><cmd>so<CR><cmd>echo("written & sauced")<CR>', { 
 map('n', '<C-s>', '<cmd>w<CR>', { desc = 'save' })
 map('n', '<C-q>', '<cmd>q<CR>', { desc = 'quit' })
 
--- UI toggles (builtin)
+-- INFO: UI toggles (builtin)
+--
 leadmap('uw', '<CMD>set wrap!<CR>', { desc = 'toggles [w]rap' })
 leadmap('ul', '<CMD>set nu!<CR>', { desc = 'toggle [l]ine-nr' })
 leadmap('ur', '<CMD>set rnu!<CR>', { desc = 'toggle [r]elative-line-nr' })
 leadmap('uc', '<CMD>set cul!<CR>', { desc = 'toggle [c]cursor-line' })
-
--- TODO: trouble on [s]ymbols
 
 -- TEST: Test
 --
@@ -135,6 +150,6 @@ leadmap('ib', '<cmd>echo "hello world 1"<Bar>echo "hello world 2"<CR>', { desc =
 -- <localleader>
 map('n', '<localleader>,', '<cmd>echo "localleader"<Bar>echo "btw"<CR>', { desc = 'localleader mapping' })
 
--- INFO: see ~/.config/nvim/after/ftplugin/ for spicy stuff !!
+-- NOTE: see ~/.config/nvim/after/ftplugin/ for spicy stuff !!
 --
--- INFO: see also `configs.lazy` 'custom_keys' (allows lazy keys, but global) https://lazy.folke.io/configuration
+-- NOTE: see also `configs.lazy` 'custom_keys' (allows lazy keys, but global) https://lazy.folke.io/configuration

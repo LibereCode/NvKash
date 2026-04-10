@@ -33,12 +33,14 @@ return { -- NOTE: Autoformat
       -- Conform can also run multiple formatters sequentially
       -- python = { 'isort', 'black' },
       --
-      -- You can use 'stop_after_first' to run the first available formatter from the list
-      javascript = { 'prettierd', 'prettier', stop_after_first = true },
+      -- NOTE: You can use 'stop_after_first' to run the first available formatter from the list
+      --
+      -- javascript = { 'prettierd', 'prettier', stop_after_first = true },
 
       -- HACK: Add more here
 
       -- inspired by lazyvim https://www.lazyvim.org/plugins/formatting#conformnvim
+      -- TODO: Figure out if key = can be a table ( {sh, bash, zsh } = { 'beautysh' })
       fish = { 'fish_indent' },
       sh = { 'beautysh' },
       bash = { 'beautysh' },
