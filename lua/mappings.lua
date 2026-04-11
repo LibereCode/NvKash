@@ -147,6 +147,9 @@ leadmap('uc', '<CMD>set cul!<CR>', { desc = 'toggle [c]cursor-line' })
 --
 leadmap('it', ':echo "test?"') -- allows to write a cmd starting with 'echo("test?")' (so you can finish it)
 leadmap('ib', '<cmd>echo "hello world 1"<Bar>echo "hello world 2"<CR>', { desc = '<bar> allows multiple commands' })
+
+leadmap('is', '<cmd>smile<CR>')
+
 -- <localleader>
 map('n', '<localleader>,', '<cmd>echo "localleader"<Bar>echo "btw"<CR>', { desc = 'localleader mapping' })
 

@@ -124,3 +124,6 @@ o.termguicolors = true -- Enable true colors for proper colorscheme support
 cset 't_Co=256'
 cset 'termguicolors'
 cset 'background=dark'
+
+o.colorcolumn = '80'
+o.textwidth = 80

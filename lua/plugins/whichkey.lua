@@ -7,7 +7,7 @@ return { -- Useful plugin to show you pending keybinds.
   opts = function(_, opts)
     vim.keymap.set('n', 'W', '<CMD>WhichKey<CR>', { desc = 'WhichKey[W]all' })
     return {
-      preset = 'modern', -- false|"classic"|"modern"|"helix"
+      preset = 'helix', -- false|"classic"|"modern"|"helix"
       -- delay between pressing a key and opening which-key (milliseconds)
       delay = 21,
       icons = { mappings = vim.g.have_nerd_font },

@@ -86,12 +86,12 @@ return { -- NOTE: Autocompletion
       triggers = { -- `:h blink-cmp-config-reference`
         show_on_backspace = true,
         show_on_insert = true,
-      },
+      }, -- TODO: Fix the reappearing error 'expected field in triggers'
     },
 
     sources = {
       default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' }, -- "buffer" show autocomplete of buffer text
-      -- TODO: Find out how to Lower prio of 'buffer'
+      -- TODO Find out how to Lower prio of 'buffer'
       providers = {
         mkdnflow = {
           name = 'Mkdnflow',
