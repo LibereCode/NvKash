@@ -30,7 +30,7 @@ vim.diagnostic.config {
   virtual_lines = false, -- Text shows up underneath the line, with virtual lines
 
   -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
-  jump = { float = true },
+  jump = { float = true }, -- WARN: causes 'deprecated' warning
 }
 
 leadmap('cq', vim.diagnostic.setloclist, { desc = '[q]Quickfix' })
@@ -38,14 +38,8 @@ map('n', ';', ':', { desc = 'cmd :' })
 
 -- INFO: TERMINAL
 --
-leadmap('tv', function()
-  vim.cmd.vnew()
-  vim.cmd.terminal()
-end, { desc = 'vterm' })
-leadmap('th', function()
-  vim.cmd.new()
-  vim.cmd.terminal()
-end, { desc = 'term' })
+leadmap('tv', ':vert te<CR>', { desc = 'vterm' })
+leadmap('th', ':hor te<CR>', { desc = 'term' })
 leadmap('tT', function() vim.cmd.terminal() end, { desc = 'Terminal buffer' })
 --
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -98,24 +92,23 @@ leadmap('<tab>n', '<cmd>tabnext<CR>', { desc = 'next' })
 --
 map('n', '<C-c>', 'gcc', { desc = 'toggle comment', remap = true }) -- remap required, becuase ?
 map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
-leadmap('ic', function()
+leadmap('ic', function() -- Odly (cursed) good
   local insert = vim.api.nvim_input
   insert '80i=<ESC>gcc"cyy"cpO' -- if not work (no auto comment), add to:
   -- insert '<ESC>ccHEADER_HERE<ESC>gcc' -- Need tweaking though...
 end, { desc = 'Header separater' })
 
 -- Selection-mode
-map({ 's', 'i' }, '<C-v>', '<C-o>"+p', { desc = 'Paste in S/I-mode', remap = true }) -- '<C-o>"sp'
-map('s', '<C-c>', '<C-o>"+y', { desc = 'Copy in S-mode', remap = true }) -- '<C-o>"sy'
-map('s', '<C-x>', '<C-o>"+d', { desc = 'Cut in S-mode', remap = true }) -- '<C-o>"sd'
+map({ 's', 'i' }, '<C-v>', '<C-o>p', { desc = 'Paste in S/I-mode', remap = true }) -- '<C-o>"sp'
+map('s', '<C-c>', '<C-o>y', { desc = 'Copy in S-mode', remap = true }) -- '<C-o>"sy'
+map('s', '<C-x>', '<C-o>d', { desc = 'Cut in S-mode', remap = true }) -- '<C-o>"sd'
 -- NGL, pretty peak (even if it is mouse-based)
--- TODO: Make this instead copy/cut/paste using sys-Clip (<C-o>"+y) and disable `o.clipboard = 'unnamedplus'`
 
--- Visual-mode
-leadmap('y', '"+y', { desc = '[y]ank 2 Sys' }, 'v')
-leadmap('p', '"+p', { desc = '[p]aste from Sys' }, 'v')
-map('v', '<C-y>', '"+y', { desc = '[y]ank 2 Sys' }) -- Really usefull, so I made it appear  multiple ...
-map('v', '<C-p>', '"+p', { desc = '[p]aste from Sys' }) -- ... places (either <leader>y/p or <C-y/p>)
+-- Visual-mode -- these copies to 'Y'-registry (so seperate from Sys-Clipboard)
+leadmap('y', '"yy', { desc = '[y]ank 2 Sys' }, 'v')
+leadmap('p', '"yp', { desc = '[p]aste from Sys' }, 'v')
+map('v', '<C-y>', '"yy', { desc = '[y]ank 2 Sys' }) -- Really usefull, so I made it appear  multiple ...
+map('v', '<C-p>', '"yp', { desc = '[p]aste from Sys' }) -- ... places (either <leader>y/p or <C-y/p>)
 
 -- Insert-mode
 -- map('i', '<C-v>', '<C-o>p') -- Merged with Selection-mode -- NOTE: Use  (^Q = <C-q>) Instead of (<C-v>) to do the thing
@@ -141,7 +134,7 @@ map('n', '<C-q>', '<cmd>q<CR>', { desc = 'quit' })
 leadmap('uw', '<CMD>set wrap!<CR>', { desc = 'toggles [w]rap' })
 leadmap('ul', '<CMD>set nu!<CR>', { desc = 'toggle [l]ine-nr' })
 leadmap('ur', '<CMD>set rnu!<CR>', { desc = 'toggle [r]elative-line-nr' })
-leadmap('uc', '<CMD>set cul!<CR>', { desc = 'toggle [c]cursor-line' })
+leadmap('uc', '<CMD>set cul!<CR>', { desc = 'toggle cursor-[L]ine' })
 
 -- TEST: Test
 --

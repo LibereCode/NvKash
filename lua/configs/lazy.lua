@@ -160,3 +160,4 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
 })
 
 vim.keymap.set('n', '<leader>ll', '<cmd>Lazy<CR>', { desc = 'Lazy󰒲 ' })
+vim.keymap.set('n', '<leader>lr', ':Lazy reload', { desc = 'LazyReload' })

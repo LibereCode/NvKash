@@ -21,12 +21,12 @@ o.slm = 'mouse' -- select mode instead of visual with mouse
 
 o.showmode = false -- Don't show the mode, since it's already in the status line
 
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
--- vim.schedule(function() o.clipboard = 'unnamedplus' end) -- TEST: disable this and use `"+y` to manually copy to clipboard
--- o.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus' -- together with the new V/S-mode mappings
+-- Sync clipboard between OS and Neovim.v
+-- Schedule the setting after `UiEnter` because it can increase startup-time.
+-- Remove this option if you want your OS clipboard to remain independent.
+-- See `:help 'clipboard'`
+-- vim.schedule(function() o.clipboard = 'unnamedplus' end) -- disable this and use `"+y` to manually copy to clipboard
+o.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus' -- together with the new V/S-mode mappings --  PERF: Hated it
 
 o.breakindent = true -- Enable break indent
 
@@ -37,10 +37,12 @@ o.softtabstop = 4 -- . :h 'sts'
 o.expandtab = true
 
 -- o.shm:append({ W = true, I = true, c = true, C = true }) -- append to shortmess, which is truncation of terms
--- o.shortmess:append 'sI' -- disable nvim intro(default dashboard)
+-- o.hortmess:append 'sI' -- disable nvim intro(default dashboard)
 o.shortmess:append 'sa' -- a=lmrw (:h shortmess) -- alpha.nvim appends I (replaces :intro)
+-- o.cmdheight = 2
 o.so = 10 -- 4 -- Lines of context (scrolloff)
-o.siso = 21 -- 8 723 -- Columns of context (sidescrolloff) -- very big(723)=always centered(unless at left)
+o.siso = 723 -- 21 8 723 -- Columns of context (sidescrolloff) -- very big(723)=always centered(unless at left)
+-- NOTE: See 'ui2' below
 
 o.udf = true -- Enable undo/redo changes even after closing and reopening a file
 o.ul = 1723 -- higher level=more memory (1000 default)
@@ -92,7 +94,7 @@ o.foldlevel = 99 -- Threshold before fold
 o.foldmethod = 'indent'
 o.foldtext = ''
 
-o.ls = 2 -- laststatus -- foldlevel is better -- foldlevel is better
+o.ls = 2 -- laststatus -- foldlevel is better
 o.splitkeep = 'screen'
 
 o.cursorlineopt = 'both' -- default?
@@ -127,3 +129,28 @@ cset 'background=dark'
 
 o.colorcolumn = '80'
 o.textwidth = 80
+
+-- TEST: Experimental ui (see: `:h ui2`)
+require('vim._core.ui2').enable {
+  enable = true, -- Whether to enable or disable the UI.
+  msg = { -- Options related to the message module.
+    ---@type 'cmd'|'msg' Default message target, either in the
+    ---cmdline or in a separate ephemeral message window.
+    ---@type string|table<string, 'cmd'|'msg'|'pager'> Default message target
+    ---or table mapping |ui-messages| kinds and triggers to a target.
+    targets = 'cmd',
+    cmd = { -- Options related to messages in the cmdline window.
+      height = 0.5, -- Maximum height while expanded for messages beyond 'cmdheight'.
+    },
+    dialog = { -- Options related to dialog window.
+      height = 0.5, -- Maximum height.
+    },
+    msg = { -- Options related to msg window.
+      height = 0.5, -- Maximum height.
+      timeout = 4000, -- Time a message is visible in the message window.
+    },
+    pager = { -- Options related to message window.
+      height = 1, -- Maximum height.
+    },
+  },
+}

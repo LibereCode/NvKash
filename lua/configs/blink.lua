@@ -83,7 +83,7 @@ return { -- NOTE: Autocompletion
         enabled = true,
         show_without_selection = true,
       },
-      triggers = { -- `:h blink-cmp-config-reference`
+      trigger = { -- `:h blink-cmp-config-reference` -- Ops, I added -s by mistake
         show_on_backspace = true,
         show_on_insert = true,
       }, -- TODO: Fix the reappearing error 'expected field in triggers'
