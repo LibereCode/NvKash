@@ -34,7 +34,7 @@ Moved from plugins/ to ./, now working as a united TODO.md
 
 - [-] Move plugin specific mappings to the plugins themself
   under `config = function() ... end`
-- [X] BAD IDEA: IT DISABLED `opts = {}`. Instead do:
+- [ ] BAD IDEA: IT DISABLED `opts = {}`. Instead do:
 
 ```lua
 opts = function(_, opts)
@@ -42,4 +42,12 @@ opts = function(_, opts)
   return {
     -- opts
   }
+```
+
+- [ ] Move `which-key` plugin-group to respecive plugin by adding:
+
+```lua
+require('which-key').add({
+  { '<leader>key', group = "group_name" }
+})
 ```

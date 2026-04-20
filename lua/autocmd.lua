@@ -1,12 +1,12 @@
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
-local autocmd = vim.api.nvim_create_autocmd
+local aucmd = vim.api.nvim_create_autocmd
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.hl.on_yank()`
-autocmd('TextYankPost', {
+aucmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function() vim.hl.on_yank() end,
@@ -16,7 +16,7 @@ autocmd('TextYankPost', {
 
 -- niri-archcraft-niri-nvim-from-lazyvim
 -- Ensure terminal opens in current working directory
-autocmd('TermOpen', {
+aucmd('TermOpen', {
   callback = function()
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
@@ -31,7 +31,7 @@ autocmd('TermOpen', {
 --   callback = function(args) require('conform').format { bufnr = args.buf } end,
 -- })
 
-autocmd('BufReadPost', { -- Restore cursor position
+aucmd('BufReadPost', { -- Restore cursor position
   pattern = '*',
   callback = function()
     local line = vim.fn.line '\'"'
@@ -41,10 +41,10 @@ autocmd('BufReadPost', { -- Restore cursor position
   end,
 })
 
--- autocmd('BufDelete', { -- show NvDash when all buffers are 💀 -- TODO: change to other starter
+-- autocmd('BufDelete', { -- show :intro when all buffers are 💀
 --   callback = function()
 --     local bufs = vim.t.bufs
---     if #bufs == 1 and vim.api.nvim_buf_get_name(bufs[1]) == '' then vim.cmd 'Nvdash' end
+--     if #bufs == 1 and vim.api.nvim_buf_get_name(bufs[1]) == '' then vim.cmd 'intro' end
 --   end,
 -- })
 
@@ -71,8 +71,5 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- INFO: Commands (vim.api.nvim_create_user_command &AND& vim.cmd(''))
 local cr_cmd = vim.api.nvim_create_user_command -- ('name', 'command', {})
-local cmd = vim.cmd -- (':cmd')
 
--- cr_cmd('W', 'SudaWrite', {})
-cr_cmd('W', 'echo "Just type :SudaWrite"', {})
--- cmd 'cd %:h' -- fucks up if not entering file
+-- vim.cmd 'cd %:h' -- fucks up if not entering file

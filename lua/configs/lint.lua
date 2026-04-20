@@ -36,7 +36,7 @@ return {
     -- lbf('terraform', 'tflint')
     lbf('text', 'vale') -- TEST: change to 'spellcheck'?
     -- INFO: Add more here
-    lbf('python', 'ruff')
+    -- lbf('python', 'ruff') -- I think ty works as a linter on it's own?  NOTE:
     lbf('json', 'jsonlint') -- biome ...
     -- lbf('javascript', 'biome') -- ... don't ...
     -- lbf('typescript', 'biome') -- ... work ?

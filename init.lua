@@ -107,5 +107,7 @@ vim.cmd [[
 source ~/.config/nvim/nvim.vim
 ]] -- sources a vim-script file (so I can use vim-scipt in config)
 
+-- print(vim.fn.input 'what?') -- what?
+
 -- INFO: The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

@@ -17,7 +17,7 @@ o.relativenumber = true -- You can also add relative line numbers, to help with 
 o.numberwidth = 3
 
 o.mouse = 'nvc' -- 'nv' = normal+visual, 'a' = all -- Enable mouse mode, can be useful for resizing splits for example!
-o.slm = 'mouse' -- select mode instead of visual with mouse
+o.selectmode = 'mouse' -- :h 'slm'
 
 o.showmode = false -- Don't show the mode, since it's already in the status line
 
@@ -29,7 +29,6 @@ o.showmode = false -- Don't show the mode, since it's already in the status line
 o.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus' -- together with the new V/S-mode mappings --  PERF: Hated it
 
 o.breakindent = true -- Enable break indent
-
 o.shiftwidth = 4 --  . :h 'sw'
 o.tabstop = 4 -- . :h 'ts'
 o.softtabstop = 4 -- . :h 'sts'
@@ -38,19 +37,23 @@ o.expandtab = true
 
 -- o.shm:append({ W = true, I = true, c = true, C = true }) -- append to shortmess, which is truncation of terms
 -- o.hortmess:append 'sI' -- disable nvim intro(default dashboard)
-o.shortmess:append 'sa' -- a=lmrw (:h shortmess) -- alpha.nvim appends I (replaces :intro)
+o.shortmess:append 'as' -- a=lmrw (:h shortmess) -- alpha.nvim appends I (replaces :intro)
 -- o.cmdheight = 2
-o.so = 10 -- 4 -- Lines of context (scrolloff)
-o.siso = 723 -- 21 8 723 -- Columns of context (sidescrolloff) -- very big(723)=always centered(unless at left)
--- NOTE: See 'ui2' below
 
-o.udf = true -- Enable undo/redo changes even after closing and reopening a file
-o.ul = 1723 -- higher level=more memory (1000 default)
+o.sidescrolloff = 40 -- :h 'siso' -- 8 723 -- very big(723)=always centered(unless at left)
+o.sidescroll = 0 -- :h 'ss' -- 0 -- scroll this many lines when `:h siso` is triggered -- 0 = center instead
+o.scrolloff = 20 -- :h 'so' -- 4 15 -- Lines of context (scrolloff) -- large (723) = always centered
+o.scrolljump = 1 -- :h 'sj' -- -69 -- like sidescroll, but for vertical -- -n = n%heifht
+
+-- NOTE: See 'ui2' [bottom/below]
+
+o.undofile = true -- :h udf
+o.undolevels = 1723 -- :h ul
 
 o.ignorecase = true -- Case-insensitive searching
 o.smartcase = true --  UNLESS \C or one or more capital letters in the search term
 
-o.signcolumn = 'yes' -- Keep signcolumn on by default
+o.signcolumn = 'yes' -- :h 'scl'
 
 o.updatetime = 250 -- Decrease update time
 
@@ -68,21 +71,26 @@ o.splitbelow = true
 --   See `:help lua-options`
 --   and `:help lua-guide-options`
 o.list = true
-o.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+o.listchars = { -- :h lcs
+  tab = '» ',
+  trail = '·',
+  nbsp = '␣',
+  extends = '→', -- '→⃨',
+  precedes = '←',
+}
 
-o.inccommand = 'split' -- Preview substitutions live, as you type!
+o.inccommand = 'split' -- :h 'icm' -- Preview substitutions live, as you type!
 
-o.cursorline = true -- Show which line your cursor is on
+o.cursorline = true -- Highlight current line
+-- o.cursorlineopt = 'both' -- default
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
 o.confirm = true
 
--- HACK: Add more down below
-
 -- o.foldenable = false -- toggle off folds by default -- foldlevel is better
-o.fcs = {
+o.fillchars = { -- :h fcs
   foldopen = '',
   foldclose = '', -- "",
   fold = '·', -- " ", ' ',
@@ -94,23 +102,21 @@ o.foldlevel = 99 -- Threshold before fold
 o.foldmethod = 'indent'
 o.foldtext = ''
 
-o.ls = 2 -- laststatus -- foldlevel is better
+o.laststatus = 2 -- :h 'ls' -- foldlevel is better
 o.splitkeep = 'screen'
-
-o.cursorlineopt = 'both' -- default?
 
 -- go to previous/next line with h,l,left arrow and right arrow when cursor reaches end/beginning of line
 o.ww:append '<>[]hl' -- OP !! -- wrapoff, see below -- '<>'=left/right in N+V and '[]' in I+R mode; 'hl'=h/l in N+V
 o.wrap = false -- toggles off wrap by default
 
-o.ve = 'block' -- allows selecting on empty space in visual-block mode
+o.virtualedit = 'block' -- :h 've' -- allows selecting on empty space in visual-block mode
 
-o.wim = 'longest:full,list' -- Command-line completion mode -- see also: `:h wildchar` `:h wildmenu`
-o.wop = 'fuzzy,pum,tagfile' -- `:h wildoptions`
+o.wildmode = 'longest:full,list' -- :h 'wim' -- Command-line completion mode -- see also: `:h wildchar` `:h wildmenu`
+o.wildoptions = 'fuzzy,pum,tagfile' -- :h 'wop'
 
--- -- disable some default providers
+-- disable some default providers -- Not neaded if I have lsp?
 -- g.loaded_node_provider = 0
--- g.loaded_python3_provider = 0
+g.loaded_python3_provider = 0
 -- g.loaded_perl_provider = 0
 -- g.loaded_ruby_provider = 0
 g.markdown_recommended_style = 0 -- Fix markdown indentation settings
@@ -130,7 +136,7 @@ cset 'background=dark'
 o.colorcolumn = '80'
 o.textwidth = 80
 
--- TEST: Experimental ui (see: `:h ui2`)
+-- NOTE: Experimental ui (see: `:h ui2`)
 require('vim._core.ui2').enable {
   enable = true, -- Whether to enable or disable the UI.
   msg = { -- Options related to the message module.

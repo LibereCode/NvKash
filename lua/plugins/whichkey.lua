@@ -5,7 +5,8 @@ return { -- Useful plugin to show you pending keybinds.
   -- ---@type wk.Opts
   ---@diagnostic disable-next-line: missing-fields
   opts = function(_, opts)
-    vim.keymap.set('n', 'W', '<CMD>WhichKey<CR>', { desc = 'WhichKey[W]all' })
+    -- vim.keymap.set('n', 'W', '<CMD>WhichKey<CR>', { desc = 'WhichKey[W]all' }) -- no leader?
+    vim.keymap.set('n', '<leader>?', '<CMD>WhichKey<CR>', { desc = 'WhichKey[?]' })
     return {
       preset = 'helix', -- false|"classic"|"modern"|"helix"
       -- delay between pressing a key and opening which-key (milliseconds)
@@ -43,7 +44,7 @@ return { -- Useful plugin to show you pending keybinds.
         -- goto
         { 'gs', group = 'surround', mode = { 'n', 'v' } },
 
-        {
+        { -- create <leader>b{n} where {n} is other buffers
           '<leader>b',
           group = '[b]buffer',
           expand = function() return require('which-key.extras').expand.buf() end,
@@ -54,8 +55,11 @@ return { -- Useful plugin to show you pending keybinds.
           proxy = '<c-w>',
           expand = function() return require('which-key.extras').expand.win() end,
         },
+        -- TODO: Move (most) groups to their respective plugin with
+        --    `require('which-key').add({
+        --      { '<leader>key', group = "foobar" },
+        --    })`
       },
     }
   end,
-  -- config = function() vim.keymap.set('n', 'W', '<CMD>WhichKey<CR>', { desc = 'WhichKey[W]all' }) end,
 }

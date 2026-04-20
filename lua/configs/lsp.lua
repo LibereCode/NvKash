@@ -35,7 +35,84 @@ return { -- NOTE: LSP-conf
     },
     { 'folke/neodev.nvim', enabled = false }, -- make sure to uninstall or disable neodev.nvim
   },
-  config = function()
+  opts = {
+    servers = {
+      -- Enable the following language servers
+      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
+      --  See `:help lsp-config` for information about keys and how to configure
+      ---@type table<string, vim.lsp.Config>
+      clangd = {}, -- c
+      -- gopls = {}, -- go
+      -- pyright = {}, -- python -- replaced with ruff -- not... ruff have no vim.lsp.buf.hover() -- changed to basedpyright
+      rust_analyzer = {}, -- rust
+      --
+      -- Some languages (like typescript) have entire language plugins that can be useful:
+      --    https://github.com/pmizio/typescript-tools.nvim
+      --
+      -- But for many setups, the LSP (`ts_ls`) will work just fine
+      -- ts_ls = {}, -- typescripts etc
+
+      stylua = {}, -- Used to format Lua code
+
+      -- NOTE: Add languages here
+
+      -- biome = {}, -- replace ts_ls
+      -- ruff = {}, -- replace pyright -- Not... I will use as a formatter and linter instead
+      ty = { -- replace pyright, fr. -- `ty` is from `ruff` creator -- really good
+        configuration = {
+          rules = {
+            ['unresolved-reference'] = 'warn',
+            ['possibly-unresolved-reference'] = 'warn',
+          },
+          init_options = {
+            logFile = '~/.log/ty.log',
+            logLevel = 'debug',
+          },
+        },
+      },
+
+      -- Special Lua Config, as recommended by neovim help docs
+      lua_ls = { -- What is even this?
+        on_init = function(client)
+          if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
+          end
+
+          vim.keymap.set('n', '<leader>ld', '<CMD>LazyDev lsp<CR>')
+
+          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+            runtime = {
+              version = 'LuaJIT',
+              path = { 'lua/?.lua', 'lua/?/init.lua' },
+            },
+            workspace = {
+              checkThirdParty = false,
+              -- NOTE: this is a lot slower and will cause issues when working on your own configuration.
+              --  See https://github.com/neovim/nvim-lspconfig/issues/3189
+              library = vim.tbl_extend('force', vim.api.nvim_get_runtime_file('', true), {
+                '${3rd}/luv/library',
+                '${3rd}/busted/library',
+              }),
+            },
+          })
+        end,
+        settings = {
+          Lua = {},
+        },
+      },
+      fish_lsp = {},
+      bashls = {
+        settings = {
+          filetypes = { 'sh', 'zsh' },
+        },
+      },
+      jsonls = {},
+      yamlls = {},
+      zls = {},
+    },
+  },
+  config = function(_, opts)
     -- Brief aside: **What is LSP?**
     --
     -- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -89,8 +166,17 @@ return { -- NOTE: LSP-conf
         --  For example, in C this would take you to the header.
         lspmap('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
-        lspmap('<leader>cI', '<CMD>LspInfo<CR>', '[I]nfo')
-        lspmap('<leader>cL', '<CMD>LspLog<CR>', '[L]og')
+        -- FIXME: Why not showing?
+        -- lspmap('<leader>cI', '<CMD>LspInfo<CR>', '[I]nfo')
+        -- lspmap('<leader>cL', '<CMD>LspLog<CR>', '[L]og')
+
+        vim.api.nvim_buf_create_user_command(0, 'Lsplogged', function()
+          -- INFO: Set these before use:
+          -- vim.lsp.log.set_level 'DEBUG'
+          -- vim.lsp.log.set_format_func(vim.inspect)
+
+          vim.cmd('tabnew ' .. vim.lsp.log.get_filename())
+        end, { desc = 'Lsp log with extra-verbosity' })
 
         -- The following two autocommands are used to highlight references of the
         -- word under your cursor when your cursor rests there for a little while.
@@ -151,65 +237,6 @@ return { -- NOTE: LSP-conf
     leadmap('ci', '<CMD>ConformInfo<CR>', 'Conform [i]nfo')
     leadmap('cd', '<CMD>lua vim.diagnostic.open_float()<CR>', 'float [d]iagnostics')
 
-    -- Enable the following language servers
-    --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-    --  See `:help lsp-config` for information about keys and how to configure
-    ---@type table<string, vim.lsp.Config>
-    local servers = {
-      clangd = {}, -- c
-      -- gopls = {}, -- go
-      -- pyright = {}, -- python -- replaced with ruff
-      rust_analyzer = {}, -- rust
-      --
-      -- Some languages (like typescript) have entire language plugins that can be useful:
-      --    https://github.com/pmizio/typescript-tools.nvim
-      --
-      -- But for many setups, the LSP (`ts_ls`) will work just fine
-      -- ts_ls = {}, -- typescripts etc
-
-      stylua = {}, -- Used to format Lua code
-
-      -- NOTE: Add languages here
-
-      -- biome = {}, -- replace ts_ls
-      ruff = {}, -- replace pyright
-
-      -- Special Lua Config, as recommended by neovim help docs
-      lua_ls = { -- What is even this? TODO: (change to?) Lazydev.nvim
-        on_init = function(client)
-          if client.workspace_folders then
-            local path = client.workspace_folders[1].name
-            if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
-          end
-
-          vim.keymap.set('n', '<leader>ld', '<CMD>LazyDev lsp<CR>')
-
-          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
-            runtime = {
-              version = 'LuaJIT',
-              path = { 'lua/?.lua', 'lua/?/init.lua' },
-            },
-            workspace = {
-              checkThirdParty = false,
-              -- NOTE: this is a lot slower and will cause issues when working on your own configuration.
-              --  See https://github.com/neovim/nvim-lspconfig/issues/3189
-              library = vim.tbl_extend('force', vim.api.nvim_get_runtime_file('', true), {
-                '${3rd}/luv/library',
-                '${3rd}/busted/library',
-              }),
-            },
-          })
-        end,
-        settings = {
-          Lua = {},
-        },
-      },
-      fish_lsp = {},
-      bashls = {},
-      jsonls = {},
-      yamlls = {},
-    }
-
     -- Ensure the servers and tools above are installed
     --
     -- To check the current status of installed tools and/or manually install
@@ -217,9 +244,9 @@ return { -- NOTE: LSP-conf
     --    :Mason
     --
     -- You can press `g?` for help in this menu.
-    local ensure_installed = vim.tbl_keys(servers or {})
-    vim.list_extend(ensure_installed, { -- MASON "ensure_installed" IS HERE
-      -- You can add other tools here that you want Mason to install
+    local ensure_installed = vim.tbl_keys(opts.servers or {})
+
+    vim.list_extend(ensure_installed, { -- You can add other tools here that you want Mason to install
       -- NOTE: This table is merged with `servers = { see above }`
       -- INSTALL LSP ABOVE (and Linters, and Formatters here)
       -- put DAP with plugins.code `nvim-dap` !!
@@ -227,7 +254,7 @@ return { -- NOTE: LSP-conf
       -- NOTE: Add only LSP that I use actaully use (and not 'potentially will use someday, maybe')
       'beautysh',
       -- 'black',
-      -- 'html-lsp'
+      'html-lsp',
       'jsonlint',
       -- 'markdown-toc',
       'markdownlint-cli2',
@@ -244,7 +271,7 @@ return { -- NOTE: LSP-conf
 
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-    for name, server in pairs(servers) do
+    for name, server in pairs(opts.servers) do
       vim.lsp.config(name, server)
       vim.lsp.enable(name)
     end

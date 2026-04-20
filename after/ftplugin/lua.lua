@@ -1,6 +1,8 @@
 local map = vim.keymap.set
 
-map({ 'n', 'x' }, '<localleader>r', function() vim.cmd 'source' end, { desc = 'Run Lua' })
+map({ 'n', 'x' }, '<localleader>r', function() vim.cmd 'source' end, { desc = '[r]un Lua' })
+
+map('n', '<localleader>R', function() vim.cmd([[ terminal nvim -l ]] .. vim.fn.expand '%:p') end, { desc = '[R]un Lua (nvim -l)', silent = true })
 
 map('n', '<localleader>h', function()
   local hword = vim.fn.expand '<cword>'

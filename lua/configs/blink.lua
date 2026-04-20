@@ -49,13 +49,15 @@ return { -- NOTE: Autocompletion
       -- NOTE: See :h blink-cmp-config-keymap for defining your own keymap
       --
       preset = 'default', -- "default" | 'super-tab' | 'enter' | 'none'
-      ['<TAB>'] = { 'snippet_forward', 'select_next', 'fallback' },
-      ['<S-TAB>'] = { 'snippet_backward', 'select_prev', 'show', 'fallback' }, -- fallback will prolly never happen
-      ['<C-y>'] = { 'select_and_accept', 'show' },
-      ['<CR>'] = { 'accept', 'fallback' },
+      -- ['<TAB>'] = { 'snippet_forward','select_next', 'fallback' },
+      -- ['<S-TAB>'] = { 'snippet_backward','select_prev', 'show', 'fallback' },
+      ['<C-y>'] = { 'select_and_accept', 'show', 'fallback' },
+      -- ['<CR>'] = { 'accept', 'fallback' },
+      ['<C-CR>'] = { 'accept_and_enter', 'fallback' },
       -- ['<C-space>'] = { function(cmp) cmp.show { providers = { 'snippets' } } end }, -- show only specific cmp
-      ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-      ['<C-c>'] = { 'cancel', 'fallback' }, -- Similar to <C-e> ?
+      ['<C-c>'] = { 'cancel', 'fallback' },
+      ['<C-e>'] = { 'show', 'cancel', 'fallback' },
+      -- ['<Esc>'] = { 'cancel', 'fallback' }, -- hated it
 
       -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -72,7 +74,7 @@ return { -- NOTE: Autocompletion
       -- Optionally, set `auto_show = true` to show the documentation after a delay.
       documentation = {
         auto_show = true,
-        auto_show_delay_ms = 333,
+        auto_show_delay_ms = 345,
       },
       menu = { -- LazyVim ref
         draw = {
@@ -83,10 +85,10 @@ return { -- NOTE: Autocompletion
         enabled = true,
         show_without_selection = true,
       },
-      trigger = { -- `:h blink-cmp-config-reference` -- Ops, I added -s by mistake
-        show_on_backspace = true,
-        show_on_insert = true,
-      }, -- TODO: Fix the reappearing error 'expected field in triggers'
+      trigger = { -- `:h blink-cmp-config-reference`
+        show_on_backspace_in_keyword = true,
+        -- show_on_insert = true,
+      },
     },
 
     sources = {

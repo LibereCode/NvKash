@@ -36,7 +36,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- -- Useful for getting pretty icons, but requires a Nerd Font.
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
-  keys = {},
+  -- keys = {},
   config = function()
     -- Telescope is a fuzzy finder that comes with a lot of different things that
     -- it can fuzzy find! It's more than just a "file finder", it can search
@@ -151,26 +151,31 @@ return { -- Fuzzy Finder (files, lsp, etc)
       group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }),
       callback = function(event)
         local buf = event.buf
-        local function lspmap(key, cmd, descript) map('n', 'gr' .. key, cmd, { buffer = buf, desc = descript }) end
-        local function leadlspmap(key, cmd, descript) map('n', '<leader>sl' .. key, cmd, { buffer = buf, desc = descript }) end
+        local function lspmap(key_g, key_lead, cmd, descript)
+          map('n', 'gr' .. key_g, cmd, { buffer = buf, desc = descript })
+          map('n', '<leader>' .. key_lead, cmd, { buffer = buf, desc = descript })
+        end -- why did I not lspmap+leadlspdmap(old) them from the start?
 
-        lspmap('r', builtin.lsp_references, '[r]eferences') -- Find references for the word under your cursor.
-        leadlspmap('r', builtin.lsp_references, 'references')
+        lspmap('r', 'cr', builtin.lsp_references, '[r]eferences') -- Find references for the word under your cursor.
         -- Jump to the implementation of the word under your cursor.
-        lspmap('i', builtin.lsp_implementations, '[i]mplementation') -- Useful when your language has ways of declaring types without an actual implementation.
-        leadlspmap('i', builtin.lsp_implementations, 'implementation')
+        lspmap('i', 'ci', builtin.lsp_implementations, '[i]mplementation') -- Useful when your language has ways of declaring types without an actual implementation.
         -- Jump to the definition of the word under your cursor. This is where a variable was first declared, or where a function is defined, etc.
-        lspmap('d', builtin.lsp_definitions, '[d]efinition') -- To jump back, press <C-t>.
-        leadlspmap('d', builtin.lsp_definitions, '[d]efinition')
+        lspmap('d', 'cd', builtin.lsp_definitions, '[d]efinition') -- To jump back, press <C-t>.
         -- Fuzzy find all the symbols in your current document.
-        lspmap('s', builtin.lsp_document_symbols, 'document [s]ymbols') -- Symbols are things like variables, functions, types, etc.
-        leadlspmap('s', builtin.lsp_document_symbols, 'document [s]ymbols')
+        lspmap('s', 'sl', builtin.lsp_document_symbols, 'document [l]sp [s]ymbols') -- Symbols are things like variables, functions, types, etc.
         -- Fuzzy find all the symbols in your current workspace.
-        lspmap('S', builtin.lsp_dynamic_workspace_symbols, 'Workspace [S]ymbols') -- Similar to document symbols, except searches over your entire project.
-        leadlspmap('S', builtin.lsp_dynamic_workspace_symbols, 'Workspace [S]ymbols')
+        lspmap('S', 'sL', builtin.lsp_dynamic_workspace_symbols, 'Workspace [L]SP [S]ymbols') -- Similar to document symbols, except searches over your entire project.
         -- Jump to the type of the word under your cursor.
-        lspmap('y', builtin.lsp_type_definitions, 't[y]pe definition') -- Useful when you're not sure what type a variable is and you want to see the definition of its *type*, not where it was *defined*.
-        leadlspmap('y', builtin.lsp_type_definitions, 't[y]pe definition')
+        lspmap('y', 'cy', builtin.lsp_type_definitions, 't[y]pe definition') -- Useful when you're not sure what type a variable is and you want to see the definition of its *type*, not where it was *defined*.
+        -- calls
+        lspmap('ci', 'cCi', builtin.lsp_incoming_calls, 'incomming') -- Useful when you're not sure what type a variable is and you want to see the definition of its *type*, not where it was *defined*.
+        lspmap('co', 'cCo', builtin.lsp_outgoing_calls, 'outgoing') -- Useful when you're not sure what type a variable is and you want to see the definition of its *type*, not where it was *defined*.
+        -- which-key group-add
+        require('which-key').add {
+          -- { '<leader>sl', group = 'LSP' },
+          { '<leader>cC', group = 'Calls' },
+          { 'grC', group = 'Calls' },
+        }
       end,
     })
   end,

@@ -16,8 +16,9 @@ end
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 map('n', '<Esc>', '<cmd>nohlsearch<CR>')
+map('n', ';', ':', { desc = 'cmd :' })
 
--- INFO: Diagnostic Config & Keymaps
+-- INFO: Diagnostics/Debug Config & Keymaps
 -- See :help vim.diagnostic.Opts
 vim.diagnostic.config {
   update_in_insert = false,
@@ -30,11 +31,13 @@ vim.diagnostic.config {
   virtual_lines = false, -- Text shows up underneath the line, with virtual lines
 
   -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
-  jump = { float = true }, -- WARN: causes 'deprecated' warning
+  -- stylua: ignore
+  jump = { on_jump = on_jump }, -- `:h diagnostic-on-jump-example` -- DEPRECATED: jump = { float = true },
 }
 
-leadmap('cq', vim.diagnostic.setloclist, { desc = '[q]Quickfix' })
-map('n', ';', ':', { desc = 'cmd :' })
+leadmap('do', vim.diagnostic.setloclist, { desc = 'l[o]clist' })
+leadmap('df', vim.diagnostic.open_float, { desc = 'open [f]loating' })
+leadmap('dl', ':log<CR>')
 
 -- INFO: TERMINAL
 --
@@ -76,10 +79,21 @@ map('n', '<C-A-=>', '<C-w>2+', { desc = '[+] win-height' }) -- same key as +
 map('n', '<C-A-,>', '<C-w>2<', { desc = 'widgth less [<]' }) -- lower-case <
 map('n', '<C-A-.>', '<C-w>2>', { desc = 'width more [>]' }) -- lower-case >
 
-leadmap('|', '<C-w>v', { desc = 'vertical[|]split' })
-leadmap('_', '<C-w>s', { desc = 'horizontal[_]split' })
+leadmap('|', ':vsplit<CR>', { desc = 'vertical[|]split' }) -- <C-w>v
+leadmap('_', ':split<CR>', { desc = 'horizontal[_]split' }) -- <C-w>s
 
 -- buffers -- see `plugins.ui` bufferline & lualine for more
+local function bufopts(tbl) -- otps in vim.keymap.set(), habing noremap and silent
+  return vim.tbl_extend('force', { noremap = true, silent = true }, tbl)
+end
+
+leadmap('bb', '<cmd>e #<cr>', bufopts { desc = 'switch to other' })
+leadmap('bl', '<cmd>buffers<CR>', bufopts { desc = '[l]ist buffers' })
+leadmap('bn', '<cmd>enew<CR>', bufopts { desc = 'new buf-file' })
+leadmap('bd', '<cmd>bn<BAR>bd #<CR>', bufopts { desc = '[d]elete' })
+leadmap('x', '<cmd>bn<BAR>bd #<CR>', bufopts { desc = 'delete[x]buffer' })
+map('n', 'H', '<cmd>bp<CR>', bufopts { desc = 'prev buf' })
+map('n', 'L', '<cmd>bn<CR>', bufopts { desc = 'next buf' })
 
 -- tabs
 leadmap('<tab>l', '<cmd>tabs<CR>', { desc = 'tab list' })
@@ -92,14 +106,9 @@ leadmap('<tab>n', '<cmd>tabnext<CR>', { desc = 'next' })
 --
 map('n', '<C-c>', 'gcc', { desc = 'toggle comment', remap = true }) -- remap required, becuase ?
 map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
-leadmap('ic', function() -- Odly (cursed) good
-  local insert = vim.api.nvim_input
-  insert '80i=<ESC>gcc"cyy"cpO' -- if not work (no auto comment), add to:
-  -- insert '<ESC>ccHEADER_HERE<ESC>gcc' -- Need tweaking though...
-end, { desc = 'Header separater' })
 
 -- Selection-mode
-map({ 's', 'i' }, '<C-v>', '<C-o>p', { desc = 'Paste in S/I-mode', remap = true }) -- '<C-o>"sp'
+map({ 's', 'i' }, '<C-v>', '<C-o>P', { desc = 'Paste in S/I-mode', remap = true }) -- '<C-o>"sp'
 map('s', '<C-c>', '<C-o>y', { desc = 'Copy in S-mode', remap = true }) -- '<C-o>"sy'
 map('s', '<C-x>', '<C-o>d', { desc = 'Cut in S-mode', remap = true }) -- '<C-o>"sd'
 -- NGL, pretty peak (even if it is mouse-based)
@@ -125,9 +134,10 @@ map('n', 'gl', 'g]1<CR><escape>', { desc = '[l]ocal link' }) -- NOTE: This disab
 leadmap('qw', '<CMD>wa<CR>', { desc = '[w]rite all' })
 leadmap('qs', '<CMD>w <BAR> so | echo "written & sauced"<CR>', { desc = 'save & sauce' }) -- figure out why I can't sauce this file
 leadmap('qq', '<CMD>qa<CR>', { desc = '[q]uit all' })
-map('n', '<C-A-s>', '<cmd>w<CR><cmd>so<CR><cmd>echo("written & sauced")<CR>', { desc = 'Save&sauce' }) -- NOTE: 'macros' (multiple cmd chained) are possible like this
-map('n', '<C-s>', '<cmd>w<CR>', { desc = 'save' })
-map('n', '<C-q>', '<cmd>q<CR>', { desc = 'quit' })
+leadmap('qr', '<CMD>restart<CR>', { desc = '[r]estart nvim' })
+map('n', '<C-A-s>', '<cmd>write<CR><cmd>source<CR><cmd>echo("written & sauced")<CR>', { desc = 'Save&sauce' }) -- NOTE: 'macros' (multiple cmd chained) are possible like this
+map('n', '<C-s>', '<cmd>write<CR>', { desc = 'save' })
+map('n', '<C-q>', '<cmd>quit<CR>', { desc = 'quit' })
 
 -- INFO: UI toggles (builtin)
 --
@@ -135,13 +145,55 @@ leadmap('uw', '<CMD>set wrap!<CR>', { desc = 'toggles [w]rap' })
 leadmap('ul', '<CMD>set nu!<CR>', { desc = 'toggle [l]ine-nr' })
 leadmap('ur', '<CMD>set rnu!<CR>', { desc = 'toggle [r]elative-line-nr' })
 leadmap('uc', '<CMD>set cul!<CR>', { desc = 'toggle cursor-[L]ine' })
+leadmap('uc', '<CMD>set cul!<CR>', { desc = 'toggle cursor-[L]ine' })
+leadmap('ut', function()
+  -- if vim.o.tabstop == 8 then -- toggle 4/8
+  --   vim.opt.tabstop = 4
+  -- else
+  --   vim.opt.tabstop = 8
+  -- end
+  -- print(vim.o.tabstop)
 
--- TEST: Test
+  vim.ui.input({ prompt = 'Enter value for Tab-stuff: ' }, function(input) -- type option
+    local tabStuff = tonumber(input) -- from `:h vim.ui.input()`
+    vim.opt.tabstop = tabStuff
+    vim.opt.softtabstop = tabStuff
+    -- vim.opt.shiftwidth = tabStuff
+  end)
+end, { desc = 'set [t]abStuff' })
+
+-- INFO: open/organize
+--
+leadmap('oo', function()
+  local curfile = vim.fn.expand '%:p'
+  vim.fn.jobstart({ 'handlr', 'open', curfile }, { detach = true })
+end, { silent = true, desc = 'Handlr open' })
+leadmap('oI', ':intro<CR>')
+
+-- INFO: Code
+-- NOTE, most are based on plugins and should't be here
+--
+leadmap('ch', '<CMD>checkhealth<CR>')
+
+-- INFO: Insert
+--
+leadmap('is', '<cmd>smile<CR>')
+
+leadmap('ic', function() -- Odly (cursed) good
+  local insert = vim.api.nvim_input
+  insert '75i=<ESC>gcc"cyy"cpO' -- if not work (no auto comment), add to:
+  -- insert '<ESC>ccHEADER_HERE<ESC>gcc' -- Need tweaking though...
+end, { desc = 'Header separater' })
+
+leadmap('id', function() -- Odly (cursed) good
+  local insert = vim.api.nvim_input
+  insert 'dd<ESC>O<ESC>gccO<ESC>o<lt><lt><CR>>><ESC>O=<ESC>9a=<ESC>Pgcip}kP{dd}dd' -- almost easy to read...
+end, { desc = 'comment<<>>[d]iff' }, { 'v', 'n' }) -- NOTE: FUCKING PEAK !!
+
+-- TEST:
 --
 leadmap('it', ':echo "test?"') -- allows to write a cmd starting with 'echo("test?")' (so you can finish it)
 leadmap('ib', '<cmd>echo "hello world 1"<Bar>echo "hello world 2"<CR>', { desc = '<bar> allows multiple commands' })
-
-leadmap('is', '<cmd>smile<CR>')
 
 -- <localleader>
 map('n', '<localleader>,', '<cmd>echo "localleader"<Bar>echo "btw"<CR>', { desc = 'localleader mapping' })
