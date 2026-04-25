@@ -1,3 +1,7 @@
 x 2026-04-02 Fix/tweak +Telescope +Mappings @Plugs
 x 2026-04-02 tweak +Todo_sh ui @Custom
 x 2026-04-02 +Plugs Grug @nvim
+x 2026-04-24 +Conf Tabs - format, opts, lsp @nvim
+x 2026-04-24 Move +Kickstart plugs and integrate them with the other plugins @PlugConf
+x 2026-04-24 +Plugs Marp @nvim
+x 2026-04-24 +Plugs LazyDev @nvim

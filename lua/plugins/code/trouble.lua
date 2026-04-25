@@ -31,9 +31,9 @@ return {
       desc = 'L[O]Clist (Trouble)',
     },
     {
-      '<leader>dQ',
+      '<leader>dq',
       '<cmd>Trouble qflist toggle<cr>',
-      desc = '[Q]uickfix (Trouble)',
+      desc = '[q]uickfix (Trouble)',
     },
   },
   opts = function(_, opts) -- There are more opts

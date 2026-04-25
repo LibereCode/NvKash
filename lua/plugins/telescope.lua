@@ -114,16 +114,22 @@ return { -- Fuzzy Finder (files, lsp, etc)
     )
 
     -- search/select
-    leadmap('sb', builtin.builtin, 'Telescope-[b]uiltins')
+    leadmap('st', builtin.builtin, '[t]elescope-builtins')
     leadmap('sd', builtin.diagnostics, 'diagnostics')
-    leadmap('sg', builtin.live_grep, 'live [g]rep')
+    leadmap('ss', builtin.live_grep, '[s]earch (live_grep)')
     leadmap('sr', builtin.resume, 'resume')
-    leadmap('ss', function() --  See `:help telescope.builtin.live_grep()` for information about particular keys
+    leadmap('sb', function() --  See `:help telescope.builtin.live_grep()` for information about particular keys
       builtin.live_grep {
         grep_open_files = true,
-        prompt_title = 'Live_[s]earch open_bufs',
+        prompt_title = 'LiveGrep open Buffers',
       }
-    end, 'Live grep[/] open files')
+    end, 'live_grep open_[b]ufs')
+    leadmap('sf', function() --  See `:help telescope.builtin.live_grep()` for information about particular keys
+      builtin.live_grep {
+        cwd = vim.fn.expand '%:p:h', -- %:p = full-path ; %:h = directory name
+        prompt_title = 'LiveGrep PWD',
+      }
+    end, 'live_grep pwd [f]iles')
     leadmap('sw', function() builtin.grep_string { grep_open_files = true } end, '[w]ord (bufs)', { 'n', 'v' })
     -- mapbuilt('sW', function() builtin.grep_string { search = vim.fn.expand '<cword>' } end, 'current [W]ord', { 'n' }) -- this is default...
     leadmap('sW', builtin.grep_string, '[W]ord', { 'n', 'v' })

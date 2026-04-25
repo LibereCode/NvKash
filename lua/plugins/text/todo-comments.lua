@@ -6,7 +6,7 @@ return { -- todo comments -- Highlight todo, notes, etc in comments
   ---@type TodoOptions
   ---@diagnostic disable-next-line: missing-fields
   opts = function(_, opts)
-    vim.keymap.set('n', '<leader>dq', '<CMD>TodoQuickFix<CR>', { desc = '[q]uickfix' })
+    vim.keymap.set('n', '<leader>dQ', '<CMD>TodoQuickFix<CR>', { desc = '[Q]uickfix (todo-comments)' })
     return {
       signs = true, -- HACK: false -> true
     }

@@ -7,6 +7,12 @@
 
 local map = vim.keymap.set
 local nomap = vim.keymap.del -- disable (default) mappings
+
+--- @param keys string -- the keys after _<leader>_
+--- @param cmd string|function -- `<CMD>foobar<CR>` or lua `function()`
+--- @param opts table<any, any>|nil -- **optional** table of _key=val_ opts
+--- @param modes table|string|nil -- **optional** table or string of modes if not _"n"_
+--- @return nil -- *return fuck all*
 local function leadmap(keys, cmd, opts, modes) -- better leadmap (allows { opts })
   modes = modes or 'n'
   opts = opts or {}
@@ -91,6 +97,7 @@ leadmap('bb', '<cmd>e #<cr>', bufopts { desc = 'switch to other' })
 leadmap('bl', '<cmd>buffers<CR>', bufopts { desc = '[l]ist buffers' })
 leadmap('bn', '<cmd>enew<CR>', bufopts { desc = 'new buf-file' })
 leadmap('bd', '<cmd>bn<BAR>bd #<CR>', bufopts { desc = '[d]elete' })
+leadmap('bd', '<cmd>bd<CR>', bufopts { desc = '[D]ELETE' })
 leadmap('x', '<cmd>bn<BAR>bd #<CR>', bufopts { desc = 'delete[x]buffer' })
 map('n', 'H', '<cmd>bp<CR>', bufopts { desc = 'prev buf' })
 map('n', 'L', '<cmd>bn<CR>', bufopts { desc = 'next buf' })
@@ -123,8 +130,8 @@ map('v', '<C-p>', '"yp', { desc = '[p]aste from Sys' }) -- ... places (either <l
 -- map('i', '<C-v>', '<C-o>p') -- Merged with Selection-mode -- NOTE: Use  (^Q = <C-q>) Instead of (<C-v>) to do the thing
 
 -- better jk
-map({ 'n', 'v' }, 'j', 'gj', { desc = 'better ↓j' })
-map({ 'n', 'v' }, 'k', 'gk', { desc = 'better ↑k' })
+map({ 'n', 'v' }, 'j', 'gj', { desc = 'better ↓j', silent = true })
+map({ 'n', 'v' }, 'k', 'gk', { desc = 'better ↑k', silent = true })
 
 -- jump to local link  -- really weird why `g]` wasen't enough, especially the last esc?
 map('n', 'gl', 'g]1<CR><escape>', { desc = '[l]ocal link' }) -- NOTE: This disables the default

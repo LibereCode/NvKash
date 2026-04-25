@@ -31,6 +31,9 @@ return { -- NOTE: LSP-conf
           -- { path = '${3rd}/busted/library', words = { 'vim%.uv' } },
         },
       },
+      keys = {
+        { '<leader>ld', '<CMD>LazyDev lsp<CR>' },
+      },
       -- enabled = function(root_dir) return not vim.uv.fs_stat(root_dir .. '/.luarc.json') end, -- WARN: bricks config
     },
     { 'folke/neodev.nvim', enabled = false }, -- make sure to uninstall or disable neodev.nvim
@@ -43,7 +46,7 @@ return { -- NOTE: LSP-conf
       ---@type table<string, vim.lsp.Config>
       clangd = {}, -- c
       -- gopls = {}, -- go
-      -- pyright = {}, -- python -- replaced with ruff -- not... ruff have no vim.lsp.buf.hover() -- changed to basedpyright
+      -- pyright = {}, -- python -- replaced with ruff -- not... ruff have no vim lsp.buf.hover() -- changed to basedpyright
       rust_analyzer = {}, -- rust
       --
       -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -79,7 +82,7 @@ return { -- NOTE: LSP-conf
             if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
           end
 
-          vim.keymap.set('n', '<leader>ld', '<CMD>LazyDev lsp<CR>')
+          -- vim.keymap.set('n', '<leader>ld', '<CMD>LazyDev lsp<CR>') -- see lazydev.keys above
 
           client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
             runtime = {
@@ -101,11 +104,22 @@ return { -- NOTE: LSP-conf
           Lua = {},
         },
       },
+      -- ALT USE `emmylua_ls`
+      -- emmylua_ls = { -- see also: `~/.config/nvim/.emmyrc.json`
+      --   -- and https://github.com/EmmyLuaLs/emmylua-analyzer-rust#documentation
+      --   -- and https://www.reddit.com/r/neovim/comments/1mdtr4g/emmylua_ls_is_supersnappy/
+      --   cmd = { 'emmylua_ls' },
+      --   filetypes = { 'lua' },
+      --   root_markers = { '.emmyrc.json', '.luarc.json', '.git' },
+      --   settings = {
+      --     Lua = {},
+      --   },
+      -- }, -- NOTE: indexes almost 2x of lua_ls, prolly because index too much in ~/.local/share/nvim/lazy
+
       fish_lsp = {},
       bashls = {
-        settings = {
-          filetypes = { 'sh', 'zsh' },
-        },
+        cmd = { 'bash-language-server', 'start' },
+        filetypes = { 'sh', 'zsh', 'bash' },
       },
       jsonls = {},
       yamlls = {},
@@ -275,5 +289,8 @@ return { -- NOTE: LSP-conf
       vim.lsp.config(name, server)
       vim.lsp.enable(name)
     end
+
+    local hover = vim.lsp.buf.hover
+    vim.keymap.set('n', 'K', function() hover { max_height = 25, max_width = 60 } end, { desc = 'LSP hover' }) -- border = 'double',
   end,
 }

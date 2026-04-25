@@ -14,7 +14,7 @@ local cset = vim.cmd.set
 
 o.number = true -- Make line numbers default
 o.relativenumber = true -- You can also add relative line numbers, to help with jumping. Experiment for yourself to see if you like it!
-o.numberwidth = 3
+o.numberwidth = 2
 
 o.mouse = 'nvc' -- 'nv' = normal+visual, 'a' = all -- Enable mouse mode, can be useful for resizing splits for example!
 o.selectmode = 'mouse' -- :h 'slm'
@@ -135,6 +135,8 @@ cset 'background=dark'
 
 o.colorcolumn = '80'
 o.textwidth = 80
+
+o.winborder = '.,-,.,¦,˙,-,˙,¦' -- "bold" (custom)'+,-,+,|,+,-,+,|' -- `:h 'winborder'`
 
 -- NOTE: Experimental ui (see: `:h ui2`)
 require('vim._core.ui2').enable {
