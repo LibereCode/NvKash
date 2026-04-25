@@ -11,15 +11,16 @@ return {
   opts = function() -- NOTE: inspired by LazyVim https://www.lazyvim.org/extras/ui/indent-blankline#indent-blanklinenvim
     return {
       debounce = 100, -- ms(time) between refreshes
-      indent = {
-        char = { '┆' }, --   '┋''┊', '┆''┇', '╏''╎', '│',
-        tab_char = { '╏', '┇', '┋' }, -- '╎', -- '│', -- what is this
+      indent = { -- See `opts.scope.char` -- only HL scope
+        char = { ' ' }, -- { '┆' }, --   '┋''┊', '┆''┇', '╏''╎', '│',
+        tab_char = { ' ' }, --  { '╏', '┇', '┋' }, -- '╎', -- '│',
       },
       -- whitespace = { -- ? ingen aning vad detta är...
-      --   highlight = { 'Function', 'Label', 'Whitespace', 'NonText' },
-      --   remove_blankline_trail = true,
+      --   -- highlight = { 'Function', 'Label', 'Whitespace', 'NonText' },
+      --   -- remove_blankline_trail = true,
       -- },
       scope = { -- INFO: `:h ibl.config.scope`
+        char = { '|' },
         include = {
           node_type = {
             ['*'] = {
