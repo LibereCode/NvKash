@@ -12,15 +12,15 @@ return {
     return {
       debounce = 100, -- ms(time) between refreshes
       indent = { -- See `opts.scope.char` -- only HL scope
-        char = { ' ' }, -- { '┆' }, --   '┋''┊', '┆''┇', '╏''╎', '│',
-        tab_char = { ' ' }, --  { '╏', '┇', '┋' }, -- '╎', -- '│',
+        char = ' ', -- { '┆' }, --   '┋''┊', '┆''┇', '╏''╎', '│',
+        tab_char = ' ', --  { '╏', '┇', '┋' }, -- '╎', -- '│',
       },
       -- whitespace = { -- ? ingen aning vad detta är...
       --   -- highlight = { 'Function', 'Label', 'Whitespace', 'NonText' },
       --   -- remove_blankline_trail = true,
       -- },
       scope = { -- INFO: `:h ibl.config.scope`
-        char = { '|' },
+        char = '¦', -- '¦' '[' '»' '󰋇',
         include = {
           node_type = {
             ['*'] = {
