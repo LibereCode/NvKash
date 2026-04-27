@@ -81,7 +81,10 @@ return { -- NOTE: Lualine https://github.com/nvim-lualine/lualine.nvim
           'progress',
         },
         lualine_z = {
-          'location',
+          -- 'location',
+          function() return '%c:' .. vim.fn.col '$' - 1 end, -- NOTE: `col` is way faster, and only drawback
+          -- function() return 'B) c:C=%c:' .. vim.fn.strwidth(vim.fn.getline '.') end, --  (being n+1) is really easy fixed
+          function() return '%l:%L' end,
           -- function() return ' ' .. os.date '%R' end, -- clock
         },
       },

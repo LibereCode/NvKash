@@ -199,8 +199,11 @@ leadmap('id', function() -- Odly (cursed) good
   insert 'dd<ESC>O<ESC>gccO<ESC>o<lt><lt><CR>>><ESC>O=<ESC>9a=<ESC>Pgcip}kP{dd}dd' -- almost easy to read...
 end, { desc = 'comment<<>>[d]iff' }, { 'v', 'n' }) -- NOTE: FUCKING PEAK !!
 
--- TEST:
+-- TEST: Messages?
 --
+leadmap('m', '<CMD>messages<CR>')
+
+-- DUMB... TEST:
 leadmap('it', ':echo "test?"') -- allows to write a cmd starting with 'echo("test?")' (so you can finish it)
 leadmap('ib', '<cmd>echo "hello world 1"<Bar>echo "hello world 2"<CR>', { desc = '<bar> allows multiple commands' })
 

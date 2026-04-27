@@ -79,6 +79,9 @@ return { -- Fuzzy Finder (files, lsp, etc)
       },
     }
 
+    -- TODO: create a list of all telescope.builtins and check if I have it
+    -- - also maybe do some cleaner themes for some pickers? (see '{*}/' maps)
+
     -- Enable Telescope extensions if they are installed
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')

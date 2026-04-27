@@ -24,4 +24,4 @@ end
 vim.api.nvim_create_user_command('Lazygit', toggle_lazygit, {})
 
 vim.keymap.set({ 'n', 't' }, '<leader>lg', '<CMD>Lazygit<CR>')
-vim.keymap.set({ 'n', 't' }, '<leader>gg', '<CMD>Lazygit<CR>')
+vim.keymap.set({ 'n', 't' }, '<leader>gl', '<CMD>Lazygit<CR>')
