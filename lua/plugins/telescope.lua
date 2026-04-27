@@ -85,8 +85,10 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
     -- See `:help telescope.builtin`
 
-    local map = vim.keymap.set
     local builtin = require 'telescope.builtin'
+    local themes = require 'telescope.themes'
+
+    local map = vim.keymap.set
     local function leadmap(keys, cmd, description, modes)
       modes = modes or 'n'
       map(modes, '<leader>' .. keys, cmd, { desc = description })
@@ -95,23 +97,22 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- Quick access
     leadmap('<leader>', builtin.live_grep, 'live[ ]grep')
     leadmap(':', builtin.command_history, '[:]command_history') -- maybe in find instead?
+
+    -- '/'
     map('n', '<C-/>', function() -- Override default behavior and theme when searching
       -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-      builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown { -- INFO: theme like this
+      builtin.current_buffer_fuzzy_find(themes.get_dropdown { -- INFO: theme like this
         winblend = 10,
-        previewer = false,
+        previewer = true, -- false,
       })
     end, { desc = 'Fzf [/] current buf' })
-    leadmap(
-      '/',
-      function()
-        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-          winblend = 10,
-          previewer = true,
-        })
-      end,
-      'Fzf [/] current buf'
-    )
+    leadmap('/', function()
+      builtin.current_buffer_fuzzy_find(themes.get_ivy { -- themes.get_dropdown
+        winblend = 10,
+        previewer = true,
+      })
+    end, 'Fzf [/] current buf')
+    leadmap('s/', function() builtin.current_buffer_fuzzy_find() end, 'Fzf [/] +BIG_preview')
 
     -- search/select
     leadmap('st', builtin.builtin, '[t]elescope-builtins')

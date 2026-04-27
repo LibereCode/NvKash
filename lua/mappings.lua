@@ -115,7 +115,9 @@ map('n', '<C-c>', 'gcc', { desc = 'toggle comment', remap = true }) -- remap req
 map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
 
 -- Selection-mode
-map({ 's', 'i' }, '<C-v>', '<C-o>P', { desc = 'Paste in S/I-mode', remap = true }) -- '<C-o>"sp'
+map({
+  's' --[[,'i' -- Made I-mode version better for insert ]],
+}, '<C-v>', '<C-o>P', { desc = 'Paste in S-mode', remap = true }) -- '<C-o>"sp'
 map('s', '<C-c>', '<C-o>y', { desc = 'Copy in S-mode', remap = true }) -- '<C-o>"sy'
 map('s', '<C-x>', '<C-o>d', { desc = 'Cut in S-mode', remap = true }) -- '<C-o>"sd'
 -- NGL, pretty peak (even if it is mouse-based)
@@ -127,7 +129,7 @@ map('v', '<C-y>', '"yy', { desc = '[y]ank 2 Sys' }) -- Really usefull, so I made
 map('v', '<C-p>', '"yp', { desc = '[p]aste from Sys' }) -- ... places (either <leader>y/p or <C-y/p>)
 
 -- Insert-mode
--- map('i', '<C-v>', '<C-o>p') -- Merged with Selection-mode -- NOTE: Use  (^Q = <C-q>) Instead of (<C-v>) to do the thing
+map('i', '<C-v>', '<ESC>pa', { desc = 'Paste in I-mode', remap = true }) -- NOTE: Use  (^Q = <C-q>) Instead of (<C-v>) to do the thing
 
 -- better jk
 map({ 'n', 'v' }, 'j', 'gj', { desc = 'better ↓j', silent = true })

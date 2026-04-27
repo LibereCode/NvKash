@@ -12,6 +12,9 @@ local o = vim.opt -- this works perfect, and vim.o breaks config
 local g = vim.g
 local cset = vim.cmd.set
 
+-- Set to true if you have a Nerd Font installed and selected in the terminal
+g.have_nerd_font = true
+
 o.number = true -- Make line numbers default
 o.relativenumber = true -- You can also add relative line numbers, to help with jumping. Experiment for yourself to see if you like it!
 o.numberwidth = 2

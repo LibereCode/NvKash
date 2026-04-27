@@ -42,7 +42,7 @@ return {
     -- cd on quit
     change_neovim_cwd_on_close = true,
     yazi_floating_window_winblend = 10, -- 0-100
-    -- yazi_floating_window_border =
+    yazi_floating_window_border = 'rounded',
   },
   -- init = function() -- 👇 if you use `open_for_directories=true`, this is recommended
   --   -- mark netrw as loaded so it's not loaded at all. -- https://github.com/mikavilpas/yazi.nvim/issues/802
