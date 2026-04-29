@@ -21,7 +21,8 @@ return {
       { '<leader>bs', '<cmd>BufferLinePick<cr>', desc = 'select buf' },
       { '<S-M-h>', '<cmd>BufferLineMovePrev<cr>', desc = 'Move buffer prev' },
       { '<S-M-l>', '<cmd>BufferLineMoveNext<cr>', desc = 'Move buffer next' },
-      { '<S-h>', '<cmd>BufferLineCyclePrev<cr>', desc = 'Focus buffer next' },
+      { '<S-h>', '<cmd>BufferLineCyclePrev<cr>', desc = 'Focus buffer Prev' },
+      { '<S-l>', '<cmd>BufferLineCycleNext<cr>', desc = 'Focus buffer Next' },
     })
     return tbl
   end,
