@@ -291,6 +291,15 @@ return { -- NOTE: LSP-conf
     end
 
     local hover = vim.lsp.buf.hover
-    vim.keymap.set('n', 'K', function() hover { max_height = 25, max_width = 60 } end, { desc = 'LSP hover' }) -- border = 'double',
+    ---@param key string
+    ---@param cmd string|function
+    ---@param optsExtra table? -- `:h vim.keymap.set()` _opts_ tbl
+    ---@param mode string? -- specify if mode is different than _n_(ormal mode)
+    local function map(key, cmd, optsExtra, mode) -- TODO: add default opts?
+      local optsMap = vim.tbl_extend('error', {}, optsExtra or {})
+      vim.keymap.set(mode or 'n', key, cmd, optsMap)
+    end
+    map('K', function() hover { max_height = 25, max_width = 60 } end, { desc = 'LSP hover' }) -- border = 'double',
+    -- WARN: i_<C-SPACE> instead (and it will auto-show hover() ) -- map('<C-k>', function() hover { max_height = 25, max_width = 60 } end, { desc = 'LSP hover', remap = true }, 'i')
   end,
 }

@@ -3,16 +3,28 @@ return {
   version = '*',
   event = 'VeryLazy',
   dependencies = 'nvim-tree/nvim-web-devicons',
-  keys = {
-    { '<leader>bp', '<Cmd>BufferLineTogglePin<CR>', desc = 'toggle pin' },
-    { '<leader>bP', '<Cmd>BufferLineGroupClose ungrouped<CR>', desc = 'delete non-pinned buffers' },
-    { '<leader>bd', '<Cmd>bn <BAR> bd #<CR>', desc = 'delete buffer' },
-    { '<leader>bD', '<Cmd>BufferLinePickClose<CR>', desc = 'pick buf2DEL' },
-    -- TODO: for i in 1 10, "b<i>", "BufferLineGoToBuffer <i>", "goto buf <i>"
-    { '<leader>bs', '<cmd>BufferLinePick<cr>', desc = 'select buf' },
-    { '<S-M-h>', '<cmd>BufferLineMovePrev<cr>', desc = 'Move buffer prev' },
-    { '<S-M-l>', '<cmd>BufferLineMoveNext<cr>', desc = 'Move buffer next' },
-  },
+  keys = function(_, keys)
+    ---Iterate over _number-keys_ to assign them as `mappings`
+    ---@return table<table>
+    local tbl = {}
+    -- for n = 1, 9 do -- NOT NEEDED: bufferline autogenerate these! <WARN:
+    --   local key = '<leader>b' .. n
+    --   local cmd = '<cmd>BufferLineGoToBuffer ' .. n .. '<CR>'
+    --   -- local descStr = 'GotoBuf: ' .. n
+    --   table.insert(tbl, { key, cmd }) -- , desc = descStr
+    -- end
+    tbl = vim.tbl_extend('force', tbl, {
+      { '<leader>bp', '<Cmd>BufferLineTogglePin<CR>', desc = 'toggle pin' },
+      { '<leader>bP', '<Cmd>BufferLineGroupClose ungrouped<CR>', desc = 'delete non-pinned buffers' },
+      { '<leader>bd', '<Cmd>bn <BAR> bd #<CR>', desc = 'delete buffer' },
+      { '<leader>bD', '<Cmd>BufferLinePickClose<CR>', desc = 'pick buf2DEL' },
+      { '<leader>bs', '<cmd>BufferLinePick<cr>', desc = 'select buf' },
+      { '<S-M-h>', '<cmd>BufferLineMovePrev<cr>', desc = 'Move buffer prev' },
+      { '<S-M-l>', '<cmd>BufferLineMoveNext<cr>', desc = 'Move buffer next' },
+      { '<S-h>', '<cmd>BufferLineCyclePrev<cr>', desc = 'Focus buffer next' },
+    })
+    return tbl
+  end,
   opts = {
     options = {
       -- can be a string | function, | false see "Mouse actions"

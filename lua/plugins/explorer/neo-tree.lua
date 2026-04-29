@@ -8,10 +8,10 @@ return {
     'MunifTanjim/nui.nvim',
     '3rd/image.nvim', -- See plugins.ui
   },
-  lazy = false,
+  -- lazy = false, -- if default opener, set to: true
   keys = {
     { '<C-e>', ':Neotree float reveal_force_cwd toggle<CR>', desc = 'float N[e]oTree', silent = true },
-    { '<leader>e', ':Neotree left reveal_force_cwd toggle<CR>', desc = 'left N[e]oTree', silent = true },
+    { '<leader>E', ':Neotree left reveal_force_cwd toggle<CR>', desc = 'left N[e]oTree', silent = true },
     -- { '<leader>E', ':Neotree current reveal_force_cwd toggle<CR>', desc = 'N[E]O-NetRC', silent = true },
   },
   ---@module 'neo-tree'

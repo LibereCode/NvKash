@@ -5,3 +5,4 @@ x 2026-04-24 +Conf Tabs - format, opts, lsp @nvim
 x 2026-04-24 Move +Kickstart plugs and integrate them with the other plugins @PlugConf
 x 2026-04-24 +Plugs Marp @nvim
 x 2026-04-24 +Plugs LazyDev @nvim
+x 2026-04-28 Now that I have custom +Todo_sh dir for nvim, make +projects and @tags more unique @Custom

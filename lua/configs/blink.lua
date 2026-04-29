@@ -28,10 +28,10 @@ return { -- NOTE: Autocompletion
           mode = mode or 'n'
           vim.keymap.set(mode, key, cmd, opts)
         end
-        local ls = require 'luasnip'
 
-        lsmap('<C-k>', function() ls.expand() end, { silent = true }, 'i')
-        lsmap('<C-l>', function() ls.jump(1) end, { silent = true }, { 'i', 's' })
+        local ls = require 'luasnip'
+        lsmap('<C-l>'--[['<C-k'>]], function() ls.expand() end, { silent = true }, 'i') --
+        lsmap('<C-k>'--[['<C-l'>]], function() ls.jump(1) end, { silent = true }, { 'i', 's' })
         lsmap('<C-j>', function() ls.jump(-1) end, { silent = true }, { 'i', 's' })
         lsmap('<C-e>', function() -- What is this? Change-active-choice?
           if ls.choice_active() then ls.change_choice(1) end
@@ -48,15 +48,33 @@ return { -- NOTE: Autocompletion
       -- No, but seriously. Please read `:help ins-completion`, it is really good!
       -- NOTE: See :h blink-cmp-config-keymap for defining your own keymap
       --
-      preset = 'default', -- "default" | 'super-tab' | 'enter' | 'none'
-      -- ['<TAB>'] = { 'snippet_forward','select_next', 'fallback' },
-      -- ['<S-TAB>'] = { 'snippet_backward','select_prev', 'show', 'fallback' },
-      ['<C-y>'] = { 'select_and_accept', 'show', 'fallback' },
+      preset = 'none', -- 'default' -- 'default'|'super-tab'|'enter'|'none'
+      -- TEST: Just disable presets and copy over entire preset 'DEFAULT'
+
       -- ['<CR>'] = { 'accept', 'fallback' },
       ['<C-CR>'] = { 'accept_and_enter', 'fallback' },
-      -- ['<C-space>'] = { function(cmp) cmp.show { providers = { 'snippets' } } end }, -- show only specific cmp
       ['<C-c>'] = { 'cancel', 'fallback' },
+
+      -- ['<C-space>'] = { function(cmp) cmp.show { providers = { 'snippets' } } end }, -- show only specific cmp
+      ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
       ['<C-e>'] = { 'show', 'cancel', 'fallback' },
+      ['<C-y>'] = { 'select_and_accept', 'show', 'fallback' },
+
+      ['<Up>'] = { 'select_prev', 'fallback' },
+      ['<Down>'] = { 'select_next', 'fallback' },
+      ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
+      ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
+
+      ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+      ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+
+      -- ['<TAB>'] = { 'snippet_forward','select_next', 'fallback' },
+      -- ['<S-TAB>'] = { 'snippet_backward','select_prev', 'show', 'fallback' },
+      ['<Tab>'] = { 'snippet_forward', 'fallback' },
+      ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+
+      [ --[['<C-k>']]'<C-h>'] = { 'show_signature', 'hide_signature', 'fallback' }, -- default
+
       -- ['<Esc>'] = { 'cancel', 'fallback' }, -- hated it
 
       -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:

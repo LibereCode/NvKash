@@ -45,13 +45,10 @@ o.shortmess:append 'as' -- a=lmrw (:h shortmess) -- alpha.nvim appends I (replac
 
 o.sidescrolloff = 40 -- :h 'siso' -- 8 723 -- very big(723)=always centered(unless at left)
 o.sidescroll = 0 -- :h 'ss' -- 0 -- scroll this many lines when `:h siso` is triggered -- 0 = center instead
-o.scrolloff = 20 -- :h 'so' -- 4 15 -- Lines of context (scrolloff) -- large (723) = always centered
+o.scrolloff = 15 -- :h 'so' -- 4 15 20 -- Lines of context (scrolloff) -- large (723) = always centered
 o.scrolljump = 1 -- :h 'sj' -- -69 -- like sidescroll, but for vertical -- -n = n%heifht
 
 -- NOTE: See 'ui2' [bottom/below]
-
-o.undofile = true -- :h udf
-o.undolevels = 1723 -- :h ul
 
 o.ignorecase = true -- Case-insensitive searching
 o.smartcase = true --  UNLESS \C or one or more capital letters in the search term
@@ -124,12 +121,16 @@ g.loaded_python3_provider = 0
 -- g.loaded_ruby_provider = 0
 g.markdown_recommended_style = 0 -- Fix markdown indentation settings
 
-o.swapfile = true -- swapfile -- default stored in local/state/nvim/swap -- enabled by default?
+-- {swap, bakkupp, undo} default dir: $XDG_STATE_HOME/{swap|undo|backup}
+o.swapfile = true -- `:h 'dir'`
 -- o.directory = "." -- store in same dir
--- o.directory = vim.fn.stdpath 'data' .. '/swap//' -- store in local/share
--- o.backup = true -- bakkupp -- default stored nowhere ?? nowhere ? -- HACK: no reason for auto-backup. Swap and undo exist
+-- o.directory = vim.fn.stdpath 'data' .. '/swap//' -- store in $XDG_DATA_HOME
+-- o.backup = true -- `:h 'bdir'`
 -- -- o.backupdir = "." -- stored in same file
 -- o.backupdir = vim.fn.stdpath 'data' .. '/bakkupp//' -- local/share/ for bakkupp files
+o.undofile = true -- :h udf
+-- o.undodir = vim.fn.stdpath('state') .. '/exampleUndoDir//'
+o.undolevels = 1723 -- :h ul
 
 o.termguicolors = true -- Enable true colors for proper colorscheme support
 cset 't_Co=256'
@@ -139,7 +140,8 @@ cset 'background=dark'
 o.colorcolumn = '80'
 o.textwidth = 80
 
-o.winborder = '.,-,.,¦,˙,-,˙,¦' -- "bold" (custom)'+,-,+,|,+,-,+,|' -- `:h 'winborder'`
+-- o.winborder = 'bold' -- "bold" -- `:h 'winborder'`
+o.winborder = '.,-,.,¦,˙,-,˙,¦' -- TEST: (customAlt)=>'+,-,+,|,+,-,+,|'
 
 -- NOTE: Experimental ui (see: `:h ui2`)
 require('vim._core.ui2').enable {

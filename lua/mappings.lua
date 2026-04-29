@@ -5,7 +5,15 @@
 -- INFO: [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
-local map = vim.keymap.set
+-- local map = vim.keymap.set
+---@param key string|string
+---@param cmd string|function
+---@param optsExtra table? -- `:h vim.keymap.set()` _opts_ tbl
+---@param mode string|string[]? -- specify if mode is different than _n_(ormal mode)
+local function map(key, cmd, optsExtra, mode)
+  local optsMap = vim.tbl_extend('error', {}, optsExtra or {})
+  vim.keymap.set(mode or 'n', key, cmd, optsMap)
+end
 local nomap = vim.keymap.del -- disable (default) mappings
 
 --- @param keys string -- the keys after _<leader>_
@@ -16,13 +24,13 @@ local nomap = vim.keymap.del -- disable (default) mappings
 local function leadmap(keys, cmd, opts, modes) -- better leadmap (allows { opts })
   modes = modes or 'n'
   opts = opts or {}
-  map(modes, '<leader>' .. keys, cmd, opts)
+  vim.keymap.set(modes, '<leader>' .. keys, cmd, opts)
 end
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
-map('n', '<Esc>', '<cmd>nohlsearch<CR>')
-map('n', ';', ':', { desc = 'cmd :' })
+map('<Esc>', '<cmd>nohlsearch<CR>')
+map(';', ':', { desc = 'cmd :' })
 
 -- INFO: Diagnostics/Debug Config & Keymaps
 -- See :help vim.diagnostic.Opts
@@ -37,8 +45,11 @@ vim.diagnostic.config {
   virtual_lines = false, -- Text shows up underneath the line, with virtual lines
 
   -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
-  -- stylua: ignore
-  jump = { on_jump = on_jump }, -- `:h diagnostic-on-jump-example` -- DEPRECATED: jump = { float = true },
+  -- stylua: ignore start
+  ---@diagnostic disable-next-line: undefined-global -- NOTE: Nice annotation
+  jump = { on_jump = on_jump },
+  -- `:h diagnostic-on-jump-example` -- DEPRECATED: jump = { float = true },
+  -- stylua: ignore end
 }
 
 leadmap('do', vim.diagnostic.setloclist, { desc = 'l[o]clist' })
@@ -56,34 +67,34 @@ leadmap('tT', function() vim.cmd.terminal() end, { desc = 'Terminal buffer' })
 -- is not what someone will guess without a bit more experience.
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
-map('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-map('t', '<C-Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+map('<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }, 't')
+map('<C-Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }, 't')
 
 -- TIP: Disable arrow keys in normal mode
--- map('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- map('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- map('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- map('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+-- map('<left>', '<cmd>echo "Use h to move!!"<CR>')
+-- map('<right>', '<cmd>echo "Use l to move!!"<CR>')
+-- map('<up>', '<cmd>echo "Use k to move!!"<CR>')
+-- map('<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- INFO: Windows/buffers/tabs
 --
 -- windows
 -- Keybinds to make split navigation easier. Use CTRL+<hjkl> to switch between windows
 --  See `:help wincmd` for a list of all window commands
-map('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-map('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-map('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-map('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+map('<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+map('<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+map('<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+map('<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 -- NOTE Some terminals have colliding keymaps or are not able to send distinct keycodes
-map('n', '<C-A-h>', '<C-w>H', { desc = 'Move window to the left' })
-map('n', '<C-A-l>', '<C-w>L', { desc = 'Move window to the right' })
-map('n', '<C-A-j>', '<C-w>J', { desc = 'Move window to the lower' })
-map('n', '<C-A-k>', '<C-w>K', { desc = 'Move window to the upper' })
+map('<C-A-h>', '<C-w>H', { desc = 'Move window to the left' })
+map('<C-A-l>', '<C-w>L', { desc = 'Move window to the right' })
+map('<C-A-j>', '<C-w>J', { desc = 'Move window to the lower' })
+map('<C-A-k>', '<C-w>K', { desc = 'Move window to the upper' })
 
-map('n', '<C-A-->', '<C-w>2-', { desc = '[-] win-height' })
-map('n', '<C-A-=>', '<C-w>2+', { desc = '[+] win-height' }) -- same key as +
-map('n', '<C-A-,>', '<C-w>2<', { desc = 'widgth less [<]' }) -- lower-case <
-map('n', '<C-A-.>', '<C-w>2>', { desc = 'width more [>]' }) -- lower-case >
+map('<C-A-->', '<C-w>2-', { desc = '[-] win-height' })
+map('<C-A-=>', '<C-w>2+', { desc = '[+] win-height' }) -- same key as +
+map('<C-A-,>', '<C-w>2<', { desc = 'widgth less [<]' }) -- lower-case <
+map('<C-A-.>', '<C-w>2>', { desc = 'width more [>]' }) -- lower-case >
 
 leadmap('|', ':vsplit<CR>', { desc = 'vertical[|]split' }) -- <C-w>v
 leadmap('_', ':split<CR>', { desc = 'horizontal[_]split' }) -- <C-w>s
@@ -99,8 +110,8 @@ leadmap('bn', '<cmd>enew<CR>', bufopts { desc = 'new buf-file' })
 leadmap('bd', '<cmd>bn<BAR>bd #<CR>', bufopts { desc = '[d]elete' })
 leadmap('bd', '<cmd>bd<CR>', bufopts { desc = '[D]ELETE' })
 leadmap('x', '<cmd>bn<BAR>bd #<CR>', bufopts { desc = 'delete[x]buffer' })
-map('n', 'H', '<cmd>bp<CR>', bufopts { desc = 'prev buf' })
-map('n', 'L', '<cmd>bn<CR>', bufopts { desc = 'next buf' })
+-- map('H', '<cmd>bp<CR>', bufopts { desc = 'prev buf' }) -- moved to
+-- map('L', '<cmd>bn<CR>', bufopts { desc = 'next buf' }) -- './plugins/ui/bufferline.lua'
 
 -- tabs
 leadmap('<tab>l', '<cmd>tabs<CR>', { desc = 'tab list' })
@@ -111,42 +122,40 @@ leadmap('<tab>n', '<cmd>tabnext<CR>', { desc = 'next' })
 
 -- INFO: quick commands / QOL
 --
-map('n', '<C-c>', 'gcc', { desc = 'toggle comment', remap = true }) -- remap required, becuase ?
-map('v', '<C-c>', 'gc', { desc = 'v-mode comment', remap = true })
+map('<C-c>', 'gcc', { desc = 'toggle comment', remap = true }) -- remap required, becuase ?
+map('<C-c>', 'gc', { desc = 'v-mode comment', remap = true }, 'v')
 
 -- Selection-mode
-map({
-  's' --[[,'i' -- Made I-mode version better for insert ]],
-}, '<C-v>', '<C-o>P', { desc = 'Paste in S-mode', remap = true }) -- '<C-o>"sp'
-map('s', '<C-c>', '<C-o>y', { desc = 'Copy in S-mode', remap = true }) -- '<C-o>"sy'
-map('s', '<C-x>', '<C-o>d', { desc = 'Cut in S-mode', remap = true }) -- '<C-o>"sd'
+map('<C-v>', '<C-o>P', { desc = 'Paste in S-mode', remap = true }, 's' --[[ { 's','i' } -- Made I-mode version better for insert ]]) -- '<C-o>"sp'
+map('<C-c>', '<C-o>y', { desc = 'Copy in S-mode', remap = true }, 's') -- '<C-o>"sy'
+map('<C-x>', '<C-o>d', { desc = 'Cut in S-mode', remap = true }, 's') -- '<C-o>"sd'
 -- NGL, pretty peak (even if it is mouse-based)
 
 -- Visual-mode -- these copies to 'Y'-registry (so seperate from Sys-Clipboard)
 leadmap('y', '"yy', { desc = '[y]ank 2 Sys' }, 'v')
 leadmap('p', '"yp', { desc = '[p]aste from Sys' }, 'v')
-map('v', '<C-y>', '"yy', { desc = '[y]ank 2 Sys' }) -- Really usefull, so I made it appear  multiple ...
-map('v', '<C-p>', '"yp', { desc = '[p]aste from Sys' }) -- ... places (either <leader>y/p or <C-y/p>)
+map('<C-y>', '"yy', { desc = '[y]ank 2 Sys' }, 'v') -- Really usefull, so I made it appear  multiple ...
+map('<C-p>', '"yp', { desc = '[p]aste from Sys' }, 'v') -- ... places (either <leader>y/p or <C-y/p>)
 
 -- Insert-mode
-map('i', '<C-v>', '<ESC>pa', { desc = 'Paste in I-mode', remap = true }) -- NOTE: Use  (^Q = <C-q>) Instead of (<C-v>) to do the thing
+map('<C-v>', '<ESC>pa', { desc = 'Paste in I-mode', remap = true }, 'i') -- NOTE: Use  (^Q = <C-q>) Instead of (<C-v>) to do the thing
 
 -- better jk
-map({ 'n', 'v' }, 'j', 'gj', { desc = 'better ↓j', silent = true })
-map({ 'n', 'v' }, 'k', 'gk', { desc = 'better ↑k', silent = true })
+map('j', 'gj', { desc = 'better ↓j', silent = true }, { 'n', 'v' })
+map('k', 'gk', { desc = 'better ↑k', silent = true }, { 'n', 'v' })
 
 -- jump to local link  -- really weird why `g]` wasen't enough, especially the last esc?
-map('n', 'gl', 'g]1<CR><escape>', { desc = '[l]ocal link' }) -- NOTE: This disables the default
+map('gl', 'g]1<CR><escape>', { desc = '[l]ocal link' }) -- NOTE: This disables the default
 
--- INFO: sessions[<leader>q]
+-- inFO: sessions[<leader>q]
 --
 leadmap('qw', '<CMD>wa<CR>', { desc = '[w]rite all' })
 leadmap('qs', '<CMD>w <BAR> so | echo "written & sauced"<CR>', { desc = 'save & sauce' }) -- figure out why I can't sauce this file
 leadmap('qq', '<CMD>qa<CR>', { desc = '[q]uit all' })
 leadmap('qr', '<CMD>restart<CR>', { desc = '[r]estart nvim' })
-map('n', '<C-A-s>', '<cmd>write<CR><cmd>source<CR><cmd>echo("written & sauced")<CR>', { desc = 'Save&sauce' }) -- NOTE: 'macros' (multiple cmd chained) are possible like this
-map('n', '<C-s>', '<cmd>write<CR>', { desc = 'save' })
-map('n', '<C-q>', '<cmd>quit<CR>', { desc = 'quit' })
+map('<C-A-s>', '<cmd>write<CR><cmd>source<CR><cmd>echo("written & sauced")<CR>', { desc = 'Save&sauce' }) -- NOTE: 'macros' (multiple cmd chained) are possible like this
+map('<C-s>', '<cmd>write<CR>', { desc = 'save' })
+map('<C-q>', '<cmd>quit<CR>', { desc = 'quit' })
 
 -- INFO: UI toggles (builtin)
 --
@@ -204,11 +213,13 @@ end, { desc = 'comment<<>>[d]iff' }, { 'v', 'n' }) -- NOTE: FUCKING PEAK !!
 leadmap('m', '<CMD>messages<CR>')
 
 -- DUMB... TEST:
+
 leadmap('it', ':echo "test?"') -- allows to write a cmd starting with 'echo("test?")' (so you can finish it)
 leadmap('ib', '<cmd>echo "hello world 1"<Bar>echo "hello world 2"<CR>', { desc = '<bar> allows multiple commands' })
 
 -- <localleader>
-map('n', '<localleader>,', '<cmd>echo "localleader"<Bar>echo "btw"<CR>', { desc = 'localleader mapping' })
+map('<localleader>,', '<cmd>echo "localleader"<Bar>echo "btw"<CR>', { desc = 'localleader mapping' })
+-- map()
 
 -- NOTE: see ~/.config/nvim/after/ftplugin/ for spicy stuff !!
 --

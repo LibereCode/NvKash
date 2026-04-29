@@ -1,6 +1,8 @@
 (C) +Text Markmap and Marp @Plugs
 (B) +Plugs Trouble @nvim
 (E) +RTFM read `:h runtimepath` @nvim
-(A) Now that I have custom +Todo_sh dir for nvim, make +projects and @tags more unique @Custom
 (F) Create +Toggle_term that handles input as a textblock and then insert that to term on <CR> @Custom
 (A) Add +Explore zoxide @Plugs
+(G) +Test if the new plugin `neogit.nvim` should be kept @Plugs
+(D) make all my +Custom 'plugins' into actually real nvim @Plugs
+(A) Prune MANY mappings (remember kids, +KISS) @Config
