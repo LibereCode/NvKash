@@ -4,3 +4,5 @@ local o = vim.opt_local
 o.sidescrolloff = 8
 o.sidescroll = 0
 o.scrolloff = 10
+o.smarttab = true
+o.smartindent = true
