@@ -11,6 +11,12 @@ return { -- NOTE: oil🦅 -- good
         'icon',
       },
       keymaps = { -- add/append new keymaps
+        -- Fast quit
+        ['q'] = 'actions.close',
+        ['<ESC><ESC>'] = 'actions.close',
+        ['<leader>O'] = 'actions.close',
+
+        -- from docs `:h oil-actions`
         ['<localleader>f'] = { -- from :h oil-actions -- Changes <leader>ff for just oil-buffer
           function()
             require('telescope.builtin').find_files {
@@ -22,13 +28,8 @@ return { -- NOTE: oil🦅 -- good
           nowait = true,
           desc = '[f]iles (oil)',
         },
-
-        -- Fast quit
-        ['q'] = 'actions.close',
-        ['<ESC><ESC>'] = 'actions.close',
-        ['<leader>O'] = 'actions.close',
-
-        ['<localleader>:'] = {
+        ['~'] = '<cmd>edit $HOME<CR>',
+        ['<localleader>;'] = {
           'actions.open_cmdline',
           opts = {
             shorten_path = true,

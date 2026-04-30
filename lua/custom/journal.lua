@@ -2,7 +2,7 @@
 
 -- Rewritten version of `~/.local/scripts/shell/journal`(.zsh) to lua
 
--- version 2.0
+--version 2.0
 -- Don't `return` no more, instead
 -- instead handle commands within script
 

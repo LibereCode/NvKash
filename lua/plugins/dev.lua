@@ -4,9 +4,27 @@
 -- https://lazy.folke.io/spec
 
 return {
+  -- {
+  --   'toggleTerm.nvim',
+  --   dev = true,
+  --   -- config = function() require 'foobar' end, -- NOTE: option 1 (load)
+  -- },
+  { -- TEST:
+    'LibereCode/toggleTerm.nvim',
+  },
+
   {
-    'toggleTerm.nvim',
+    'journal.nvim',
     dev = true,
-    -- config = function() require 'foobar' end, -- NOTE: option 1 (load)
+  },
+
+  {
+    'lazygit.nvim',
+    dev = true,
+  },
+
+  {
+    'todo-sh.nvim',
+    dev = true,
   },
 }
