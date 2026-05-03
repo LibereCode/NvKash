@@ -23,19 +23,29 @@ return { -- NOTE: Autocompletion
           config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
         },
       },
-      opts = function(_, opts)
-        local lsmap = function(key, cmd, opts, mode)
-          mode = mode or 'n'
-          vim.keymap.set(mode, key, cmd, opts)
-        end
 
+      opts = function(_, opts)
         local ls = require 'luasnip'
-        lsmap('<C-l>'--[['<C-k'>]], function() ls.expand() end, { silent = true }, 'i') --
-        lsmap('<C-k>'--[['<C-l'>]], function() ls.jump(1) end, { silent = true }, { 'i', 's' })
-        lsmap('<C-j>', function() ls.jump(-1) end, { silent = true }, { 'i', 's' })
-        lsmap('<C-e>', function() -- What is this? Change-active-choice?
+
+        local lsmap = function(key, cmd, mapOpts, mode)
+          mode = mode or 'n'
+          vim.keymap.set(mode, key, cmd, mapOpts)
+        end
+        lsmap('<M-e>'--[['<C-l>' '<C-k'>]], function() ls.expand() end, { silent = true }, 'i') --
+        lsmap('<M-n>'--[['<C-k>' '<C-l'>]], function() ls.jump(1) end, { silent = true }, { 'i', 's' })
+        lsmap('<M-p>'--[['<C-j>']], function() ls.jump(-1) end, { silent = true }, { 'i', 's' })
+        lsmap('<M-c>'--[['<C-e>']], function() -- What is this? Change-active-choice?
           if ls.choice_active() then ls.change_choice(1) end
         end, { silent = true }, { 'i', 's' })
+
+        --   local s = ls.snippet
+        --   local t = ls.text_node
+        --   local i = ls.insert_node
+        --   ls.add_snippets( -- TODO: get to work
+        --     'all',
+        --     s('helloSnip', { t 'test ', i(1), t 'test again', i(2) })
+        --   )
+        --   return vim.tbl_extend('force', opts, {})
       end,
     },
   },
@@ -109,8 +119,10 @@ return { -- NOTE: Autocompletion
       },
     },
 
+    snippets = { preset = 'luasnip' },
+
     sources = {
-      default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' }, -- "buffer" show autocomplete of buffer text
+      default = { 'lsp', 'lazydev', 'path', 'snippets', 'buffer' },
       -- TODO Find out how to Lower prio of 'buffer'
       providers = {
         mkdnflow = {
@@ -141,8 +153,6 @@ return { -- NOTE: Autocompletion
         ghost_text = { enabled = true },
       },
     },
-
-    snippets = { preset = 'luasnip' },
 
     -- See :h blink-cmp-config-fuzzy for more information
     fuzzy = { implementation = 'prefer_rust_with_warning' },
