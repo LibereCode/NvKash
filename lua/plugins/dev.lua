@@ -31,13 +31,15 @@ return {
 
   {
     -- 'lazygit.nvim',
-    -- dev = true,
+    dev = true,
     'LibereCode/lazygit.nvim',
+    opts = {},
   },
 
   {
     -- 'todo-sh.nvim',
     -- dev = true,
     'LibereCode/todo-sh.nvim',
+    opts = {},
   },
 }
