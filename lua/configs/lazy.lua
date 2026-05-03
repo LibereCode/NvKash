@@ -170,6 +170,14 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
   },
   -- INFO: disables notify when changing (saving :w) config files
   change_detection = { notify = false },
+
+  install = {
+    colorscheme = {
+      'kanagawa',
+      'habamax',
+    },
+  },
+  checker = { enabled = true },
 })
 
 vim.keymap.set('n', '<leader>ll', '<cmd>Lazy<CR>', { desc = 'Lazy󰒲 ' })
