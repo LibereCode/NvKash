@@ -123,7 +123,9 @@ return { -- NOTE: LSP-conf
       },
       jsonls = {},
       yamlls = {},
-      zls = {},
+      zls = {
+        cmd = { '/usr/bin/zls-master' },
+      },
     },
   },
   config = function(_, opts)

@@ -97,43 +97,65 @@ return { -- Fuzzy Finder (files, lsp, etc)
       map(modes, '<leader>' .. keys, cmd, { desc = description })
     end
 
+    --[[ INFO: TEMPLATE
+    --    See:
+    --    - :h telescope.layout
+    --    - :h telescope.defaults.layout_config
+    --    - :h telescope.builtin.commands
+    --
+    leadmap('ss', function()
+      builtin.builtins {
+        layout_strategy = 'center',
+        layout_config = {
+            height = 25, -- 0.4
+            preview_cutoff = 120,
+            prompt_position = "top", -- "bottom",
+            width = 0.5,
+        },
+      }
+    end, 'Fzf [/] +BIG_preview')
+    --]]
+
     -- Quick access
-    leadmap('<leader>', builtin.live_grep, 'live[ ]grep')
+    -- leadmap('<leader>', builtin.live_grep, 'live[ ]grep')
     leadmap(':', builtin.command_history, '[:]command_history') -- maybe in find instead?
 
-    -- '/'
-    map('n', '<C-/>', function() -- Override default behavior and theme when searching
-      -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-      builtin.current_buffer_fuzzy_find(themes.get_dropdown { -- INFO: theme like this
-        winblend = 10,
-        previewer = true, -- false,
-      })
-    end, { desc = 'Fzf [/] current buf' })
+    -- '/' => live_grep/fzf curBuf
     leadmap('/', function()
-      builtin.current_buffer_fuzzy_find(themes.get_ivy { -- themes.get_dropdown
+      builtin.current_buffer_fuzzy_find(themes.get_dropdown { --  themes.get_ivy
         winblend = 10,
         previewer = true,
       })
     end, 'Fzf [/] current buf')
-    leadmap('s/', function() builtin.current_buffer_fuzzy_find() end, 'Fzf [/] +BIG_preview')
+    -- leadmap('s/', function() builtin.current_buffer_fuzzy_find() end, 'Fzf [/] +BIG_preview')
+    leadmap('s/', function()
+      builtin.current_buffer_fuzzy_find {
+        layout_strategy = 'flex',
+        height = 25, -- 0.4
+        preview_cutoff = 120,
+        prompt_position = 'top', -- "bottom",
+        width = 0.5,
+      }
+    end, 'Fzf [/] +BIG_preview')
 
     -- search/select
-    leadmap('st', builtin.builtin, '[t]elescope-builtins')
-    leadmap('sd', builtin.diagnostics, 'diagnostics')
-    leadmap('ss', builtin.live_grep, '[s]earch (live_grep)')
-    leadmap('sr', builtin.resume, 'resume')
     leadmap('sb', function() --  See `:help telescope.builtin.live_grep()` for information about particular keys
       builtin.live_grep {
         grep_open_files = true,
         prompt_title = 'LiveGrep open Buffers',
       }
     end, 'live_grep open_[b]ufs')
+    leadmap('sd', builtin.diagnostics, 'diagnostics')
     leadmap('sf', function() --  See `:help telescope.builtin.live_grep()` for information about particular keys
       builtin.live_grep {
         cwd = vim.fn.expand '%:p:h', -- %:p = full-path ; %:h = directory name
         prompt_title = 'LiveGrep PWD',
       }
     end, 'live_grep pwd [f]iles')
+    leadmap('sm', function() builtin.marks(themes.get_dropdown()) end, '[m]arks')
+    leadmap('sr', builtin.resume, '[r]esume')
+    leadmap('ss', builtin.live_grep, '[s]earch (live_grep)')
+    leadmap('st', builtin.builtin, '[t]elescope-builtins')
     leadmap('sw', function() builtin.grep_string { grep_open_files = true } end, '[w]ord (bufs)', { 'n', 'v' })
     -- mapbuilt('sW', function() builtin.grep_string { search = vim.fn.expand '<cword>' } end, 'current [W]ord', { 'n' }) -- this is default...
     leadmap('sW', builtin.grep_string, '[W]ord', { 'n', 'v' })

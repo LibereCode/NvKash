@@ -216,6 +216,7 @@ leadmap('m', '<CMD>messages<CR>')
 
 leadmap('it', ':echo "test?"') -- allows to write a cmd starting with 'echo("test?")' (so you can finish it)
 leadmap('ib', '<cmd>echo "hello world 1"<Bar>echo "hello world 2"<CR>', { desc = '<bar> allows multiple commands' })
+leadmap('i:', ': | only<HOME>') -- Fullscreen a cmd
 
 -- <localleader>
 map('<localleader>,', '<cmd>echo "localleader"<Bar>echo "btw"<CR>', { desc = 'localleader mapping' })

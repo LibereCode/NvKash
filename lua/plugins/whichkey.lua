@@ -33,7 +33,7 @@ return { -- Useful plugin to show you pending keybinds.
         { '<leader>t', group = 'terminal' },
         { '<leader>u', group = 'ui', mode = { 'n' } },
         { '<leader><tab>', group = 'tab', mode = { 'n' } },
-        { '<leader>s', group = 'search/[s]elect', mode = { 'n', 'v' } },
+        { '<leader>s', group = 'search/[s]tring', mode = { 'n', 'v' } },
         { '<leader>f', group = 'find/[f]iles', mode = { 'n' } },
         { '<leader>q', group = 'session/[q]uit', mode = { 'n' } },
 
