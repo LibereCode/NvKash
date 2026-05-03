@@ -9,7 +9,7 @@ return {
         mode = 'n',
         '<CMD>Markview splitToggle<CR>',
         desc = 'toggle [s]plit',
-        ft = 'markdown',
+        ft = 'markdown', -- ft = { 'markdown', 'telekasten' },
       },
       { -- map('n', '<leader>mt', '<CMD>Markview Toggle<CR>', { desc = 'toggle markview' })
         '<localleader>m',

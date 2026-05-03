@@ -25,21 +25,22 @@ return { -- Useful plugin to show you pending keybinds.
         -- <leader>
         { '<leader>c', group = 'code', mode = { 'n', 'v' } },
         { '<leader>d', group = 'debug', mode = { 'n' } },
+        { '<leader>f', group = 'find/[f]iles', mode = { 'n' } },
         { '<leader>g', group = 'git', mode = { 'n' } },
         { '<leader>i', group = 'insert', mode = { 'n' } },
         { '<leader>l', group = 'lazy', mode = { 'n' } },
         -- { '<leader>m', group = 'text/[m]arkdown', mode = { 'n' } }, -- I use <localleader> instead
+        -- { '<leader>n', group = 'telekaste[n]otes', mode = { 'n' } }, -- I use <localleader> instead
         { '<leader>o', group = 'open/[o]rganize', mode = { 'n' } }, -- includes my `custom.journal`
         { '<leader>t', group = 'terminal' },
         { '<leader>u', group = 'ui', mode = { 'n' } },
         { '<leader><tab>', group = 'tab', mode = { 'n' } },
         { '<leader>s', group = 'search/[s]tring', mode = { 'n', 'v' } },
-        { '<leader>f', group = 'find/[f]iles', mode = { 'n' } },
         { '<leader>q', group = 'session/[q]uit', mode = { 'n' } },
 
         -- <leader> subgroups
         { '<leader>bo', group = 'order', mode = { 'n' } },
-        { '<leader>sl', group = 'LSP actions', mode = { 'n' } },
+        -- { '<leader>sl', group = 'LSP actions', mode = { 'n' } },
 
         -- goto
         { 'gs', group = 'surround', mode = { 'n', 'v' } },

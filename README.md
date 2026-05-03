@@ -1,4 +1,4 @@
-# NvChad.nvim
+# README NvKash.nvim
 
 Merged from branch `kickstart.2`
 
@@ -18,11 +18,11 @@ simple native configs)
 - tree-sitter-cli
 - nerd font
 
-TODO:
+> [!TODO]
 
 ### LSP/similar
 
-TODO:
+> [!TODO]
 
 ### Other
 
@@ -30,4 +30,4 @@ TODO:
 - kitty (terminal)
 - ImageMagick
 
-TODO:
+> [!TODO]
