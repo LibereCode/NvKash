@@ -4,6 +4,5 @@ return {
   require 'plugins.text.markview',
   require 'plugins.text.mkdnflow',
   require 'plugins.text.orgmode',
-  require 'plugins.text.telekasten',
   require 'plugins.text.todo-comments',
 }

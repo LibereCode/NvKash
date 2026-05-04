@@ -177,7 +177,7 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
       'habamax',
     },
   },
-  checker = { enabled = true },
+  -- checker = { enabled = true },
 })
 
 vim.keymap.set('n', '<leader>ll', '<cmd>Lazy<CR>', { desc = 'Lazy󰒲 ' })
