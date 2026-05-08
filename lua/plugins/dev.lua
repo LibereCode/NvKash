@@ -11,10 +11,11 @@ return {
     dev = true,
     'LibereCode/toggleTerm.nvim',
     opts = function()
-      local toggle = require('toggleTerm').toggle_term
-      vim.keymap.set({ 'n', 't' }, '<M-t>', function() toggle { border = 'single' } end, { desc = 'toggleTerm' })
-      vim.keymap.set({ 'n', 't' }, '<leader>tt', function() toggle { border = 'shadow', x = 0.95, y = 0.95 } end, { desc = 'larger Term' })
-      vim.keymap.set({ 'n', 't' }, '<C-/>', function() toggle { border = 'shadow', x = 0.95, y = 0.95 } end, { desc = 'larger Term' })
+      local toggleFloat = require('toggleTerm').toggle_float
+      local toggleHor = require('toggleTerm').toggle_hor
+      vim.keymap.set({ 'n', 't' }, '<M-t>', function() toggleFloat { border = 'double' } end, { desc = 'toggleTerm' })
+      vim.keymap.set({ 'n', 't' }, '<leader>tt', function() toggleFloat { x = 0.95, y = 0.95 } end, { desc = 'larger Term' })
+      vim.keymap.set({ 'n', 't' }, '<C-/>', function() toggleHor() end, { desc = 'larger Term' })
     end,
     --   -- config = function() require 'foobar' end, -- NOTE: option 1 (load)
   },
@@ -42,4 +43,8 @@ return {
     'LibereCode/todo-sh.nvim',
     opts = {},
   },
+
+  --[[ INFO:
+        TEST PLUGINS BELOW
+  --]]
 }

@@ -29,7 +29,8 @@ end
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
-map('<Esc>', '<cmd>nohlsearch<CR>')
+-- map('<Esc>', '<cmd>nohlsearch<CR>')
+map('<Esc>', '<cmd>nohl<CR>:<C-c>') -- TEST: also clear exec-line
 map(';', ':', { desc = 'cmd :' })
 
 -- INFO: Diagnostics/Debug Config & Keymaps
@@ -68,7 +69,8 @@ leadmap('tT', function() vim.cmd.terminal() end, { desc = 'Terminal buffer' })
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 map('<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }, 't')
-map('<C-Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }, 't')
+map('<C-Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }, 't') --TEST:
+map('<M-Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }, 't') --TEST:
 
 -- TIP: Disable arrow keys in normal mode
 -- map('<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -91,10 +93,10 @@ map('<C-A-l>', '<C-w>L', { desc = 'Move window to the right' })
 map('<C-A-j>', '<C-w>J', { desc = 'Move window to the lower' })
 map('<C-A-k>', '<C-w>K', { desc = 'Move window to the upper' })
 
-map('<C-A-->', '<C-w>2-', { desc = '[-] win-height' })
-map('<C-A-=>', '<C-w>2+', { desc = '[+] win-height' }) -- same key as +
-map('<C-A-,>', '<C-w>2<', { desc = 'widgth less [<]' }) -- lower-case <
-map('<C-A-.>', '<C-w>2>', { desc = 'width more [>]' }) -- lower-case >
+map('<C-->', '<C-w>2-', { desc = '[-] win-height' })
+map('<C-=>', '<C-w>2+', { desc = '[+] win-height' }) -- same key as +
+map('<C-,>', '<C-w>2<', { desc = 'widgth less [<]' }) -- lower-case <
+map('<C-.>', '<C-w>2>', { desc = 'width more [>]' }) -- lower-case >
 
 leadmap('|', ':vsplit<CR>', { desc = 'vertical[|]split' }) -- <C-w>v
 leadmap('_', ':split<CR>', { desc = 'horizontal[_]split' }) -- <C-w>s

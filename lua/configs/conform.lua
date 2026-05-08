@@ -53,7 +53,7 @@ return { -- NOTE: Autoformat
         end
       end,
       -- kdl = { "kdlfmt" }, -- fucks up niri config, and I can't get `.kdlfmtignore` to work -- https://github.com/hougesen/kdlfmt
-      markdown = { 'markdownlint-cli2', 'markdown-toc' }, -- "markdownlint-cli2" -- TEST:
+      markdown = { 'markdownlint-cli2' }, -- "markdownlint-cli2" , 'markdown-toc' -- TEST:
       yaml = { 'prettierd' },
 
       nix = { 'nixfmt' },

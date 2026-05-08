@@ -45,7 +45,7 @@ return { -- NOTE: LSP-conf
       --  See `:help lsp-config` for information about keys and how to configure
       ---@type table<string, vim.lsp.Config>
       clangd = {}, -- c
-      -- gopls = {}, -- go
+      gopls = {}, -- go
       -- pyright = {}, -- python -- replaced with ruff -- not... ruff have no vim lsp.buf.hover() -- changed to basedpyright
       rust_analyzer = {}, -- rust
       --
@@ -53,7 +53,7 @@ return { -- NOTE: LSP-conf
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`ts_ls`) will work just fine
-      -- ts_ls = {}, -- typescripts etc
+      ts_ls = {}, -- typescripts etc
 
       stylua = {}, -- Used to format Lua code
 
@@ -126,6 +126,8 @@ return { -- NOTE: LSP-conf
       zls = {
         cmd = { '/usr/bin/zls-master' },
       },
+      vale_ls = {}, -- you can just rename them... (vale-ls -> vale_ls)
+      hyprls = {},
     },
   },
   config = function(_, opts)

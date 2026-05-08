@@ -30,11 +30,11 @@ return {
     -- lbf('inko', 'inko')
     -- lbf('janet', 'janet')
     -- lbf('json', 'jsonlint')
-    lbf('markdown', 'markdownlint-cli2') -- vale
+    lbf('markdown', 'markdownlint-cli2') -- 'vale'
     -- lbf('rst', 'vale')
     -- lbf('ruby', 'ruby')
     -- lbf('terraform', 'tflint')
-    lbf('text', 'vale') -- TEST: change to 'spellcheck'?
+    lbf('text', 'vale')
     -- INFO: Add more here
     -- lbf('python', 'ruff') -- I think ty works as a linter on it's own?  NOTE:
     lbf('json', 'jsonlint') -- biome ...

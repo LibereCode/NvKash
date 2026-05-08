@@ -69,6 +69,7 @@ return { -- NOTE: Autocompletion
       ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
       ['<C-e>'] = { 'show', 'cancel', 'fallback' },
       ['<C-y>'] = { 'select_and_accept', 'show', 'fallback' },
+      ['<C-j>'] = { 'select_and_accept', 'fallback' }, -- NOTE: remaps C-j (was newline). use C-m instead for newline (by default)
 
       ['<Up>'] = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
