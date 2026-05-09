@@ -43,8 +43,4 @@ return {
     'LibereCode/todo-sh.nvim',
     opts = {},
   },
-
-  --[[ INFO:
-        TEST PLUGINS BELOW
-  --]]
 }

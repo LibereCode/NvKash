@@ -63,12 +63,19 @@ return { -- Fuzzy Finder (files, lsp, etc)
       -- You can put your default mappings / updates / etc. in here
       --  All the info you're looking for is in `:help telescope.setup()`
       --
-      -- defaults = {
-      --   mappings = {
-      --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-      --   },
-      -- },
-      -- pickers = {}
+      defaults = {
+        --   mappings = {
+        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+        --   },
+        layout_strategy = 'flex',
+        layout_config = {
+          preview_cutoff = 100,
+          width = 0.9,
+          horizontal = { preview_width = 0.6 },
+          vertical = { preview_cutoff = 35 },
+        },
+        -- border = false, -- XXX: NO
+      },
       extensions = {
         ['ui-select'] = { require('telescope.themes').get_dropdown() },
       },
@@ -102,64 +109,86 @@ return { -- Fuzzy Finder (files, lsp, etc)
     --    - :h telescope.layout
     --    - :h telescope.defaults.layout_config
     --    - :h telescope.builtin.commands
-    --
+
     leadmap('ss', function()
       builtin.builtins {
-        layout_strategy = 'center',
+        layout_strategy = 'flex',
         layout_config = {
             height = 25, -- 0.4
-            preview_cutoff = 120,
+            preview_cutoff = 69,
             prompt_position = "top", -- "bottom",
-            width = 0.5,
+            width = 0.5, -- 59
         },
+        preview_height = 0.2,
+        preview_width = 0.6,
+        winblend = 10,
+        wrap_results = true,
       }
     end, 'Fzf [/] +BIG_preview')
+
+    -- ALT (was builtin.builtin() before)
+        -- preview = false,
+        layout_strategy = 'center',
+        layout_config = {
+          height = 0.8,
+          preview_cutoff = 40,
+          prompt_position = 'bottom',
+        },
+        preview_height = 0.2,
+
     --]]
 
     -- Quick access
-    -- leadmap('<leader>', builtin.live_grep, 'live[ ]grep')
+    leadmap('T', function() builtin.builtin {} end, 'Telescope [T]uiltins')
     leadmap(':', builtin.command_history, '[:]command_history') -- maybe in find instead?
-
     -- '/' => live_grep/fzf curBuf
     leadmap('/', function()
-      builtin.current_buffer_fuzzy_find(themes.get_dropdown { --  themes.get_ivy
-        winblend = 10,
-        previewer = true,
-      })
-    end, 'Fzf [/] current buf')
-    -- leadmap('s/', function() builtin.current_buffer_fuzzy_find() end, 'Fzf [/] +BIG_preview')
-    leadmap('s/', function()
+      --   builtin.current_buffer_fuzzy_find(themes.get_dropdown { -- themes.get_ivy
+      --     winblend = 10,
+      --     previewer = true,
+      --   })
       builtin.current_buffer_fuzzy_find {
-        layout_strategy = 'flex',
-        height = 25, -- 0.4
-        preview_cutoff = 120,
-        prompt_position = 'top', -- "bottom",
-        width = 0.5,
+        layout_strategy = 'bottom_pane',
+        layout_config = {
+          height = 0.4,
+          preview_cutoff = 69,
+          prompt_position = 'bottom',
+        },
+        -- preview_width = 0.6,
+        winblend = 10,
+        wrap_results = true,
       }
-    end, 'Fzf [/] +BIG_preview')
+    end, 'Fzf [/] current buf')
 
-    -- search/select
-    leadmap('sb', function() --  See `:help telescope.builtin.live_grep()` for information about particular keys
-      builtin.live_grep {
+    -- search/select --  See `:help telescope.builtin` for information about particular keys
+    -- stylua: ignore start
+    leadmap( 'sb', function() builtin.live_grep {
         grep_open_files = true,
         prompt_title = 'LiveGrep open Buffers',
-      }
-    end, 'live_grep open_[b]ufs')
+    } end, 'live_grep open_[b]ufs' )
     leadmap('sd', builtin.diagnostics, 'diagnostics')
-    leadmap('sf', function() --  See `:help telescope.builtin.live_grep()` for information about particular keys
-      builtin.live_grep {
+    leadmap('sf', function() builtin.live_grep {
         cwd = vim.fn.expand '%:p:h', -- %:p = full-path ; %:h = directory name
         prompt_title = 'LiveGrep PWD',
-      }
-    end, 'live_grep pwd [f]iles')
+      } end, 'live_grep pwd [f]iles')
     leadmap('sm', function() builtin.marks(themes.get_dropdown()) end, '[m]arks')
     leadmap('sr', builtin.resume, '[r]esume')
     leadmap('ss', builtin.live_grep, '[s]earch (live_grep)')
-    leadmap('st', builtin.builtin, '[t]elescope-builtins')
+    leadmap('st', builtin.builtin, '[t]elescope-builtins') -- TODO: builtins->todo
     leadmap('sw', function() builtin.grep_string { grep_open_files = true } end, '[w]ord (bufs)', { 'n', 'v' })
     -- mapbuilt('sW', function() builtin.grep_string { search = vim.fn.expand '<cword>' } end, 'current [W]ord', { 'n' }) -- this is default...
     leadmap('sW', builtin.grep_string, '[W]ord', { 'n', 'v' })
-    leadmap('sy', builtin.treesitter, 'Treesitter s[y]mbols')
+    leadmap('sT', builtin.treesitter, '[T]reesitter')
+    leadmap('s"', builtin.registers, '["]registers')
+    -- leadmap('s/', function() builtin.current_buffer_fuzzy_find() end, 'Fzf [/] +BIG_preview')
+    leadmap('s/', function() builtin.current_buffer_fuzzy_find {
+        layout_strategy = 'flex',
+        height = 25, -- 0.4
+        preview_cutoff = 120,
+        -- prompt_position = 'top', -- "bottom",
+        width = 0.5,
+      } end, 'Fzf [/] +BIG_preview')
+    -- stylua: ignore end
 
     -- find/files
     leadmap('fb', builtin.buffers, 'buffers')
@@ -171,10 +200,9 @@ return { -- Fuzzy Finder (files, lsp, etc)
     leadmap('ft', builtin.builtin, '[t]elescopes')
     leadmap('f:', builtin.commands, '[:]commands')
 
-    -- buffer
+    -- other groups
+    leadmap('df', builtin.diagnostics, '[f]ind diagnostics')
     leadmap('bf', builtin.buffers, 'find')
-
-    -- ui
     leadmap('uC', builtin.colorscheme, 'live preview Colorscheme')
 
     -- This runs on LSP attach per buffer (see main LSP attach function in 'neovim/nvim-lspconfig' config for more info,

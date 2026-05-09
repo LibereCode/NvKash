@@ -19,7 +19,12 @@ return {
         endif
       ]]
     vim.g.undotree_WindowLayout = 3
-    -- It is technically ui..., but now it's [u]ndo [t]ree -- was <C-s> instead before
-    vim.keymap.set('n', '<LEADER>U', ':UndotreeToggle<CR>', { desc = '[U]ndoTree' })
+    -- vim.keymap.set('n', '<LEADER>U', ':UndotreeToggle<CR>', { desc = '[U]ndoTree' })
+    vim.keymap.set( -- TEST:
+      'n',
+      '<LEADER>r',
+      ':UndotreeToggle<CR>',
+      { desc = 'UndoT[r]ee' }
+    )
   end,
 }

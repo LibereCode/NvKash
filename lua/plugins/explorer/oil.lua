@@ -39,20 +39,27 @@ return { -- NOTE: oil🦅 -- good
           desc = ':ex-mode <cDir>',
         },
 
-        ['<C-d>'] = 'actions.preview_scroll_down',
-        ['<C-u>'] = 'actions.preview_scroll_up',
-        ['<C-f>'] = 'actions.preview_scroll_right',
-        ['<C-b>'] = 'actions.preview_scroll_left',
+        -- ['<C-b>'] = 'actions.preview_scroll_left',
+        -- ['<C-d>'] = 'actions.preview_scroll_down',
+        -- ['<C-u>'] = 'actions.preview_scroll_up',
+        -- ['<C-f>'] = 'actions.preview_scroll_right',
+        ['H'] = 'actions.preview_scroll_left',
+        ['J'] = 'actions.preview_scroll_down',
+        ['K'] = 'actions.preview_scroll_up',
+        ['L'] = 'actions.preview_scroll_right',
 
-        ['H'] = { 'actions.parent', mode = 'n' },
-        ['L'] = { 'actions.select', mode = 'n' },
-        -- ['J'] = { 'actions.show_help', mode = 'n' }, -- ?? idk
-        ['K'] = { 'actions.preview', mode = 'n' },
+        -- ['H'] = { 'actions.parent', mode = 'n' },
+        -- ['L'] = { 'actions.select', mode = 'n' },
+        -- -- ['J'] = { 'actions.show_help', mode = 'n' }, -- ?? idk
+        -- ['K'] = { 'actions.preview', mode = 'n' },
+        ['<C-b>'] = { 'actions.parent', mode = 'n' },
+        ['<C-f>'] = { 'actions.select', mode = 'n' },
       },
 
-      -- preview_win = {
-      --   preview_method = 'load', -- SLOW
-      -- },
+      preview_win = {
+        -- preview_method = 'load', -- WARN slow
+        preview_method = 'scratch', -- vs 'scratch_fast'
+      },
 
       delete_to_trash = true, -- :h oil-trash
       default_file_explorer = true, -- false, -- Oil is really good

@@ -54,7 +54,7 @@ vim.diagnostic.config {
 }
 
 leadmap('do', vim.diagnostic.setloclist, { desc = 'l[o]clist' })
-leadmap('df', vim.diagnostic.open_float, { desc = 'open [f]loating' })
+leadmap('dd'--[[df, see plugins/telescope.lua]], vim.diagnostic.open_float, { desc = 'floating [d]iagnostics' })
 leadmap('dl', ':log<CR>')
 
 -- INFO: TERMINAL
@@ -121,6 +121,7 @@ leadmap('<tab><tab>', '<cmd>tabnew<CR>', { desc = 'new' })
 leadmap('<tab>d', '<cmd>tabclose<CR>', { desc = 'delete' })
 leadmap('<tab>p', '<cmd>tabprev<CR>', { desc = 'prev' })
 leadmap('<tab>n', '<cmd>tabnext<CR>', { desc = 'next' })
+leadmap('<tab>t', '<C-W>T', { desc = 'window->newTab' })
 
 -- INFO: quick commands / QOL
 --
