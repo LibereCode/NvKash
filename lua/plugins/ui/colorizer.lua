@@ -3,7 +3,8 @@ return { -- NOTE: Colorizer (give color to #ff7200 hex codes) https://github.com
   event = 'BufReadPre', -- BufReadPre not working -- Lazyload until event "BufREadPre"
   -- Remember kids, TO DELETE THE OLD VERSION BEFORE INSTALLING A NEW!
   opts = function(_, opts)
-    vim.keymap.set('n', '<leader>uc', ':ColorizerToggle<CR>')
+    -- vim.keymap.set('n', '<leader>uc', ':ColorizerToggle<CR>')
+    vim.keymap.set('n', '<leader>tc', ':ColorizerToggle<CR>')
     return { -- INFO: https://github.com/catgoose/nvim-colorizer.lua?tab=readme-ov-file#default-configuration
       options = {
         parsers = {
@@ -13,7 +14,7 @@ return { -- NOTE: Colorizer (give color to #ff7200 hex codes) https://github.com
           xterm = { enable = true }, -- xterm 256-color codes (#xNN, \e[38;5;NNNm) \e[32;1m
         },
         display = {
-          mode = { 'foreground', 'virtualtext' },
+          mode = { 'background', 'virtualtext' }, -- foreground
           virtualtext = {
             -- position = 'before', -- default='eol'
             char = '󰚍', -- '', -- '■', -- character used for virtualtext

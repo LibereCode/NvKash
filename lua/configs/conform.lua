@@ -6,8 +6,12 @@ return { -- NOTE: Autoformat
     {
       '<leader>cf',
       function() require('conform').format { async = true, lsp_format = 'fallback' } end,
-      mode = '',
       desc = '[F]ormat buffer',
+    },
+    {
+      '<leader>cI',
+      '<CMD>ConformInfo<CR>',
+      desc = 'Conform [i]nfo',
     },
   },
   ---@module 'conform'
@@ -45,18 +49,22 @@ return { -- NOTE: Autoformat
       sh = { 'beautysh' },
       bash = { 'beautysh' },
       zsh = { 'beautysh' },
-      python = function(bufnr) -- runs ruff if I have it, else isort+black
-        if require('conform').get_formatter_info('ruff_format', bufnr).available then
-          return { 'ruff_format' } -- config in ~/.config/ruff/ruff.toml
-        else
-          return { 'black' } -- 'isort'
-        end
-      end,
+      -- python = function(bufnr) -- runs ruff if I have it, else isort+black
+      --   if require('conform').get_formatter_info('ruff_format', bufnr).available then
+      --     return { 'ruff_format' } -- config in ~/.config/ruff/ruff.toml
+      --   else
+      --     return { 'black' } -- 'isort'
+      --   end
+      -- end,
+      python = { 'ruff_format' },
       -- kdl = { "kdlfmt" }, -- fucks up niri config, and I can't get `.kdlfmtignore` to work -- https://github.com/hougesen/kdlfmt
-      markdown = { 'markdownlint-cli2' }, -- "markdownlint-cli2" , 'markdown-toc' -- TEST:
+      markdown = { 'prettierd' }, -- "markdownlint-cli2" -- TEST:
       yaml = { 'prettierd' },
+      json = { 'prettierd' },
+      jsonc = { 'prettierd' },
 
       nix = { 'nixfmt' },
+      css = { 'prettierd' },
     },
   },
 }

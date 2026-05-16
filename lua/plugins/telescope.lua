@@ -139,6 +139,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     --]]
 
     -- Quick access
+    leadmap('r', function() builtin.resume {} end, '[r]esume Telescope')
     leadmap('T', function() builtin.builtin {} end, 'Telescope [T]uiltins')
     leadmap(':', builtin.command_history, '[:]command_history') -- maybe in find instead?
     -- '/' => live_grep/fzf curBuf
@@ -196,6 +197,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     leadmap('ff', builtin.fd, 'files') -- fd=find_files
     leadmap('fh', builtin.help_tags, 'help')
     leadmap('fk', builtin.keymaps, 'keymaps')
+    leadmap('fm', builtin.man_pages, 'men')
     leadmap('fr', builtin.oldfiles, 'recent Files')
     leadmap('ft', builtin.builtin, '[t]elescopes')
     leadmap('f:', builtin.commands, '[:]commands')
@@ -203,7 +205,8 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- other groups
     leadmap('df', builtin.diagnostics, '[f]ind diagnostics')
     leadmap('bf', builtin.buffers, 'find')
-    leadmap('uC', builtin.colorscheme, 'live preview Colorscheme')
+    -- leadmap('uC', builtin.colorscheme, 'live preview Colorscheme')
+    leadmap('tC', builtin.colorscheme, 'live preview Colorscheme')
 
     -- This runs on LSP attach per buffer (see main LSP attach function in 'neovim/nvim-lspconfig' config for more info,
     -- it is better explained there). This allows easily switching between pickers if you prefer using something else!

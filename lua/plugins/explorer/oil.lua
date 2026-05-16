@@ -2,8 +2,8 @@ return { -- NOTE: oil🦅 -- good
   'stevearc/oil.nvim',
   opts = function()
     local oil = require 'oil'
-    vim.keymap.set('n', '<leader>O', function() oil.open(nil, { preview = { vertical = true } }) end) -- '<CMD>Oil<CR>'
-    vim.keymap.set('n', '<leader>e', function() oil.toggle_float() end, { desc = '󰏇 [O]il🦅' })
+    vim.keymap.set('n', '<leader>O', function() oil.open(nil, { preview = { vertical = true } }) end, { desc = '󰏇 [O]il🦅' }) -- '<CMD>Oil<CR>'
+    vim.keymap.set('n', '<leader>e', function() oil.toggle_float() end, { desc = 'toggl[e]󰏇 OIL🦅' })
     return {
       columns = {
         -- 'permissions',
@@ -39,21 +39,15 @@ return { -- NOTE: oil🦅 -- good
           desc = ':ex-mode <cDir>',
         },
 
-        -- ['<C-b>'] = 'actions.preview_scroll_left',
-        -- ['<C-d>'] = 'actions.preview_scroll_down',
-        -- ['<C-u>'] = 'actions.preview_scroll_up',
-        -- ['<C-f>'] = 'actions.preview_scroll_right',
-        ['H'] = 'actions.preview_scroll_left',
-        ['J'] = 'actions.preview_scroll_down',
-        ['K'] = 'actions.preview_scroll_up',
-        ['L'] = 'actions.preview_scroll_right',
+        ['<C-b>'] = 'actions.preview_scroll_left',
+        ['<C-d>'] = 'actions.preview_scroll_down',
+        ['<C-u>'] = 'actions.preview_scroll_up',
+        ['<C-f>'] = 'actions.preview_scroll_right',
 
-        -- ['H'] = { 'actions.parent', mode = 'n' },
-        -- ['L'] = { 'actions.select', mode = 'n' },
-        -- -- ['J'] = { 'actions.show_help', mode = 'n' }, -- ?? idk
-        -- ['K'] = { 'actions.preview', mode = 'n' },
-        ['<C-b>'] = { 'actions.parent', mode = 'n' },
-        ['<C-f>'] = { 'actions.select', mode = 'n' },
+        ['H'] = { 'actions.parent', mode = 'n' },
+        ['L'] = { 'actions.select', mode = 'n' },
+        -- ['J'] = { 'actions.show_help', mode = 'n' }, -- ?? idk
+        ['K'] = { 'actions.preview', mode = 'n' },
       },
 
       preview_win = {

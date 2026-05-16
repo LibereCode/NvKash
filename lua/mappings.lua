@@ -135,10 +135,14 @@ map('<C-x>', '<C-o>d', { desc = 'Cut in S-mode', remap = true }, 's') -- '<C-o>"
 -- NGL, pretty peak (even if it is mouse-based)
 
 -- Visual-mode -- these copies to 'Y'-registry (so seperate from Sys-Clipboard)
-leadmap('y', '"yy', { desc = '[y]ank 2 Sys' }, 'v')
-leadmap('p', '"yp', { desc = '[p]aste from Sys' }, 'v')
-map('<C-y>', '"yy', { desc = '[y]ank 2 Sys' }, 'v') -- Really usefull, so I made it appear  multiple ...
-map('<C-p>', '"yp', { desc = '[p]aste from Sys' }, 'v') -- ... places (either <leader>y/p or <C-y/p>)
+leadmap('y', '"yy', { desc = '[y]ank 2 "y' }, 'v')
+leadmap('p', '"yp', { desc = '[p]aste from "y' }, 'v')
+map('<C-y>', '"yy', { desc = '[y]ank 2 "y' }, 'v') -- Really usefull, so I made it appear  multiple ...
+map('<C-p>', '"yp', { desc = '[p]aste from "y' }, 'v') -- ... places (either <leader>y/p or <C-y/p>)
+leadmap('d', '"yd', { desc = '[d]elete 2 "y' }, 'v')
+leadmap('p', '"yp', { desc = '[p]aste "y' }, { 'n', 'v' })
+
+leadmap('P', '"_dd<ESC>P', { desc = 'delete->[p]aste, no❌yank' }, { 'n', 'v' })
 
 -- Insert-mode
 map('<C-v>', '<ESC>pa', { desc = 'Paste in I-mode', remap = true }, 'i') -- NOTE: Use  (^Q = <C-q>) Instead of (<C-v>) to do the thing
@@ -162,26 +166,22 @@ map('<C-q>', '<cmd>quit<CR>', { desc = 'quit' })
 
 -- INFO: UI toggles (builtin)
 --
-leadmap('uw', '<CMD>set wrap!<CR>', { desc = 'toggles [w]rap' })
-leadmap('ul', '<CMD>set nu!<CR>', { desc = 'toggle [l]ine-nr' })
-leadmap('ur', '<CMD>set rnu!<CR>', { desc = 'toggle [r]elative-line-nr' })
-leadmap('uc', '<CMD>set cul!<CR>', { desc = 'toggle cursor-[L]ine' })
-leadmap('uc', '<CMD>set cul!<CR>', { desc = 'toggle cursor-[L]ine' })
-leadmap('ut', function()
-  -- if vim.o.tabstop == 8 then -- toggle 4/8
-  --   vim.opt.tabstop = 4
-  -- else
-  --   vim.opt.tabstop = 8
-  -- end
-  -- print(vim.o.tabstop)
-
-  vim.ui.input({ prompt = 'Enter value for Tab-stuff: ' }, function(input) -- type option
-    local tabStuff = tonumber(input) -- from `:h vim.ui.input()`
-    vim.opt.tabstop = tabStuff
-    vim.opt.softtabstop = tabStuff
-    -- vim.opt.shiftwidth = tabStuff
-  end)
-end, { desc = 'set [t]abStuff' })
+-- leadmap('uw', '<CMD>set wrap!<CR>', { desc = 'toggles [w]rap' })
+-- leadmap('ul', '<CMD>set nu!<CR>', { desc = 'toggle [l]ine-nr' })
+-- leadmap('ur', '<CMD>set rnu!<CR>', { desc = 'toggle [r]elative-line-nr' })
+-- leadmap('uc', '<CMD>set cul!<CR>', { desc = 'toggle cursor-[L]ine' })
+leadmap('tw', '<CMD>set wrap!<CR>', { desc = '[w]rap' })
+leadmap('tl', '<CMD>set nu!<CR>', { desc = '[l]ine-nr' })
+leadmap('tr', '<CMD>set rnu!<CR>', { desc = '[r]elative-line-nr' })
+leadmap('tL', '<CMD>set cul!<CR>', { desc = 'cursor-[L]ine' })
+-- leadmap('ut', function()
+--   vim.ui.input({ prompt = 'Enter value for Tab-stuff: ' }, function(input) -- type option
+--     local tabStuff = tonumber(input) -- from `:h vim.ui.input()`
+--     vim.opt.tabstop = tabStuff
+--     vim.opt.softtabstop = tabStuff
+--     -- vim.opt.shiftwidth = tabStuff
+--   end)
+-- end, { desc = 'set [t]abStuff' })
 
 -- INFO: open/organize
 --

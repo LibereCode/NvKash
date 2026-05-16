@@ -12,37 +12,46 @@ return {
     -- lint.linters_by_ft = { -- to allow only the following
     --   markdown = { 'markdownlint' },
     -- }
-    -- To allow other plugins to add linters to require('lint').linters_by_ft,
-    -- INSTEAD set linters_by_ft like this:
-    -- lint.linters_by_ft = lint.linters_by_ft or {}
-    -- lint.linters_by_ft['markdown'] = { 'markdownlint' }
 
     -- for name, linter in pairs(opts.ft_linters) do -- WARN: this with opts.ft_linters didn't work D:
     --   lbf(name, linter)
     -- end
 
-    lint.linters_by_ft = lint.linters_by_ft or {}
-    local function lbf(ft, linter) lint.linters_by_ft[ft] = { linter } end
-    -- lbf('foo', 'bar')
-    --
-    -- lbf('clojure', 'clj-kondo')
-    -- lbf('dockerfile', 'hadolint')
-    -- lbf('inko', 'inko')
-    -- lbf('janet', 'janet')
-    -- lbf('json', 'jsonlint')
-    lbf('markdown', 'markdownlint-cli2') -- 'vale'
-    -- lbf('rst', 'vale')
-    -- lbf('ruby', 'ruby')
-    -- lbf('terraform', 'tflint')
-    lbf('text', 'vale')
-    -- INFO: Add more here
-    -- lbf('python', 'ruff') -- I think ty works as a linter on it's own?  NOTE:
-    lbf('json', 'jsonlint') -- biome ...
-    -- lbf('javascript', 'biome') -- ... don't ...
-    -- lbf('typescript', 'biome') -- ... work ?
-    -- lbf('go', 'nilaway')
-    lbf('bash', 'shellcheck')
-    lbf('sh', 'shellcheck')
+    -- lint.linters_by_ft = lint.linters_by_ft or {}
+    -- ---@param lintpairs table<string,string>
+    -- local function lbf(lintpairs)
+    --   for file, linter in pairs(lintpairs) do
+    --     lint.linters_by_ft[file] = { linter }
+    --   end
+    -- end
+    -- lbf {
+    --   clojure = 'clj-kondo',
+    --   dockerfile = 'hadolint',
+    --   inko = 'inko',
+    --   janet = 'janet',
+    --   json = 'jsonlint',
+    --   rst = 'vale',
+    --   ruby = 'ruby',
+    --   terraform = 'tflint',
+    --   python = 'ruff', -- I think ty works as a linter on it's own?  NOTE:
+    --   javascript = 'biome', -- ... don't ...
+    --   typescript = 'biome', -- ... work ?
+    --   go = 'nilaway',
+    -- }
+
+    -- TEST:
+    lint.linters_by_ft = {
+      markdown = { 'markdownlint-cli2' }, -- 'vale'
+      text = { 'vale' },
+
+      -- INFO: Add more here
+
+      json = { 'jsonlint' }, -- jsonlint biome ...
+      sh = { 'shellcheck' },
+      bash = { 'shellcheck', 'bash' },
+      zsh = { 'zsh' }, -- ??
+      fish = { 'fish' }, -- ??
+    }
 
     -- You can disable the default linters by setting their filetypes to nil:
     -- lint.linters_by_ft['clojure'] = nil

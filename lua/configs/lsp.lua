@@ -123,11 +123,13 @@ return { -- NOTE: LSP-conf
       },
       jsonls = {},
       yamlls = {},
-      zls = {
-        cmd = { '/usr/bin/zls-master' },
+      zls = { -- zig
+        -- cmd = { '/usr/bin/zls-master' },
       },
       vale_ls = {}, -- you can just rename them... (vale-ls -> vale_ls)
       hyprls = {},
+      nil_ls = {},
+      -- cssls = {},
     },
   },
   config = function(_, opts)
@@ -230,7 +232,8 @@ return { -- NOTE: LSP-conf
         --
         -- This may be unwanted, since they displace some of your code
         if client and client:supports_method('textDocument/inlayHint', event.buf) then
-          lspmap('<leader>uH', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'toggle Inlay [H]ints') -- HACK: <leader>th --> <leader>uH
+          -- lspmap('<leader>uH', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'toggle Inlay [H]ints') -- HACK: <leader>th --> <leader>uH
+          lspmap('<leader>tH', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'Inlay [H]ints') -- HACK: <leader>th --> <leader>uH
           lspmap('<leader>cH', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'toggle Inlay [H]ints') -- and --> <leader>cH
         end
       end,
@@ -252,7 +255,6 @@ return { -- NOTE: LSP-conf
     -- end, 'TS: [T]ree')
     leadmap('cm', '<CMD>Mason<CR>', '[m]ason')
     leadmap('cM', '<CMD>MasonLog<CR>', '[M]asonLog')
-    leadmap('ci', '<CMD>ConformInfo<CR>', 'Conform [i]nfo')
     leadmap('cd', '<CMD>lua vim.diagnostic.open_float()<CR>', 'float [d]iagnostics')
 
     -- Ensure the servers and tools above are installed
@@ -274,13 +276,11 @@ return { -- NOTE: LSP-conf
       -- 'black',
       'html-lsp',
       'jsonlint',
-      -- 'markdown-toc',
       'markdownlint-cli2',
       -- 'markmap-cli',
       -- 'marksman',
       -- 'nixfmt',
       -- 'nixpkgs-fmt',
-      -- 'prettier',
       'prettierd',
       'shellcheck',
       -- 'taplo',

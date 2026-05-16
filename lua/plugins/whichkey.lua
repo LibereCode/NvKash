@@ -6,7 +6,7 @@ return { -- Useful plugin to show you pending keybinds.
   ---@diagnostic disable-next-line: missing-fields
   opts = function(_, opts)
     -- vim.keymap.set('n', 'W', '<CMD>WhichKey<CR>', { desc = 'WhichKey[W]all' }) -- no leader?
-    vim.keymap.set('n', '<leader>?', '<CMD>WhichKey<CR>', { desc = 'WhichKey[?]' })
+    vim.keymap.set('n', '<leader>?', '<CMD>WhichKey<CR>', { desc = 'Which[?]Key' })
     return {
       preset = 'helix', -- false|"classic"|"modern"|"helix"
       -- delay between pressing a key and opening which-key (milliseconds)
@@ -32,8 +32,9 @@ return { -- Useful plugin to show you pending keybinds.
         -- { '<leader>m', group = 'text/[m]arkdown', mode = { 'n' } }, -- I use <localleader> instead
         -- { '<leader>n', group = 'telekaste[n]otes', mode = { 'n' } }, -- I use <localleader> instead
         { '<leader>o', group = 'open/[o]rganize', mode = { 'n' } }, -- includes my `custom.journal`
-        { '<leader>t', group = 'terminal' },
-        { '<leader>u', group = 'ui', mode = { 'n' } },
+        -- { '<leader>t', group = 'terminal' },
+        { '<leader>t', group = 'toggle/[t]erm' },
+        -- { '<leader>u', group = 'ui', mode = { 'n' } },
         { '<leader><tab>', group = 'tab', mode = { 'n' } },
         { '<leader>s', group = 'search/[s]tring', mode = { 'n', 'v' } },
         { '<leader>q', group = 'session/[q]uit', mode = { 'n' } },

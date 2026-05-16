@@ -32,11 +32,12 @@ o.showmode = false -- Don't show the mode, since it's already in the status line
 o.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus' -- together with the new V/S-mode mappings --  PERF: Hated it
 
 o.breakindent = true -- Enable break indent
-o.shiftwidth = 4 --  . :h 'sw'
-o.tabstop = 4 -- . :h 'ts'
-o.softtabstop = 4 -- . :h 'sts'
 -- o.smartindent = true -- maybe not so smart...
-o.expandtab = true
+o.tabstop = 4 -- . :h 'ts'
+-- TEST: only tabstop
+-- o.shiftwidth = 4 --  . :h 'sw'
+-- o.softtabstop = 4 -- . :h 'sts'
+-- o.expandtab = true
 
 -- o.shm:append({ W = true, I = true, c = true, C = true }) -- append to shortmess, which is truncation of terms
 -- o.hortmess:append 'sI' -- disable nvim intro(default dashboard)
@@ -72,11 +73,14 @@ o.splitbelow = true
 --   and `:help lua-guide-options`
 o.list = true
 o.listchars = { -- :h lcs
-  tab = '» ',
-  trail = '·',
-  nbsp = '␣',
-  extends = '→', -- '→⃨',
-  precedes = '←',
+  -- eol = '󰌑', --   ␤ 󰌑 
+  tab = '⇥ ', -- ↣ ↪ ⇢ ⇛ ⇒ ⇨ ⇥ 󰌒 »
+  multispace = string.rep(' ', (vim.o.ts - 1)) .. '␣', -- mark "shiftwidth" tabs
+  trail = '·', -- ␣ 󱁐 · ␠
+  lead = ' ',
+  nbsp = '⍽',
+  extends = '󰶻', --  →⃨
+  precedes = '󰶺', --  ←
 }
 
 o.inccommand = 'split' -- :h 'icm' -- Preview substitutions live, as you type!
@@ -93,7 +97,7 @@ o.confirm = true
 o.fillchars = { -- :h fcs
   foldopen = '',
   foldclose = '', -- "",
-  fold = '·', -- " ", ' ',
+  fold = '·', -- · ' '
   foldsep = '', -- " ",
   diff = '╱',
   eob = ' ',
@@ -137,8 +141,8 @@ cset 't_Co=256'
 cset 'termguicolors'
 cset 'background=dark'
 
-o.colorcolumn = '80'
 o.textwidth = 80
+o.colorcolumn = tostring(vim.opt.textwidth:get()) -- see also autocmd
 
 -- o.winborder = 'bold' -- "bold" -- `:h 'winborder'`
 o.winborder = '.,-,.,¦,˙,-,˙,¦' -- TEST: (customAlt)=>'+,-,+,|,+,-,+,|'

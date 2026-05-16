@@ -1,14 +1,15 @@
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
-local aucmd = vim.api.nvim_create_autocmd
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.hl.on_yank()`
-aucmd('TextYankPost', {
+autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  group = augroup('kickstart-highlight-yank', { clear = true }),
   callback = function() vim.hl.on_yank() end,
 })
 
@@ -16,7 +17,7 @@ aucmd('TextYankPost', {
 
 -- niri-archcraft-niri-nvim-from-lazyvim
 -- Ensure terminal opens in current working directory
-aucmd('TermOpen', {
+autocmd('TermOpen', {
   callback = function()
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
@@ -31,13 +32,27 @@ aucmd('TermOpen', {
 --   callback = function(args) require('conform').format { bufnr = args.buf } end,
 -- })
 
-aucmd('BufReadPost', { -- Restore cursor position
+autocmd('BufReadPost', { -- Restore cursor position
   pattern = '*',
   callback = function()
     local line = vim.fn.line '\'"'
     if line > 1 and line <= vim.fn.line '$' and vim.bo.filetype ~= 'commit' and vim.fn.index({ 'xxd', 'gitrebase' }, vim.bo.filetype) == -1 then
       vim.cmd 'normal! g`"'
     end
+  end,
+})
+
+-- autocmd({ 'InsertCharPre' }, { -- TEST: moving colorcolumn (moves with cursor)
+--   callback = function() --
+--     vim.o.colorcolumn = tostring(vim.api.nvim_win_get_cursor(0)[2] + 1)
+--   end,
+-- })
+
+autocmd('OptionSet', { -- make 'colorcolumn' auto-match textwidth
+  pattern = { 'textwidth' },
+  group = augroup('colorcolumn-match-textwidth', { clear = true }),
+  callback = function() --
+    vim.opt_local.colorcolumn = tostring(vim.opt.textwidth:get())
   end,
 })
 
@@ -72,4 +87,4 @@ vim.api.nvim_create_autocmd('FileType', {
 -- INFO: Commands (vim.api.nvim_create_user_command &AND& vim.cmd(''))
 local cr_cmd = vim.api.nvim_create_user_command -- ('name', 'command', {})
 
--- vim.cmd 'cd %:h' -- fucks up if not entering file
+-- vim.cmd 'cd %:h' --XXX: fucks up if not entering file
