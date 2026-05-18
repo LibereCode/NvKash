@@ -34,9 +34,8 @@ o.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus' -- together with th
 o.breakindent = true -- Enable break indent
 -- o.smartindent = true -- maybe not so smart...
 o.tabstop = 4 -- . :h 'ts'
--- TEST: only tabstop
--- o.shiftwidth = 4 --  . :h 'sw'
--- o.softtabstop = 4 -- . :h 'sts'
+o.shiftwidth = 0 -- 4 -- 0 => sw=ts --  . :h 'sw'
+o.softtabstop = -1 -- 4 -- sts>0 => sts=sw(=ts) -- . :h 'sts'
 -- o.expandtab = true
 
 -- o.shm:append({ W = true, I = true, c = true, C = true }) -- append to shortmess, which is truncation of terms

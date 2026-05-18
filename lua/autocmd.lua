@@ -84,6 +84,14 @@ vim.api.nvim_create_autocmd('FileType', {
 --   end,
 -- }) -- kinda sucked
 
+-- Makes file.conf (and ghostty-conf.boo) into filetype "cfg" syntax
+autocmd('BufEnter', { -- TEST: which group should I ?
+  pattern = { '*.conf', '*.boo' },
+  desc = 'file.conf -> file.cfg syntax',
+  command = 'set ft=cfg',
+  -- once = true, -- TEST:
+})
+
 -- INFO: Commands (vim.api.nvim_create_user_command &AND& vim.cmd(''))
 local cr_cmd = vim.api.nvim_create_user_command -- ('name', 'command', {})
 

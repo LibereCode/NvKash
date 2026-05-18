@@ -130,6 +130,7 @@ return { -- NOTE: LSP-conf
       hyprls = {},
       nil_ls = {},
       -- cssls = {},
+      lemminx = {}, -- test
     },
   },
   config = function(_, opts)

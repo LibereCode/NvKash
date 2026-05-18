@@ -65,6 +65,7 @@ return { -- NOTE: Autoformat
 
       nix = { 'nixfmt' },
       css = { 'prettierd' },
+      xml = { 'xmlformatter' },
     },
   },
 }

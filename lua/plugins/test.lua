@@ -3,9 +3,9 @@
 --]]
 
 return {
-  {
-    'bezhermoso/tree-sitter-ghostty',
-    build = 'make nvim_install',
-    ft = 'ghostty',
-  },
+  -- {
+  --   'bezhermoso/tree-sitter-ghostty',
+  --   build = 'make nvim_install',
+  --   ft = 'ghostty',
+  -- },
 }
