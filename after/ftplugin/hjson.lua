@@ -1,3 +1,3 @@
-local o = vim.opt_local
+local ol = vim.opt_local
 
-o.commentstring = '# %s'
+ol.commentstring = '# %s'

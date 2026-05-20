@@ -23,6 +23,6 @@ map('<localleader>h', helpCword(), { desc = 'help <cword>', remap = true })
 map('gh', helpCword(), { desc = 'help <cword>', remap = true }) -- will replace the ... weird?
 -- default gh ``:h gh`. Just use <C-g> while in V-mode instead....
 
-local o = vim.opt_local
+local ol = vim.opt_local
 -- o.softtabstop = 2 -- . :h 'sts' -- Will only be applied at config because :...
 -- ... I have a ~/.config/stylua saying tab = 4, so stylua here don't apply globally

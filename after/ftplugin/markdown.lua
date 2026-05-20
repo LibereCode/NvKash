@@ -8,7 +8,9 @@ local function localmap(keys, cmd, opts, modes) map('<localleader>' .. keys, cmd
 -- localmap('t', 'o| h1 | h2 |<Escape>o| -- | -- |<Escape>o| i1 | i2 |<Escape>"')
 localmap('c', 'o ```lua<CR>```<ESCAPE>ko', { desc = 'ins [c]odeblock' })
 
-vim.opt_local.wrap = true -- local is the GOAT here
+local ol = vim.opt_local -- local is the GOAT here
+
+ol.wrap = true
 
 -- Because no tags in .md, instead markdown links
 map('gl', 'gx', { desc = 'Go to header/local link', remap = true }) -- remap was needed

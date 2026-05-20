@@ -1,4 +1,4 @@
-:setlocal sidescrolloff=0 " helpdocs already have a good witdh (or wrap, idk, idgaf)
+:setlocal sidescrolloff=10 " helpdocs already have a good witdh (or wrap, idk, idgaf)
 
 " NOTE: lua HEREDOC
 lua << EOF

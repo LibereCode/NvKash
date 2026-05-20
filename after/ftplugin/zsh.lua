@@ -1,4 +1,4 @@
-local o = vim.opt_local
+local ol = vim.opt_local
 
-o.smarttab = true
-o.smartindent = true
+ol.smarttab = true
+ol.smartindent = true
