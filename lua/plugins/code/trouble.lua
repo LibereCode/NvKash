@@ -13,14 +13,14 @@ return {
       desc = 'Diagnostics (Trouble)',
     },
     {
-      '<leader>cs',
+      '<leader>cs', -- ct
       '<cmd>Trouble symbols toggle focus=false<cr>',
-      desc = 'Symbols (Trouble)',
+      desc = 'Trouble: [s]ymbols',
     },
     {
-      '<leader>cl',
+      '<leader>cS', -- cl ct cT
       '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
-      desc = 'LSP Definitions / references / ... (Trouble)',
+      desc = 'Trouble: [l]sp', -- 'LSP Definitions / references / ... (Trouble)'
     },
     {
       '<leader>dO',

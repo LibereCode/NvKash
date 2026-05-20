@@ -121,7 +121,6 @@ return { -- NOTE: LSP-conf
         cmd = { 'bash-language-server', 'start' },
         filetypes = { 'sh', 'zsh', 'bash' },
       },
-      jsonls = {},
       yamlls = {},
       zls = { -- zig
         -- cmd = { '/usr/bin/zls-master' },
@@ -131,6 +130,9 @@ return { -- NOTE: LSP-conf
       nil_ls = {},
       -- cssls = {},
       lemminx = {}, -- test
+      jsonls = {
+        filetypes = { 'json', 'jsonc' },
+      },
     },
   },
   config = function(_, opts)
@@ -233,9 +235,9 @@ return { -- NOTE: LSP-conf
         --
         -- This may be unwanted, since they displace some of your code
         if client and client:supports_method('textDocument/inlayHint', event.buf) then
-          -- lspmap('<leader>uH', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'toggle Inlay [H]ints') -- HACK: <leader>th --> <leader>uH
-          lspmap('<leader>tH', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'Inlay [H]ints') -- HACK: <leader>th --> <leader>uH
-          lspmap('<leader>cH', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'toggle Inlay [H]ints') -- and --> <leader>cH
+          lspmap('<leader>uh', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'toggle Inlay [H]ints') -- uH
+          -- lspmap('<leader>tH', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'Inlay [H]ints') -- HACK: <leader>th --> <leader>uH
+          lspmap('<leader>ch', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, 'toggle Inlay [H]ints') -- cH -- and --> <leader>cH
         end
       end,
     })

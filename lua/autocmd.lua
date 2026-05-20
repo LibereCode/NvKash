@@ -10,7 +10,8 @@ local augroup = vim.api.nvim_create_augroup
 autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function() vim.hl.on_yank() end,
+  -- callback = function() vim.hl.on_yank() end,
+  callback = function() vim.hl.hl_op() end,
 })
 
 -- HACK: Add more down below
@@ -42,19 +43,25 @@ autocmd('BufReadPost', { -- Restore cursor position
   end,
 })
 
--- autocmd({ 'InsertCharPre' }, { -- TEST: moving colorcolumn (moves with cursor)
+-- autocmd({ 'InsertCharPre' }, { -- XXX: (cursed) moving colorcolumn (moves with cursor)
 --   callback = function() --
 --     vim.o.colorcolumn = tostring(vim.api.nvim_win_get_cursor(0)[2] + 1)
 --   end,
 -- })
 
-autocmd('OptionSet', { -- make 'colorcolumn' auto-match textwidth
-  pattern = { 'textwidth' },
-  group = augroup('colorcolumn-match-textwidth', { clear = true }),
-  callback = function() --
-    vim.opt_local.colorcolumn = tostring(vim.opt.textwidth:get())
-  end,
+autocmd('WinResized', { -- change colorcolumn with screenwidth
+  group = augroup('colorcolumn-follow-columns', { clear = true }),
+  callback = function() vim.o.colorcolumn = tostring(vim.o.columns - 5) .. ',-10' end,
 })
+
+-- autocmd('OptionSet', { -- make 'colorcolumn' auto-match textwidth -- DUMB!
+--   pattern = { 'textwidth' },
+--   group = augroup('colorcolumn-match-textwidth', { clear = true }),
+--   callback = function() --
+--     local textwidth = vim.o.textwidth
+--     if textwidth >= 80 then vim.opt.colorcolumn = tostring(textwidth) .. ',80' end -- tostring(textwidth-20)
+--   end,
+-- }) -- bruh, could've just done `set colorcolumn=+0` to match textwidth (see :h colorcolumn)
 
 -- autocmd('BufDelete', { -- show :intro when all buffers are 💀
 --   callback = function()
@@ -88,11 +95,49 @@ vim.api.nvim_create_autocmd('FileType', {
 autocmd('BufEnter', { -- TEST: which group should I ?
   pattern = { '*.conf', '*.boo' },
   desc = 'file.conf -> file.cfg syntax',
-  command = 'set ft=cfg',
-  -- once = true, -- TEST:
+  -- command = 'set ft=cfg',
+  -- once = true,
+  callback = function() -- TEST:
+    if vim.o.filetype == 'conf' then vim.opt.filetype = 'cfg' end -- ~= "hyprlang"
+  end,
 })
 
 -- INFO: Commands (vim.api.nvim_create_user_command &AND& vim.cmd(''))
 local cr_cmd = vim.api.nvim_create_user_command -- ('name', 'command', {})
 
--- vim.cmd 'cd %:h' --XXX: fucks up if not entering file
+-- -- XXX: MOVED TO NeoVim/dev/printTreeTable.nvim (REMOVE)
+-- ---Used in _user_command_ `TreeTable`
+-- ---@param value any
+-- ---@param func function
+-- ---@param tabs? integer
+-- local ifTableFunc = function(value, func, tabs)
+--   tabs = tabs or 0
+--   local tabString = string.rep('	', tabs)
+--
+--   if type(value) == 'table' then
+--     for key, val in pairs(value) do
+--       print(tabString .. key)
+--       func(val, func, tabs + 1)
+--     end
+--   else
+--     print(tabString .. '= ' .. tostring(value))
+--   end
+-- end
+-- cr_cmd('TreeTable', function(opts)
+--   print('\n-------------- TreeTable: ' .. '' .. ' ------------------')
+--   local tableName = opts.args
+--   local tableIn = _G[tableName] -- converts into table?
+--   if type(tableIn) == 'table' then
+--     ifTableFunc(tableIn, ifTableFunc)
+--   else
+--     print('Error: ' .. tableName .. ' is not a table')
+--   end
+-- end, {
+--   nargs = 1,
+--   desc = [[Print Tree-structure of a table-nested table.
+-- USE:
+--   :lua GlobalTable = require('lualine').get_config()
+--   :TreeTable GlobalTable]],
+-- })
+
+-- v\im.cmd 'cd %:h' -- XXX: ??? why did I do this ???

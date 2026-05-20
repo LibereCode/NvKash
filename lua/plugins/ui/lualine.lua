@@ -77,7 +77,7 @@ return { -- NOTE: Lualine https://github.com/nvim-lualine/lualine.nvim
           'filetype',
         },
         lualine_y = {
-          -- 'selectioncount',
+          'selectioncount',
           'progress',
         },
         lualine_z = {
@@ -88,42 +88,6 @@ return { -- NOTE: Lualine https://github.com/nvim-lualine/lualine.nvim
           -- function() return ' ' .. os.date '%R' end, -- clock
         },
       },
-      -- inactive_sections = {
-      --   lualine_a = {},
-      --   lualine_b = {},
-      --   lualine_c = { 'filename' },
-      --   lualine_x = { 'location' },
-      --   lualine_y = {},
-      --   lualine_z = {},
-      -- },
-
-      -- -- tabline = {},
-      -- tabline = { -- TODO: replace with bufferline (or barbar)
-      --   lualine_a = { 'buffers' },
-      --   -- lualine_c = { '%=', '%t%m', '%3p' }, '%=' = ??? ; '%t%m' = filename,modified ; '%3p' = linenr/3
-      --   -- lualine_x = { 'g:coc_status', 'bo:filetype' }, -- ignores abcxyz position and do whatever
-      --   lualine_y = {},
-      --   lualine_z = { 'tabs' },
-      -- },
-
-      -- winbar = {},
-      -- inactive_winbar = {},
-      -- -- winbar = {
-      -- --    lualine_a = {},
-      -- --    lualine_b = {},
-      -- -- lualine_c = { 'filename' },
-      -- --    lualine_x = {},
-      -- --    lualine_y = {},
-      -- --    lualine_z = {},
-      -- -- },
-      -- -- inactive_winbar = {
-      -- --    lualine_a = {},
-      -- --    lualine_b = {},
-      -- -- lualine_c = { 'filename' },
-      -- --    lualine_x = {},
-      -- --    lualine_y = {},
-      -- --    lualine_z = {},
-      -- -- },
 
       extensions = {
         'neo-tree',

@@ -9,36 +9,6 @@ return {
   config = function(_, opts)
     local lint = require 'lint'
 
-    -- lint.linters_by_ft = { -- to allow only the following
-    --   markdown = { 'markdownlint' },
-    -- }
-
-    -- for name, linter in pairs(opts.ft_linters) do -- WARN: this with opts.ft_linters didn't work D:
-    --   lbf(name, linter)
-    -- end
-
-    -- lint.linters_by_ft = lint.linters_by_ft or {}
-    -- ---@param lintpairs table<string,string>
-    -- local function lbf(lintpairs)
-    --   for file, linter in pairs(lintpairs) do
-    --     lint.linters_by_ft[file] = { linter }
-    --   end
-    -- end
-    -- lbf {
-    --   clojure = 'clj-kondo',
-    --   dockerfile = 'hadolint',
-    --   inko = 'inko',
-    --   janet = 'janet',
-    --   json = 'jsonlint',
-    --   rst = 'vale',
-    --   ruby = 'ruby',
-    --   terraform = 'tflint',
-    --   python = 'ruff', -- I think ty works as a linter on it's own?  NOTE:
-    --   javascript = 'biome', -- ... don't ...
-    --   typescript = 'biome', -- ... work ?
-    --   go = 'nilaway',
-    -- }
-
     -- TEST:
     lint.linters_by_ft = {
       markdown = { 'markdownlint-cli2' }, -- 'vale'
@@ -77,5 +47,28 @@ return {
         if vim.bo.modifiable then lint.try_lint() end
       end,
     })
+
+    ---@param key string
+    ---@param cmd string|function
+    ---@param mapOpts? table  -- defaults to: {}
+    ---@param mode? string    -- defaults to: 'n'
+    local lint_map = function(key, cmd, mapOpts, mode)
+      if mapOpts and mapOpts.desc then mapOpts.desc = 'Lint: ' .. mapOpts.desc end
+      vim.keymap.set(mode or 'n', key, cmd, mapOpts or {})
+    end
+    --
+    lint_map('<leader>cL', function()
+      local lintGet = lint.get_running()
+      print 'lint.get_running:'
+      for key, val in pairs(lintGet) do
+        print(key, val)
+      end
+      local linters = lint.linters
+      print 'lint.linters:'
+      for key, val in pairs(linters) do
+        print(key, val)
+      end
+    end, { desc = '[L]inters' })
+    --
   end,
 }

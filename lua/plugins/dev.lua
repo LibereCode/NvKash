@@ -43,4 +43,10 @@ return {
     'LibereCode/todo-sh.nvim',
     opts = {},
   },
+
+  {
+    -- dev = true,
+    'LibereCode/printTreeTable.nvim',
+    opts = {},
+  },
 }

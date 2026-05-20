@@ -23,10 +23,10 @@ return {
     vim.keymap.set( -- TEST:
       'n',
       -- '<LEADER>r',
-      '<LEADER>u',
+      '<LEADER>U', -- '<LEADER>u',
       ':UndotreeToggle<CR>',
       -- { desc = 'UndoT[r]ee' }
-      { desc = '[u]ndoTree' }
+      { desc = '[U]ndoTree' }
     )
   end,
 }

@@ -41,7 +41,8 @@ o.softtabstop = -1 -- 4 -- sts>0 => sts=sw(=ts) -- . :h 'sts'
 -- o.shm:append({ W = true, I = true, c = true, C = true }) -- append to shortmess, which is truncation of terms
 -- o.hortmess:append 'sI' -- disable nvim intro(default dashboard)
 o.shortmess:append 'as' -- a=lmrw (:h shortmess) -- alpha.nvim appends I (replaces :intro)
--- o.cmdheight = 2
+o.ruler = false
+o.cmdheight = 0 -- 0 2
 
 o.sidescrolloff = 40 -- :h 'siso' -- 8 723 -- very big(723)=always centered(unless at left)
 o.sidescroll = 0 -- :h 'ss' -- 0 -- scroll this many lines when `:h siso` is triggered -- 0 = center instead
@@ -140,8 +141,9 @@ cset 't_Co=256'
 cset 'termguicolors'
 cset 'background=dark'
 
-o.textwidth = 80
-o.colorcolumn = tostring(vim.opt.textwidth:get()) -- see also autocmd
+o.textwidth = 100 -- 80
+-- o.colorcolumn = tostring(vim.opt.textwidth:get()) -- see also autocmd
+o.colorcolumn = '-10,80' -- bruh
 
 -- o.winborder = 'bold' -- "bold" -- `:h 'winborder'`
 o.winborder = '.,-,.,¦,˙,-,˙,¦' -- TEST: (customAlt)=>'+,-,+,|,+,-,+,|'
@@ -150,13 +152,15 @@ o.winborder = '.,-,.,¦,˙,-,˙,¦' -- TEST: (customAlt)=>'+,-,+,|,+,-,+,|'
 require('vim._core.ui2').enable {
   enable = true, -- Whether to enable or disable the UI.
   msg = { -- Options related to the message module.
-    ---@type 'cmd'|'msg' Default message target, either in the
-    ---cmdline or in a separate ephemeral message window.
     ---@type string|table<string, 'cmd'|'msg'|'pager'> Default message target
-    ---or table mapping |ui-messages| kinds and triggers to a target.
+    ---or table mapping |ui-messages| kinds, triggers and IDs to a target.
+    ---Table keys are are matched as a Lua pattern to the message ID. 'default'
+    ---mapping applies to any omitted kind: { default = 'cmd', progress = 'msg' }.
     targets = 'cmd',
     cmd = { -- Options related to messages in the cmdline window.
-      height = 0.5, -- Maximum height while expanded for messages beyond 'cmdheight'.
+      -- Maximum height (rows if >=1, or % of 'lines' if <1) of messages expanded
+      -- beyond 'cmdheight'; 0.999 for full height.
+      height = 0.5,
     },
     dialog = { -- Options related to dialog window.
       height = 0.5, -- Maximum height.
@@ -166,7 +170,7 @@ require('vim._core.ui2').enable {
       timeout = 4000, -- Time a message is visible in the message window.
     },
     pager = { -- Options related to message window.
-      height = 1, -- Maximum height.
+      height = 0.999, -- Maximum height.
     },
   },
 }

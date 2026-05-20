@@ -205,8 +205,8 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- other groups
     leadmap('df', builtin.diagnostics, '[f]ind diagnostics')
     leadmap('bf', builtin.buffers, 'find')
-    -- leadmap('uC', builtin.colorscheme, 'live preview Colorscheme')
-    leadmap('tC', builtin.colorscheme, 'live preview Colorscheme')
+    leadmap('uC', builtin.colorscheme, 'live preview Colorscheme')
+    -- leadmap('tC', builtin.colorscheme, 'live preview Colorscheme')
 
     -- This runs on LSP attach per buffer (see main LSP attach function in 'neovim/nvim-lspconfig' config for more info,
     -- it is better explained there). This allows easily switching between pickers if you prefer using something else!

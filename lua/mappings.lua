@@ -4,6 +4,7 @@
 --
 -- INFO: [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
+--  also see: /usr/share/nvim/runtime/lua/vim/_core/defaults.lua (for reference)
 
 -- local map = vim.keymap.set
 ---@param key string|string
@@ -166,14 +167,14 @@ map('<C-q>', '<cmd>quit<CR>', { desc = 'quit' })
 
 -- INFO: UI toggles (builtin)
 --
--- leadmap('uw', '<CMD>set wrap!<CR>', { desc = 'toggles [w]rap' })
--- leadmap('ul', '<CMD>set nu!<CR>', { desc = 'toggle [l]ine-nr' })
--- leadmap('ur', '<CMD>set rnu!<CR>', { desc = 'toggle [r]elative-line-nr' })
--- leadmap('uc', '<CMD>set cul!<CR>', { desc = 'toggle cursor-[L]ine' })
-leadmap('tw', '<CMD>set wrap!<CR>', { desc = '[w]rap' })
-leadmap('tl', '<CMD>set nu!<CR>', { desc = '[l]ine-nr' })
-leadmap('tr', '<CMD>set rnu!<CR>', { desc = '[r]elative-line-nr' })
-leadmap('tL', '<CMD>set cul!<CR>', { desc = 'cursor-[L]ine' })
+leadmap('uw', '<CMD>set wrap!<CR>', { desc = 'toggles [w]rap' })
+leadmap('ul', '<CMD>set nu!<CR>', { desc = 'toggle [l]ine-nr' })
+leadmap('ur', '<CMD>set rnu!<CR>', { desc = 'toggle [r]elative-line-nr' })
+leadmap('uL', '<CMD>set cul!<CR>', { desc = 'toggle cursor-[L]ine' })
+-- leadmap('tw', '<CMD>set wrap!<CR>', { desc = '[w]rap' })
+-- leadmap('tl', '<CMD>set nu!<CR>', { desc = '[l]ine-nr' })
+-- leadmap('tr', '<CMD>set rnu!<CR>', { desc = '[r]elative-line-nr' })
+-- leadmap('tL', '<CMD>set cul!<CR>', { desc = 'cursor-[L]ine' })
 -- leadmap('ut', function()
 --   vim.ui.input({ prompt = 'Enter value for Tab-stuff: ' }, function(input) -- type option
 --     local tabStuff = tonumber(input) -- from `:h vim.ui.input()`

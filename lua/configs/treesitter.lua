@@ -35,10 +35,13 @@ return { -- Highlight, edit, and navigate code
 
         -- check if parser exists and load it -- BUG: Does it really???
         if not vim.treesitter.language.add(language) then
-          vim.keymap.set('n', '<leader>ct', vim.show_pos, { desc = 'TS: position' }) -- Treesitter inspect
-          vim.keymap.set('n', 'cT', function()
+          -- stylua: ignore
+          vim.keymap.set( 'n', '<leader>ut' --[[cs|ct]],
+            vim.show_pos, { desc = 'TS: posi[t]ion' }
+          )
+          vim.keymap.set('n', '<leader>uT'--[[cS|cT]], function()
             vim.treesitter.inspect_tree()
-            vim.api.nvim_input 'I' -- INFO: THIS IS HOW YOU INSERT TEXT !!
+            vim.api.nvim_input 'I' -- INFO: THIS IS (in one way) HOW YOU INSERT TEXT !!
           end, { desc = 'TS: [T]ree' })
           return
         end
