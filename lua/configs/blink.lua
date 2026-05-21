@@ -23,30 +23,34 @@ return { -- NOTE: Autocompletion
           config = function() require('luasnip.loaders.from_vscode').lazy_load() end,
         },
       },
+      opts = {
+        -- NOTE: see plugins/util/luasnip.lua (put the snippets here)
+      },
+    },
 
-      opts = function(_, opts)
-        local ls = require 'luasnip'
+    { 'folke/neodev.nvim', enabled = false }, -- make sure to uninstall or disable neodev.nvim
+    {
+      'folke/lazydev.nvim',
+      ft = 'lua', -- only load on lua files
+      opts = {
+        library = {
+          -- See the configuration section for more details
+          -- Load luvit types when the `vim.uv` word is found
+          { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+        },
+        -- enabled = function(root_dir)
+        --   return not vim.uv.fs_stat(root_dir .. "/.luarc.json")
+        -- end,
+      },
+      keys = {
+        { '<leader>ld', '<CMD>LazyDev lsp<CR>' },
+      },
+      -- enabled = function(root_dir) return not vim.uv.fs_stat(root_dir .. '/.luarc.json') end, -- WARN: bricks config
+    },
 
-        local lsmap = function(key, cmd, mapOpts, mode)
-          mode = mode or 'n'
-          vim.keymap.set(mode, key, cmd, mapOpts)
-        end
-        lsmap('<M-e>'--[['<C-l>' '<C-k'>]], function() ls.expand() end, { silent = true }, 'i') --
-        lsmap('<M-n>'--[['<C-k>' '<C-l'>]], function() ls.jump(1) end, { silent = true }, { 'i', 's' })
-        lsmap('<M-p>'--[['<C-j>']], function() ls.jump(-1) end, { silent = true }, { 'i', 's' })
-        lsmap('<M-c>'--[['<C-e>']], function() -- What is this? Change-active-choice?
-          if ls.choice_active() then ls.change_choice(1) end
-        end, { silent = true }, { 'i', 's' })
-
-        --   local s = ls.snippet
-        --   local t = ls.text_node
-        --   local i = ls.insert_node
-        --   ls.add_snippets( -- TODO: get to work
-        --     'all',
-        --     s('helloSnip', { t 'test ', i(1), t 'test again', i(2) })
-        --   )
-        --   return vim.tbl_extend('force', opts, {})
-      end,
+    { -- NOTE: https://github.com/mikavilpas/blink-ripgrep.nvim#minimal-config
+      'mikavilpas/blink-ripgrep.nvim',
+      version = '*',
     },
   },
   ---@module 'blink.cmp'
@@ -69,12 +73,14 @@ return { -- NOTE: Autocompletion
       ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
       ['<C-e>'] = { 'show', 'cancel', 'fallback' },
       ['<C-y>'] = { 'select_and_accept', 'show', 'fallback' },
-      ['<C-j>'] = { 'select_and_accept', 'fallback' }, -- NOTE: remaps C-j (was newline). use C-m instead for newline (by default)
+      -- ['<C-j>'] = { 'select_and_accept', 'fallback' }, -- NOTE: remaps C-j (was newline). use C-m instead for newline (by default)
+
+      ['<C-l>' --[['<C-;>']]] = { 'select_and_accept', 'fallback' }, -- TEST: instead of C-j
 
       ['<Up>'] = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
-      ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
-      ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
+      ['<C-p>'] = { 'select_prev', 'snippet_backward', 'fallback_to_mappings' },
+      ['<C-n>'] = { 'select_next', 'snippet_forward', 'fallback_to_mappings' },
 
       ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
       ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
@@ -109,6 +115,7 @@ return { -- NOTE: Autocompletion
         draw = {
           treesitter = { 'lsp' },
         },
+        auto_show = false, -- TEST: see :h blink-cmp-config-completion # GHOST TEXT
       },
       ghost_text = {
         enabled = true,
@@ -119,22 +126,67 @@ return { -- NOTE: Autocompletion
         -- show_on_insert = true,
       },
     },
-
-    snippets = { preset = 'luasnip' },
+    snippets = { -- :h blink-cmp-config-snippets
+      preset = 'luasnip',
+    },
 
     sources = {
-      default = { 'lsp', 'lazydev', 'path', 'snippets', 'buffer' },
-      -- TODO Find out how to Lower prio of 'buffer'
+      default = {
+        'lazydev',
+        'lsp',
+        'path',
+        'snippets',
+        'buffer',
+        'ripgrep',
+      },
       providers = {
+        snippets = {
+          opts = { -- :h blink-cmp-config-reference # PROVIDERS # snippets
+            -- Whether to use show_condition for filtering snippets
+            use_show_condition = true,
+            -- Whether to show autosnippets in the completion list
+            show_autosnippets = true,
+            -- Whether to prefer docTrig placeholders over trig when expanding regTrig snippets
+            prefer_doc_trig = false,
+            -- Whether to put the snippet description in the label description
+            use_label_description = false, -- false
+          },
+        },
+
+        path = { opts = { show_hidden_files_by_default = true } },
+
+        buffer = { score_offset = -100 }, -- TEST: lower prio (was a bit spammy, and ripgrep instead)
+
         mkdnflow = {
           name = 'Mkdnflow',
           module = 'mkdnflow.completion.blink',
         },
+
         lazydev = {
           name = 'LazyDev',
           module = 'lazydev.integrations.blink',
           -- make lazydev completions top priority (see `:h blink.cmp`)
           score_offset = 100,
+        },
+
+        ripgrep = {
+          module = 'blink-ripgrep',
+          name = 'Ripgrep',
+          -- See full config at: https://github.com/mikavilpas/blink-ripgrep.nvim#minimal-config
+          ---@module "blink-ripgrep"
+          ---@type blink-ripgrep.Options
+          opts = {
+            prefix_min_len = 2, -- 3
+            backend = {
+              use = 'gitgrep-or-ripgrep', -- ripgrep
+              ripgrep = {
+                search_casing = '--smartcase',
+              },
+            },
+            project_root_marker = { '.git', '.luarc.json', '.editorconfig', 'pyproject.toml' },
+            -- debug = true, -- false
+          },
+          score_offset = -50, -- prio other completions
         },
       },
     },

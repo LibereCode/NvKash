@@ -18,5 +18,7 @@ return {
   -- nvim v0.8.0
   -- { 'kdheepak/lazygit.nvim' } -- HACK: replaced with custom.lazygit
 
+  require 'plugins.util.luasnip',
+
   require 'plugins.util.neogit', -- TEST:
 }

@@ -19,24 +19,6 @@ return { -- NOTE: LSP-conf
 
     -- Useful status updates for LSP.
     { 'j-hui/fidget.nvim', opts = {} },
-
-    {
-      'folke/lazydev.nvim',
-      ft = 'lua', -- only load on lua files
-      opts = {
-        library = {
-          -- See the configuration section for more details
-          -- Load luvit types when the `vim.uv` word is found
-          { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-          -- { path = '${3rd}/busted/library', words = { 'vim%.uv' } },
-        },
-      },
-      keys = {
-        { '<leader>ld', '<CMD>LazyDev lsp<CR>' },
-      },
-      -- enabled = function(root_dir) return not vim.uv.fs_stat(root_dir .. '/.luarc.json') end, -- WARN: bricks config
-    },
-    { 'folke/neodev.nvim', enabled = false }, -- make sure to uninstall or disable neodev.nvim
   },
   opts = {
     servers = {
