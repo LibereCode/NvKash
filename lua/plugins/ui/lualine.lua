@@ -77,8 +77,26 @@ return { -- NOTE: Lualine https://github.com/nvim-lualine/lualine.nvim
           'filetype',
         },
         lualine_y = {
-          'selectioncount',
-          'progress',
+          -- 'selectioncount',
+          -- 'progress',
+          -- NOTE: combination of 'selectioncount' and 'progress'
+          -- (I don't know how to `require()` them, fml😀... at least made it compact)
+          function()
+            -- Copyright (c) 2020-2021 hoob3rt
+            -- MIT license, see lualine LICENSE for more details.
+            local mode = vim.fn.mode(true)
+            local lineDelta = math.abs(vim.fn.line 'v' - vim.fn.line '.') + 1
+            local colDelta = math.abs(vim.fn.col 'v' - vim.fn.col '.') + 1
+            if mode:match '' then
+              return string.format('%dx%d', lineDelta, colDelta)
+            elseif mode:match 'V' or lineDelta ~= 1 then
+              return lineDelta
+            elseif mode:match 'v' then
+              return colDelta -- string.format('%d,%d', lineDelta, colDelta)
+            else
+              return string.format('%2d%%%%', math.floor(vim.fn.line '.' / vim.fn.line '$' * 100))
+            end
+          end,
         },
         lualine_z = {
           -- 'location',
