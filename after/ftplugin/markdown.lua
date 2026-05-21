@@ -11,6 +11,7 @@ localmap('c', 'o ```lua<CR>```<ESCAPE>ko', { desc = 'ins [c]odeblock' })
 local ol = vim.opt_local -- local is the GOAT here
 
 ol.wrap = true
+ol.expandtab = true
 
 -- Because no tags in .md, instead markdown links
 map('gl', 'gx', { desc = 'Go to header/local link', remap = true }) -- remap was needed

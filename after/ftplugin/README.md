@@ -7,4 +7,4 @@
   - `:h vim.opt_local`
 
 - Useful commands:
-  - `:set filetype?` -> gets current filetype
+  - `:set filetype?` -> gets current file type

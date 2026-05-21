@@ -1,0 +1,6 @@
+{
+  "test4all": {
+    "prefix": "test4all",
+    "body": ["Just a ${1:test},", "available ${2:for} ${3:all} filetypes"]
+  }
+}
