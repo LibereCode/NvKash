@@ -14,6 +14,6 @@ return {
   require 'plugins.ui.bufferline',
   require 'plugins.ui.colorizer',
   require 'plugins.ui.indent-blankline',
-  require 'plugins.ui.image',
+  -- require 'plugins.ui.image',
   require 'plugins.ui.lualine',
 }

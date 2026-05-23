@@ -63,10 +63,8 @@ return { -- NOTE: Autocompletion
       -- NOTE: See :h blink-cmp-config-keymap for defining your own keymap
       --
       preset = 'none', -- 'default' -- 'default'|'super-tab'|'enter'|'none'
-      -- TEST: Just disable presets and copy over entire preset 'DEFAULT'
 
-      -- ['<CR>'] = { 'accept', 'fallback' },
-      ['<C-CR>'] = { 'accept_and_enter', 'fallback' },
+      ['<C-CR>'] = { 'accept_and_enter', 'fallback' }, -- ['<CR>']
       ['<C-c>'] = { 'cancel', 'fallback' },
 
       -- ['<C-space>'] = { function(cmp) cmp.show { providers = { 'snippets' } } end }, -- show only specific cmp
@@ -74,6 +72,7 @@ return { -- NOTE: Autocompletion
       ['<C-e>'] = { 'show', 'cancel', 'fallback' },
       ['<C-y>'] = { 'select_and_accept', 'show', 'fallback' },
       -- ['<C-j>'] = { 'select_and_accept', 'fallback' }, -- NOTE: remaps C-j (was newline). use C-m instead for newline (by default)
+      ['<C-t>'] = { 'hide', 'show', 'fallback' }, -- [t]oggle
 
       ['<C-l>' --[['<C-;>']]] = { 'select_and_accept', 'fallback' }, -- TEST: instead of C-j
 
@@ -82,15 +81,15 @@ return { -- NOTE: Autocompletion
       ['<C-p>'] = { 'select_prev', 'snippet_backward', 'fallback_to_mappings' },
       ['<C-n>'] = { 'select_next', 'snippet_forward', 'fallback_to_mappings' },
 
-      ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
-      ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+      ['<C-u>'] = { 'scroll_documentation_up', 'fallback' }, -- ['<C-b>']
+      ['<C-d>'] = { 'scroll_documentation_down', 'fallback' }, --  ['<C-f>']
 
       -- ['<TAB>'] = { 'snippet_forward','select_next', 'fallback' },
       -- ['<S-TAB>'] = { 'snippet_backward','select_prev', 'show', 'fallback' },
       ['<Tab>'] = { 'snippet_forward', 'fallback' },
       ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
 
-      [ --[['<C-k>']]'<C-h>'] = { 'show_signature', 'hide_signature', 'fallback' }, -- default
+      ['<C-h>'] = { 'show_signature', 'hide_signature', 'fallback' }, -- ['<C-k>']
 
       -- ['<Esc>'] = { 'cancel', 'fallback' }, -- hated it
 
@@ -112,14 +111,17 @@ return { -- NOTE: Autocompletion
         auto_show_delay_ms = 345,
       },
       menu = { -- LazyVim ref
+        border = 'none',
         draw = {
           treesitter = { 'lsp' },
+          columns = { { 'kind_icon', 'label', 'label_description', gap = 1 }, { 'kind', 'source_name', gap = 1 } }, -- look like nvim-cmp
         },
-        auto_show = false, -- TEST: see :h blink-cmp-config-completion # GHOST TEXT
+        auto_show = false, -- see :h blink-cmp-config-completion # GHOST TEXT
       },
       ghost_text = {
         enabled = true,
         show_without_selection = true,
+        show_with_menu = false, -- hide when menu is open
       },
       trigger = { -- `:h blink-cmp-config-reference`
         show_on_backspace_in_keyword = true,

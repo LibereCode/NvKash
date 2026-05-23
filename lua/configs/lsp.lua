@@ -107,14 +107,17 @@ return { -- NOTE: LSP-conf
       zls = { -- zig
         -- cmd = { '/usr/bin/zls-master' },
       },
-      vale_ls = {}, -- you can just rename them... (vale-ls -> vale_ls)
+      vale_ls = { -- you can just rename them... (vale-ls -> vale_ls)
+        filetypes = { 'text', 'markdown' },
+      },
       hyprls = {},
       nil_ls = {},
       -- cssls = {},
-      lemminx = {}, -- test
+      lemminx = {}, -- xml
       jsonls = {
         filetypes = { 'json', 'jsonc' },
       },
+      qmlls = {},
     },
   },
   config = function(_, opts)

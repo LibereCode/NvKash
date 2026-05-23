@@ -176,9 +176,9 @@ return { -- Fuzzy Finder (files, lsp, etc)
     leadmap('sr', builtin.resume, '[r]esume')
     leadmap('ss', builtin.live_grep, '[s]earch (live_grep)')
     leadmap('st', builtin.builtin, '[t]elescope-builtins') -- TODO: builtins->todo
-    leadmap('sw', function() builtin.grep_string { grep_open_files = true } end, '[w]ord (bufs)', { 'n', 'v' })
+    leadmap('sw', function() builtin.grep_string { grep_open_files = true } end, '[w]ord (bufs)', { 'n', 'x' }) -- 'v'
     -- mapbuilt('sW', function() builtin.grep_string { search = vim.fn.expand '<cword>' } end, 'current [W]ord', { 'n' }) -- this is default...
-    leadmap('sW', builtin.grep_string, '[W]ord', { 'n', 'v' })
+    leadmap('sW', builtin.grep_string, '[W]ord', { 'n', 'x' }) -- 'v'
     leadmap('sT', builtin.treesitter, '[T]reesitter')
     leadmap('s"', builtin.registers, '["]registers')
     -- leadmap('s/', function() builtin.current_buffer_fuzzy_find() end, 'Fzf [/] +BIG_preview')

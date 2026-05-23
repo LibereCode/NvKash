@@ -38,8 +38,6 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
   --        end,
   --    } -- (plugins.oneliners)
 
-  -- Gitsign (plugins.git)
-
   -- NOTE Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
@@ -54,8 +52,6 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
   -- Then, because we use the `opts` key (recommended), the configuration runs
   -- after the plugin has been loaded as `require(MODULE).setup(opts)`.
 
-  -- which-key (plugins.whichkey)
-
   -- NOTE Plugins can specify dependencies.
   --
   -- The dependencies are proper plugin specifications as well - anything
@@ -68,11 +64,7 @@ require('lazy').setup({ -- TODO: move all plugins into lua/plugins/*
   -- conform
   -- blink
 
-  -- Todo comments (plugins.text)
-
-  -- mini (plugins.mini)
-
-  -- treesitter (plugins.treesitter)
+  require 'themes', -- themes and such...
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and

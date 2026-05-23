@@ -9,7 +9,7 @@ local augroup = vim.api.nvim_create_augroup
 --  See `:help vim.hl.on_yank()`
 autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
-  group = augroup('kickstart-highlight-yank', { clear = true }),
+  group = augroup('highlight-yank', { clear = true }), -- kickstart-highlight-yank
   -- callback = function() vim.hl.on_yank() end,
   callback = function() vim.hl.hl_op() end,
 })
@@ -49,10 +49,10 @@ autocmd('BufReadPost', { -- Restore cursor position
 --   end,
 -- })
 
-autocmd('WinResized', { -- change colorcolumn with screenwidth
-  group = augroup('colorcolumn-follow-columns', { clear = true }),
-  callback = function() vim.o.colorcolumn = tostring(vim.o.columns - 5) .. ',-10' end,
-})
+-- autocmd('WinResized', { -- change colorcolumn with screenwidth
+--   group = augroup('colorcolumn-follow-columns', { clear = true }),
+--   callback = function() vim.o.colorcolumn = tostring(vim.o.columns - 5) .. ',-10' end,
+-- })
 
 -- autocmd('OptionSet', { -- make 'colorcolumn' auto-match textwidth -- DUMB!
 --   pattern = { 'textwidth' },

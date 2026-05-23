@@ -4,8 +4,8 @@ return { -- file-managers/explorersexpl
   ---@module 'lazy'
   ---@type LazySpec
 
-  require 'plugins.explorer.neo-tree',
+  -- require 'plugins.explorer.neo-tree',
   -- require('plugins.explorer.nnn'),
   require 'plugins.explorer.oil',
-  -- require 'plugins.explorer.yazi',
+  require 'plugins.explorer.yazi',
 }

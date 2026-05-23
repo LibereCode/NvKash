@@ -57,6 +57,9 @@ vim.diagnostic.config {
 leadmap('do', vim.diagnostic.setloclist, { desc = 'l[o]clist' })
 leadmap('dd'--[[df, see plugins/telescope.lua]], vim.diagnostic.open_float, { desc = 'floating [d]iagnostics' })
 leadmap('dl', ':log<CR>')
+local function toggleDiagnostics() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end
+leadmap('dt', toggleDiagnostics, { desc = '[t]oggle diagnostics' })
+leadmap('ud', toggleDiagnostics, { desc = '[d]diagnostics' })
 
 -- INFO: TERMINAL
 --
@@ -111,7 +114,7 @@ leadmap('bb', '<cmd>e #<cr>', bufopts { desc = 'switch to other' })
 leadmap('bl', '<cmd>buffers<CR>', bufopts { desc = '[l]ist buffers' })
 leadmap('bn', '<cmd>enew<CR>', bufopts { desc = 'new buf-file' })
 leadmap('bd', '<cmd>bn<BAR>bd #<CR>', bufopts { desc = '[d]elete' })
-leadmap('bd', '<cmd>bd<CR>', bufopts { desc = '[D]ELETE' })
+-- leadmap('bd', '<Cmd>bn <BAR> bd #<CR>', bufopts { desc = '[D]ELETE' }) -- see ./plugins/ui/bufferline.lua
 leadmap('x', '<cmd>bn<BAR>bd #<CR>', bufopts { desc = 'delete[x]buffer' })
 -- map('H', '<cmd>bp<CR>', bufopts { desc = 'prev buf' }) -- moved to
 -- map('L', '<cmd>bn<CR>', bufopts { desc = 'next buf' }) -- './plugins/ui/bufferline.lua'
@@ -127,7 +130,7 @@ leadmap('<tab>t', '<C-W>T', { desc = 'window->newTab' })
 -- INFO: quick commands / QOL
 --
 map('<C-c>', 'gcc', { desc = 'toggle comment', remap = true }) -- remap required, becuase ?
-map('<C-c>', 'gc', { desc = 'v-mode comment', remap = true }, 'v')
+map('<C-c>', 'gc', { desc = 'v-mode comment', remap = true }, 'x') -- v
 
 -- Selection-mode
 map('<C-v>', '<C-o>P', { desc = 'Paste in S-mode', remap = true }, 's' --[[ { 's','i' } -- Made I-mode version better for insert ]]) -- '<C-o>"sp'
@@ -136,21 +139,21 @@ map('<C-x>', '<C-o>d', { desc = 'Cut in S-mode', remap = true }, 's') -- '<C-o>"
 -- NGL, pretty peak (even if it is mouse-based)
 
 -- Visual-mode -- these copies to 'Y'-registry (so seperate from Sys-Clipboard)
-leadmap('y', '"yy', { desc = '[y]ank 2 "y' }, 'v')
-leadmap('p', '"yp', { desc = '[p]aste from "y' }, 'v')
-map('<C-y>', '"yy', { desc = '[y]ank 2 "y' }, 'v') -- Really usefull, so I made it appear  multiple ...
-map('<C-p>', '"yp', { desc = '[p]aste from "y' }, 'v') -- ... places (either <leader>y/p or <C-y/p>)
-leadmap('d', '"yd', { desc = '[d]elete 2 "y' }, 'v')
-leadmap('p', '"yp', { desc = '[p]aste "y' }, { 'n', 'v' })
+leadmap('y', '"yy', { desc = '[y]ank 2 "y' }, 'x') -- v
+leadmap('p', '"yp', { desc = '[p]aste from "y' }, 'x') -- v
+map('<C-y>', '"yy', { desc = '[y]ank 2 "y' }, 'x') -- v -- Really usefull, so I made it appear  multiple ...
+map('<C-p>', '"yp', { desc = '[p]aste from "y' }, 'x') -- v -- ... places (either <leader>y/p or <C-y/p>)
+leadmap('d', '"yd', { desc = '[d]elete 2 "y' }, 'x') -- v
+leadmap('p', '"yp', { desc = '[p]aste "y' }, { 'n', 'x' }) -- v
 
-leadmap('P', '"_dd<ESC>P', { desc = 'delete->[p]aste, no❌yank' }, { 'n', 'v' })
+leadmap('P', '"_dd<ESC>P', { desc = 'delete->[p]aste, no❌yank' }, { 'n', 'x' }) -- v
 
 -- Insert-mode
 map('<C-v>', '<ESC>pa', { desc = 'Paste in I-mode', remap = true }, 'i') -- NOTE: Use  (^Q = <C-q>) Instead of (<C-v>) to do the thing
 
 -- better jk
-map('j', 'gj', { desc = 'better ↓j', silent = true }, { 'n', 'v' })
-map('k', 'gk', { desc = 'better ↑k', silent = true }, { 'n', 'v' })
+map('j', 'gj', { desc = 'better ↓j', silent = true }, { 'n', 'x' }) -- v
+map('k', 'gk', { desc = 'better ↑k', silent = true }, { 'n', 'x' }) -- v
 
 -- jump to local link  -- really weird why `g]` wasen't enough, especially the last esc?
 map('gl', 'g]1<CR><escape>', { desc = '[l]ocal link' }) -- NOTE: This disables the default
@@ -207,10 +210,10 @@ leadmap('ic', function() -- Odly (cursed) good
   -- insert '<ESC>ccHEADER_HERE<ESC>gcc' -- Need tweaking though...
 end, { desc = 'Header separater' })
 
-leadmap('id', function() -- Odly (cursed) good
+leadmap('id', function() -- Odly (cursed) good -- make into a snippet/registry
   local insert = vim.api.nvim_input
   insert 'dd<ESC>O<ESC>gccO<ESC>o<lt><lt><CR>>><ESC>O=<ESC>9a=<ESC>Pgcip}kP{dd}dd' -- almost easy to read...
-end, { desc = 'comment<<>>[d]iff' }, { 'v', 'n' }) -- NOTE: FUCKING PEAK !!
+end, { desc = 'comment<<>>[d]iff' }, { 'x', 'n' }) -- v -- NOTE: FUCKING PEAK !!
 
 -- TEST: Messages?
 --

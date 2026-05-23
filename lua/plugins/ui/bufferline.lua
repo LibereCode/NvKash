@@ -16,7 +16,7 @@ return {
     tbl = vim.tbl_extend('force', tbl, {
       { '<leader>bp', '<Cmd>BufferLineTogglePin<CR>', desc = 'toggle pin' },
       { '<leader>bP', '<Cmd>BufferLineGroupClose ungrouped<CR>', desc = 'delete non-pinned buffers' },
-      { '<leader>bd', '<Cmd>bn <BAR> bd #<CR>', desc = 'delete buffer' },
+      { '<leader>bd', '<Cmd>BufferLineMoveNext <BAR> bd #<CR>', desc = 'delete buffer' },
       { '<leader>bD', '<Cmd>BufferLinePickClose<CR>', desc = 'pick buf2DEL' },
       { '<leader>bs', '<cmd>BufferLinePick<cr>', desc = 'select buf' },
       { '<S-M-h>', '<cmd>BufferLineMovePrev<cr>', desc = 'Move buffer prev' },

@@ -19,8 +19,6 @@ return {
       json = { 'jsonlint' }, -- jsonlint biome ...
       sh = { 'shellcheck' },
       bash = { 'shellcheck', 'bash' },
-      zsh = { 'zsh' }, -- ??
-      fish = { 'fish' }, -- ??
     }
 
     -- You can disable the default linters by setting their filetypes to nil:

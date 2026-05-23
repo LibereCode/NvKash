@@ -11,11 +11,12 @@ return {
     dev = true,
     'LibereCode/toggleTerm.nvim',
     opts = function()
-      local toggleFloat = require('toggleTerm').toggle_float
-      local toggleHor = require('toggleTerm').toggle_hor
-      vim.keymap.set({ 'n', 't' }, '<M-t>', function() toggleFloat { border = 'double' } end, { desc = 'toggleTerm' })
-      vim.keymap.set({ 'n', 't' }, '<leader>tt', function() toggleFloat { x = 0.95, y = 0.95 } end, { desc = 'larger Term' })
-      vim.keymap.set({ 'n', 't' }, '<C-/>', function() toggleHor() end, { desc = 'larger Term' })
+      local map, tTerm = vim.keymap.set, require 'toggleTerm'
+      local togterm = tTerm.new()
+
+      map({ 'n', 't' }, '<M-t>', function() togterm:toggle_float { border = 'double' } end, { desc = 'toggleTerm' })
+      map({ 'n', 't' }, '<leader>tt', function() togterm:toggle_float { x = 0.95, y = 0.95 } end, { desc = 'larger Term' })
+      map({ 'n', 't' }, '<C-/>', function() togterm:toggle_hor() end, { desc = 'larger Term' })
     end,
     --   -- config = function() require 'foobar' end, -- NOTE: option 1 (load)
   },
@@ -30,12 +31,13 @@ return {
     end,
   },
 
-  {
-    -- 'lazygit.nvim',
-    dev = true,
-    'LibereCode/lazygit.nvim',
-    opts = {},
-  },
+  -- {
+  --   -- 'lazygit.nvim',
+  --   dev = true,
+  --   'LibereCode/lazygit.nvim',
+  --   opts = {},
+  -- }, -- XXX: too yanky, will use <https://github.com/kdheepak/lazygit.nvim> instead
+  --        ( or improve my toggleTerm and spawn it there ... ? )
 
   {
     -- 'todo-sh.nvim',

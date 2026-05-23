@@ -42,7 +42,7 @@ o.softtabstop = -1 -- 4 -- sts>0 => sts=sw(=ts) -- . :h 'sts'
 -- o.hortmess:append 'sI' -- disable nvim intro(default dashboard)
 o.shortmess:append 'as' -- a=lmrw (:h shortmess) -- alpha.nvim appends I (replaces :intro)
 o.ruler = false
-o.cmdheight = 0 -- 0 2
+-- o.cmdheight = 0 -- 0 2 -- Too buggy (when too low, pushes cursor position)
 
 o.sidescrolloff = 40 -- :h 'siso' -- 8 723 -- very big(723)=always centered(unless at left)
 o.sidescroll = 0 -- :h 'ss' -- 0 -- scroll this many lines when `:h siso` is triggered -- 0 = center instead

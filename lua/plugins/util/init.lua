@@ -15,10 +15,7 @@ return {
 
   require 'plugins.util.gitsigns',
 
-  -- nvim v0.8.0
-  -- { 'kdheepak/lazygit.nvim' } -- HACK: replaced with custom.lazygit
+  require 'plugins.util.lazygit', -- until I fix my custom-lazygit (or itegrate into my toggleTerm)
 
-  require 'plugins.util.luasnip',
-
-  require 'plugins.util.neogit', -- TEST:
+  -- require 'plugins.util.neogit', -- Use lazygit instead
 }
