@@ -23,9 +23,14 @@ return { -- You can easily change to a different colorscheme.
       terminalColors = true, -- define vim.g.terminal_color_{0,17}
       colors = { -- add/modify theme and palette colors
         palette = {},
-        theme = { wave = {}, lotus = {}, dragon = {}, all = {
-          ui = { bg_gutter = 'none' },
-        } },
+        theme = {
+          wave = {},
+          lotus = {},
+          dragon = {},
+          all = {
+            -- ui = { bg_gutter = 'none' },
+          },
+        },
       },
       overrides = function(colors) -- add/modify highlights
         local theme = colors.theme
@@ -52,13 +57,13 @@ return { -- You can easily change to a different colorscheme.
           DiagnosticVirtualTextError = makeDiagnosticColor(theme.diag.error),
 
           -- telescope
-          TelescopeTitle = { fg = theme.ui.special, bold = true },
-          TelescopePromptNormal = { bg = theme.ui.bg_p1 },
-          TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
-          TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
-          TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
-          TelescopePreviewNormal = { bg = theme.ui.bg_dim },
-          TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
+          -- TelescopeTitle = { fg = theme.ui.special, bold = true },
+          -- TelescopePromptNormal = { bg = theme.ui.bg_p1 },
+          -- TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+          -- TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
+          -- TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
+          -- TelescopePreviewNormal = { bg = theme.ui.bg_dim },
+          -- TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
         }
       end,
       theme = 'dragon', -- Load "wave" theme
@@ -75,12 +80,62 @@ return { -- You can easily change to a different colorscheme.
     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
     vim.cmd.colorscheme 'kanagawa-dragon'
 
-    vim.api.nvim_create_autocmd({ 'BufWritePost', 'FileWritePost' }, {
-      desc = 'When kanagawa.lua is written, do `:KanagawaCompile`',
-      group = vim.api.nvim_create_augroup('Kanagawa-compile-on-save', { clear = true }),
+    -- vim.api.nvim_create_autocmd({ 'BufWritePost', 'FileWritePost' }, { -- TODO: find out how to autosave next time VimEnter after edit this file
+    --   desc = 'When kanagawa.lua is written, do `:KanagawaCompile`',
+    --   group = vim.api.nvim_create_augroup('Kanagawa-compile-on-save', { clear = true }),
+    --
+    --   pattern = '*.config/nvim/lua/*/kanagawa.lua',
+    --   callback = function() vim.cmd 'KanagawaCompile' end,
+    -- })
 
-      pattern = '*.config/nvim/lua/*/kanagawa.lua',
-      callback = function() vim.cmd 'KanagawaCompile' end,
+    -- TODO: This could be really usefull as a "global" autocmd used in general...
+    local seen = {}
+    local kanaLuaPath = vim.fn.stdpath 'config' .. '/lua/themes/kanagawa.lua'
+    vim.api.nvim_create_autocmd('BufEnter', {
+      desc = 'When kanagawa.lua is Entered after prev change, do `:KanagawaCompile`',
+      group = vim.api.nvim_create_augroup('KanagawaCompile-on-enter-after-save', { clear = true }),
+      pattern = kanaLuaPath,
+
+      callback = function(args)
+        -- check if first read
+        local curFile = vim.api.nvim_buf_get_name(args.buf)
+        if seen[curFile] then
+          -- print('DEBUG: Not first time entering ' .. vim.fn.expand '%')
+          return
+        else
+          -- read old hash
+          local kanaHashPath = vim.fn.stdpath 'data' .. '/kanagawa.hash'
+          local f = io.open(kanaHashPath, 'r')
+          local prev_hash
+          if f then
+            prev_hash = f:read '*l'
+            f:close()
+            -- print('DEBUG: prev_hash =', prev_hash)
+          end
+
+          -- get new hash
+          local new_hash = vim.fn.system { 'sha256sum', kanaLuaPath }
+          new_hash = new_hash:match '^%w+'
+          -- print('DEBUG: new_hash =', new_hash)
+
+          -- compile if the file has been changed (according to sha256sum)
+          if new_hash ~= prev_hash then
+            -- print("DEBUG:", new_hash, '!=', prev_hash, 'Not equal, and that means: ')
+            vim.cmd 'KanagawaCompile'
+            local f2 = io.open(kanaHashPath, 'w')
+            if f2 then
+              f2:write(new_hash)
+              f2:close()
+            end
+          else
+            -- print(new_hash, '=', prev_hash, 'They are equal, nothing ever happens')
+          end
+
+          -- mark the file as seen
+          seen[curFile] = true
+        end
+      end,
     })
+    --
   end,
 }

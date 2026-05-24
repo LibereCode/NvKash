@@ -59,9 +59,21 @@ autocmd('BufReadPost', { -- Restore cursor position
 --   group = augroup('colorcolumn-match-textwidth', { clear = true }),
 --   callback = function() --
 --     local textwidth = vim.o.textwidth
---     if textwidth >= 80 then vim.opt.colorcolumn = tostring(textwidth) .. ',80' end -- tostring(textwidth-20)
+--     if textwidth >= 80 then vim.opt.colorcolumn = tostrin=g(textwidth) .. ',80' end -- tostring(textwidth-20)
 --   end,
 -- }) -- bruh, could've just done `set colorcolumn=+0` to match textwidth (see :h colorcolumn)
+
+autocmd({ 'WinResized', 'WinEnter' }, { -- change colorcolumn with screenwidth
+  desc = 'When window is resized (prehaps) change sidescroll',
+  group = augroup('WinResized-sidescroll', { clear = true }),
+  callback = function()
+    if vim.fn.filetype ~= 'help' then
+      local curwidth = vim.fn.winwidth(0)
+      -- vim.opt_local.sidescroll = 0
+      vim.opt_local.sidescrolloff = math.max(math.floor(curwidth / 2.5), 40)
+    end
+  end,
+})
 
 -- autocmd('BufDelete', { -- show :intro when all buffers are 💀
 --   callback = function()

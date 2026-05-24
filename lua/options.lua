@@ -45,7 +45,7 @@ o.ruler = false
 -- o.cmdheight = 0 -- 0 2 -- Too buggy (when too low, pushes cursor position)
 
 o.sidescrolloff = 40 -- :h 'siso' -- 8 723 -- very big(723)=always centered(unless at left)
-o.sidescroll = 0 -- :h 'ss' -- 0 -- scroll this many lines when `:h siso` is triggered -- 0 = center instead
+o.sidescroll = 1 -- :h 'ss' -- 0 1 -- scroll this many lines when `:h siso` is triggered -- 0 = center instead
 o.scrolloff = 15 -- :h 'so' -- 4 15 20 -- Lines of context (scrolloff) -- large (723) = always centered
 o.scrolljump = 1 -- :h 'sj' -- -69 -- like sidescroll, but for vertical -- -n = n%heifht
 
