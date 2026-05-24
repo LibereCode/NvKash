@@ -156,7 +156,7 @@ map('j', 'gj', { desc = 'better ↓j', silent = true }, { 'n', 'x' }) -- v
 map('k', 'gk', { desc = 'better ↑k', silent = true }, { 'n', 'x' }) -- v
 
 -- jump to local link  -- really weird why `g]` wasen't enough, especially the last esc?
-map('gl', 'g]1<CR><escape>', { desc = '[l]ocal link' }) -- NOTE: This disables the default
+map('gL', 'g]1<CR><escape>', { desc = '[L]ocal Link' }) -- NOTE: This disables the default
 
 -- inFO: sessions[<leader>q]
 --

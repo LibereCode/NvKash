@@ -33,13 +33,14 @@ return { -- Collection of various small independent plugins/modules
       custom_surroundings = nil,
       highlight_duration = 723, -- Duration (in ms) of highlight when calling `MiniSurround.highlight()`
 
+      -- stylua: ignore
       mappings = { -- Module mappings. Use `''` (empty string) to disable one.
-        add = 'gsa', -- 'sa' -- Add surrounding in Normal and Visual modes
-        delete = 'gsd', -- 'sd' -- Delete surrounding
-        find = 'gsf', -- 'sf' -- Find surrounding (to the right)
-        find_left = 'gsF', -- 'sF' -- Find surrounding (to the left)
-        highlight = 'gsh', -- 'sh' -- Highlight surrounding
-        replace = 'gsr', -- 'sr' -- Replace surrounding
+        add       = 'gsa', -- = 'gza', -- 'sa' -- Add surrounding in Normal and Visual modes
+        delete    = 'gsd', -- = 'gzd', -- 'sd' -- Delete surrounding
+        find      = 'gsf', -- = 'gzf', -- 'sf' -- Find surrounding (to the right)
+        find_left = 'gsF', -- = 'gzF', -- 'sF' -- Find surrounding (to the left)
+        highlight = 'gsh', -- = 'gzh', -- 'sh' -- Highlight surrounding
+        replace   = 'gsr', -- = 'gzr', -- 'sr' -- Replace surrounding
 
         suffix_last = 'l', -- Suffix to search with "prev" method
         suffix_next = 'n', -- Suffix to search with "next" method

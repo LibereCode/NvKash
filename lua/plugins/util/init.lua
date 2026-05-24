@@ -17,5 +17,8 @@ return {
 
   require 'plugins.util.lazygit', -- until I fix my custom-lazygit (or itegrate into my toggleTerm)
 
+  require 'plugins.util.flash',
+  -- require 'plugins.util.leap',
+
   -- require 'plugins.util.neogit', -- Use lazygit instead
 }
