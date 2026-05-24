@@ -1,0 +1,28 @@
+// Specific .luarc.json(c) for nvim
+// https://luals.github.io/wiki/configuration/#client-configuration
+{
+    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "completion": {
+        "autoRequire": true,
+        "callSnippet": "Both"
+    },
+    "diagnostics": {
+        // "disable": [
+        //     "undefined-global" //example
+        // ],
+        "globals": [
+            "vim"
+        ],
+        "workspaceDelay": 567
+    },
+    "hint": {
+        "enable": true
+    },
+    "runtime": {
+        "version": "LuaJIT",
+        "requirePattern": [
+            "lua/?.lua",
+            "lua/?/init.lua"
+        ]
+    }
+}
