@@ -69,10 +69,11 @@ return { -- NOTE: Autocompletion
 
       -- ['<C-space>'] = { function(cmp) cmp.show { providers = { 'snippets' } } end }, -- show only specific cmp
       ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-      ['<C-e>'] = { 'show', 'cancel', 'fallback' },
+      -- ['<C-e>'] = { 'show', 'cancel', 'fallback' },
+      -- ['<C-t>'] = { 'hide', 'show', 'fallback' }, -- [t]oggle
+      ['<C-e>'] = { 'show', 'hide', 'fallback' }, -- TEST: can use <C-c> to cancel
       ['<C-y>'] = { 'select_and_accept', 'show', 'fallback' },
       -- ['<C-j>'] = { 'select_and_accept', 'fallback' }, -- NOTE: remaps C-j (was newline). use C-m instead for newline (by default)
-      ['<C-t>'] = { 'hide', 'show', 'fallback' }, -- [t]oggle
 
       ['<C-l>' --[['<C-;>']]] = { 'select_and_accept', 'fallback' }, -- TEST: instead of C-j
 
@@ -116,12 +117,29 @@ return { -- NOTE: Autocompletion
           treesitter = { 'lsp' },
           columns = { { 'kind_icon', 'label', 'label_description', gap = 1 }, { 'kind', 'source_name', gap = 1 } }, -- look like nvim-cmp
         },
-        auto_show = false, -- see :h blink-cmp-config-completion # GHOST TEXT
+        -- auto_show = false, -- see :h blink-cmp-config-completion # GHOST TEXT
+        --
+        direction_priority = function() -- :h blink-cmp-recipes # AVOID MULTI-LINE COMPLETION GHOST TEXT -- it works, stfu diagnostics
+          local ctx = require('blink.cmp').get_context()
+          local item = require('blink.cmp').get_selected_item()
+          if ctx == nil or item == nil then return { 's', 'n' } end
+
+          local item_text = item.textEdit ~= nil and item.textEdit.newText or item.insertText or item.label
+          local is_multi_line = item_text:find '\n' ~= nil
+
+          -- after showing the menu upwards, we want to maintain that direction
+          -- until we re-open the menu, so store the context id in a global variable
+          if is_multi_line or vim.g.blink_cmp_upwards_ctx_id == ctx.id then
+            vim.g.blink_cmp_upwards_ctx_id = ctx.id
+            return { 'n', 's' }
+          end
+          return { 's', 'n' }
+        end,
       },
       ghost_text = {
         enabled = true,
         show_without_selection = true,
-        show_with_menu = false, -- hide when menu is open
+        -- show_with_menu = false, -- hide when menu is open
       },
       trigger = { -- `:h blink-cmp-config-reference`
         show_on_backspace_in_keyword = true,
@@ -142,6 +160,7 @@ return { -- NOTE: Autocompletion
         'ripgrep',
       },
       providers = {
+
         snippets = {
           opts = { -- :h blink-cmp-config-reference # PROVIDERS # snippets
             -- Whether to use show_condition for filtering snippets

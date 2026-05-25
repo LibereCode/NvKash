@@ -6,19 +6,19 @@ return {
   'mfussenegger/nvim-lint',
   event = { 'BufReadPre', 'BufNewFile' },
   -- otps = { ? }
-  config = function(_, opts)
+  config = function()
     local lint = require 'lint'
 
     -- TEST:
     lint.linters_by_ft = {
       markdown = { 'markdownlint-cli2' }, -- 'vale'
-      text = { 'vale' },
+      -- text = { 'vale' },
 
       -- INFO: Add more here
 
-      json = { 'jsonlint' }, -- jsonlint biome ...
-      sh = { 'shellcheck' },
-      bash = { 'shellcheck', 'bash' },
+      -- json = { 'jsonlint' }, -- jsonlint biome ...
+      -- sh = { 'shellcheck' },
+      -- bash = { 'bash' }, -- spellcheck
     }
 
     -- You can disable the default linters by setting their filetypes to nil:

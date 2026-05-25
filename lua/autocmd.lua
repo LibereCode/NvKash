@@ -64,13 +64,13 @@ autocmd('BufReadPost', { -- Restore cursor position
 -- }) -- bruh, could've just done `set colorcolumn=+0` to match textwidth (see :h colorcolumn)
 
 autocmd({ 'WinResized', 'WinEnter' }, { -- change colorcolumn with screenwidth
-  desc = 'When window is resized (prehaps) change sidescroll',
+  desc = 'When window is resized (prehaps) change sidescrolloff',
   group = augroup('WinResized-sidescroll', { clear = true }),
   callback = function()
     if vim.fn.filetype ~= 'help' then
       local curwidth = vim.fn.winwidth(0)
       -- vim.opt_local.sidescroll = 0
-      vim.opt_local.sidescrolloff = math.max(math.floor(curwidth / 2.5), 40)
+      vim.opt_local.sidescrolloff = math.floor(curwidth / 2.5) -- math.max(..., 40)
     end
   end,
 })
@@ -151,5 +151,7 @@ local cr_cmd = vim.api.nvim_create_user_command -- ('name', 'command', {})
 --   :lua GlobalTable = require('lualine').get_config()
 --   :TreeTable GlobalTable]],
 -- })
+
+cr_cmd('W', 'w', { desc = 'fix common typo of "w"' })
 
 -- v\im.cmd 'cd %:h' -- XXX: ??? why did I do this ???

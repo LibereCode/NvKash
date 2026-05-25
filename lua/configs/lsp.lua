@@ -110,14 +110,21 @@ return { -- NOTE: LSP-conf
       vale_ls = { -- you can just rename them... (vale-ls -> vale_ls)
         filetypes = { 'text', 'markdown' },
       },
-      hyprls = {},
-      nil_ls = {},
+      markdown_oxide = {}, -- marksman={}, -- markdown
+      hyprls = {}, -- hyprlang
+      nil_ls = {}, -- nix
       -- cssls = {},
       lemminx = {}, -- xml
       jsonls = {
         filetypes = { 'json', 'jsonc' },
+        -- settings = { -- https://github.com/LazyVim/LazyVim/discussions/2830
+        --   json = { schemas = {
+        --       { fileMatch = { '*.json', '*.jsonc' }, schema = { allowTrailingCommas = true } },
+        --     }},
+        -- },
       },
       qmlls = {},
+      tombi = {}, -- toml -- taplo tombi
     },
   },
   config = function(_, opts)
@@ -258,21 +265,13 @@ return { -- NOTE: LSP-conf
       -- NOTE: This table is merged with `servers = { see above }`
       -- INSTALL LSP ABOVE (and Linters, and Formatters here)
       -- put DAP with plugins.code `nvim-dap` !!
-      --
-      -- NOTE: Add only LSP that I use actaully use (and not 'potentially will use someday, maybe')
+
       'beautysh',
-      -- 'black',
       'html-lsp',
       'jsonlint',
       'markdownlint-cli2',
-      -- 'markmap-cli',
-      -- 'marksman',
-      -- 'nixfmt',
-      -- 'nixpkgs-fmt',
       'prettierd',
       'shellcheck',
-      -- 'taplo',
-      -- 'texlab',
     })
 
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }

@@ -6,12 +6,12 @@ return { --		TODO: try it for my minimal configs
     -- E.g., `gs{leap}$y` or `ygs{leap}$`, where {leap}, as usual, means
     -- {char1}{char2}{label?}. The linewise version can also take [count],
     -- e.g. `d2gs{leap}` deletes two lines.
-    vim.keymap.set({ 'n', 'o' }, 's', '<plug>(leap-remote)') -- 'gs' 'gz'
-    vim.keymap.set({ 'n', 'o' }, 'S', '<Plug>(leap-remote-linewise)') -- 'gS' 'gZ'
+    vim.keymap.set({ 'n', 'o' }, 'gl', '<plug>(leap-remote)') -- 'gs' 'gz' 'gl'
+    vim.keymap.set({ 'n', 'o' }, 'gL', '<Plug>(leap-remote-linewise)') -- 'gS' 'gZ' 'gL'
     -- Useful shortcut for a frequent operation: the same as remote-linewise,
     -- except it auto-triggers even without [count] (`yrr{leap}` copies a line).
     vim.keymap.set({ 'o' }, 'rr', '<Plug>(leap-remote-line)')
-    -- These commands expect another character as input before leaping, and
+    -- These commands expect another chjracter as input before leaping, and
     -- select the given text object at the destination (`yarp{leap}`).
     vim.keymap.set({ 'x', 'o' }, 'ar', '<Plug>(leap-remote-text-object)')
     vim.keymap.set({ 'x', 'o' }, 'ir', '<Plug>(leap-remote-inner-text-object)')

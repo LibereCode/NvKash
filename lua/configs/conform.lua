@@ -63,6 +63,35 @@ return { -- NOTE: Autoformat
       nix = { 'nixfmt' },
       css = { 'prettierd' },
       xml = { 'xmlformatter' },
+
+      ['_'] = { 'trim_whitespace' }, -- run on filetype without any formatter
+    },
+
+    formatters = { -- formatter settings
+      prettierd = {
+        args = { '--config', vim.env.XDG_CONFIG_HOME .. '/prettierrc.json' },
+      },
+      -- examples -- see :h conform-options
+      -- formatterTbl = {
+      --   command = 'my_cmd',
+      --   args = { '--stdin-from-filename', '$FILENAME' },
+      --   range_args = function(self, ctx) return { '--line-start', ctx.range.start[1], '--line-end', ctx.range['end'][1] } end,
+      --   stdin = true,
+      --   cwd = require('conform.util').root_file { '.editorconfig', 'package.json' },
+      --   require_cwd = true,
+      --   tmpfile_format = '.conform.$RANDOM.$FILENAME',
+      --   condition = function(self, ctx) return vim.fs.basename(ctx.filename) ~= 'README.md' end,
+      --   exit_codes = { 0, 1 },
+      --   env = { VAR = 'value' },
+      --   inherit = true,
+      --   prepend_args = { '--use-tabs' },
+      --   append_args = { '--trailing-comma' },
+      -- },
+      -- formatterFunc = function(bufnr)
+      --   return {
+      --     command = 'my_cmd',
+      --   }
+      -- end,
     },
   },
 }
