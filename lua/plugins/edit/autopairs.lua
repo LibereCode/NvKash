@@ -4,6 +4,10 @@
 ---@type LazySpec
 return {
   'windwp/nvim-autopairs',
-  event = 'InsertEnter',
-  opts = {},
+  -- event = 'InsertEnter',
+  opts = {
+    check_ts = true,
+    map_cr = false, -- sadly,<true> was buggy
+    fast_wrap = {},
+  },
 }

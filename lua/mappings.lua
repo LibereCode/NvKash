@@ -195,6 +195,12 @@ leadmap('oo', function()
   vim.fn.jobstart({ 'handlr', 'open', curfile }, { detach = true })
 end, { silent = true, desc = 'Handlr open' })
 leadmap('oI', ':intro<CR>')
+leadmap('ov', function()
+  vim.cmd('e ' .. vim.uv.fs_realpath( -- opens the file:
+    vim.env.XDG_CONFIG_HOME -- ~/.config/vale/styles/config/vocabularies/MyVocab/accept.txt
+      .. '/vale/styles/config/vocabularies/MyVocab/accept.txt'
+  ))
+end)
 
 -- INFO: Code
 -- NOTE, most are based on plugins and should't be here

@@ -19,18 +19,25 @@ return { -- NOTE: Autoformat
   opts = {
     notify_on_error = false,
     format_on_save = function(bufnr)
-      -- Disable "format_on_save lsp_fallback" for languages that don't
-      -- have a well standardized coding style. You can add additional
-      -- languages here or re-enable it for the disabled ones.
+      local bufname = vim.api.nvim_buf_get_name(bufnr)
+      -- Disable "format_on_save lsp_fallback" for languages without FORMAT-STANDARD
       local disable_filetypes = { c = true, cpp = true }
       if disable_filetypes[vim.bo[bufnr].filetype] then
         return nil
-      else
-        return {
-          timeout_ms = 345,
-          lsp_format = 'fallback',
-        }
+        -- inspired by -- https://github.com/NixOS/nixfmt/issues/91#issuecomment-3217419103
+        -- elseif bufname:match '%.nix$' then -- For just nix
+      else -- If line 2 is vim.o.commentstring .. 'fmt:off' => disable conform (formatting)
+        -- TODO:
+        -- ADDITIONS
+        -- - check each line with conform builtin ?
+
+        local line2 = vim.api.nvim_buf_get_lines(bufnr, 1, 2, false)[1] or ''
+        if line2:match(vim.o.commentstring:gsub('%%s', 'fmt:off')) then return nil end
       end
+      return { -- else
+        timeout_ms = 345,
+        lsp_format = 'fallback',
+      }
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
@@ -64,7 +71,7 @@ return { -- NOTE: Autoformat
       css = { 'prettierd' },
       xml = { 'xmlformatter' },
 
-      ['_'] = { 'trim_whitespace' }, -- run on filetype without any formatter
+      -- ['_'] = { 'trim_whitespace' }, -- run on filetype without any formatter
     },
 
     formatters = { -- formatter settings
