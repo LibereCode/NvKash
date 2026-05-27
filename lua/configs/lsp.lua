@@ -39,23 +39,6 @@ return { -- NOTE: LSP-conf
 
       stylua = {}, -- Used to format Lua code
 
-      -- NOTE: Add languages here
-
-      -- biome = {}, -- replace ts_ls
-      -- ruff = {}, -- replace pyright -- Not... I will use as a formatter and linter instead
-      ty = { -- replace pyright, fr. -- `ty` is from `ruff` creator -- really good
-        configuration = {
-          rules = {
-            ['unresolved-reference'] = 'warn',
-            ['possibly-unresolved-reference'] = 'warn',
-          },
-          init_options = {
-            logFile = '~/.log/ty.log',
-            logLevel = 'debug',
-          },
-        },
-      },
-
       -- Special Lua Config, as recommended by neovim help docs
       lua_ls = { -- What is even this?
         on_init = function(client)
@@ -98,11 +81,29 @@ return { -- NOTE: LSP-conf
       --   },
       -- }, -- NOTE: indexes almost 2x of lua_ls, prolly because index too much in ~/.local/share/nvim/lazy
 
+      -- NOTE: ADD LSP HERE
+
+      -- biome = {}, -- replace ts_ls
+      -- ruff = {}, -- replace pyright -- Not... I will use as a formatter and linter instead
+      ty = { -- replace pyright, fr. -- `ty` is from `ruff` creator -- really good
+        configuration = {
+          rules = {
+            ['unresolved-reference'] = 'warn',
+            ['possibly-unresolved-reference'] = 'warn',
+          },
+          init_options = {
+            logFile = '~/.log/ty.log',
+            logLevel = 'debug',
+          },
+        },
+      },
+
       fish_lsp = {},
       bashls = {
         cmd = { 'bash-language-server', 'start' },
-        filetypes = { 'sh', 'zsh', 'bash' },
+        filetypes = { 'sh', 'bash', 'zsh' }, -- 'zsh',
       },
+      -- zsh -- see ~/.config/nvim/lsp/zshcs.lua AND "CUSTOM LSP" below
       yamlls = {},
       zls = { -- zig
         -- cmd = { '/usr/bin/zls-master' },
@@ -280,6 +281,10 @@ return { -- NOTE: LSP-conf
       vim.lsp.config(name, server)
       vim.lsp.enable(name)
     end
+
+    --!NOTE: CUSTOM LSP (from ~/.config/nvim/lsp/)
+    --
+    -- vim.lsp.enable 'zshcs' -- didn't work?
 
     local hover = vim.lsp.buf.hover
     ---@param key string
