@@ -285,6 +285,7 @@ return { -- NOTE: LSP-conf
     --!NOTE: CUSTOM LSP (from ~/.config/nvim/lsp/)
     --
     -- vim.lsp.enable 'zshcs' -- didn't work?
+    vim.lsp.enable 'lzp' -- TEST: custom lsp
 
     local hover = vim.lsp.buf.hover
     ---@param key string

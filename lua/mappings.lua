@@ -200,7 +200,7 @@ leadmap('ov', function()
     vim.env.XDG_CONFIG_HOME -- ~/.config/vale/styles/config/vocabularies/MyVocab/accept.txt
       .. '/vale/styles/config/vocabularies/MyVocab/accept.txt'
   ))
-end)
+end, { desc = 'vale [v]ocab' })
 
 -- INFO: Code
 -- NOTE, most are based on plugins and should't be here
