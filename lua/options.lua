@@ -42,7 +42,11 @@ o.softtabstop = -1 -- 4 -- sts>0 => sts=sw(=ts) -- . :h 'sts'
 -- o.hortmess:append 'sI' -- disable nvim intro(default dashboard)
 o.shortmess:append 'as' -- a=lmrw (:h shortmess) -- alpha.nvim appends I (replaces :intro)
 o.ruler = false
+
 -- o.cmdheight = 0 -- 0 2 -- Too buggy (when too low, pushes cursor position)
+o.showcmd = false -- :h 'sc'
+-- o.showcmdloc = 'statusline' -- showcmdloc(ation) -- :h 'sloc'
+o.cedit = '<C-q>' -- :h 'cedit' (opens cmdline window)
 
 o.sidescrolloff = 40 -- :h 'siso' -- 8 723 -- very big(723)=always centered(unless at left)
 o.sidescroll = 1 -- :h 'ss' -- 0 1 -- scroll this many lines when `:h siso` is triggered -- 0 = center instead
@@ -107,7 +111,9 @@ o.foldmethod = 'indent'
 o.foldtext = ''
 
 o.laststatus = 2 -- :h 'ls' -- foldlevel is better
-o.splitkeep = 'screen'
+o.splitkeep = 'screen' -- 'cursor'
+
+o.lazyredraw = true -- :h 'lz' -- Force update with :redraw --  TEST:
 
 -- go to previous/next line with h,l,left arrow and right arrow when cursor reaches end/beginning of line
 o.ww:append '<>[]hl' -- OP !! -- wrapoff, see below -- '<>'=left/right in N+V and '[]' in I+R mode; 'hl'=h/l in N+V
@@ -115,14 +121,15 @@ o.wrap = false -- toggles off wrap by default
 
 o.virtualedit = 'block' -- :h 've' -- allows selecting on empty space in visual-block mode
 
-o.wildmode = 'longest:full,list' -- :h 'wim' -- Command-line completion mode -- see also: `:h wildchar` `:h wildmenu`
+o.wildmode = 'longest:full' -- ,list -- :h 'wim' -- Command-line completion mode -- see also: `:h wildchar` `:h wildmenu`
 o.wildoptions = 'fuzzy,pum,tagfile' -- :h 'wop'
 
--- disable some default providers -- Not neaded if I have lsp?
--- g.loaded_node_provider = 0
-g.loaded_python3_provider = 0
--- g.loaded_perl_provider = 0
--- g.loaded_ruby_provider = 0
+-- disable some default providers -- for plugins?
+g.loaded_node_provider = 0
+-- g.loaded_python3_provider = 0
+g.python3_host_prog = '/usr/sbin/pynvim-python'
+g.loaded_perl_provider = 0
+g.loaded_ruby_provider = 0
 g.markdown_recommended_style = 0 -- Fix markdown indentation settings
 
 -- {swap, bakkupp, undo} default dir: $XDG_STATE_HOME/{swap|undo|backup}

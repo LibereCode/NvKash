@@ -101,7 +101,7 @@ return { -- NOTE: LSP-conf
       fish_lsp = {},
       bashls = {
         cmd = { 'bash-language-server', 'start' },
-        filetypes = { 'sh', 'bash', 'zsh' }, -- 'zsh',
+        filetypes = { 'sh', 'bash' }, -- 'zsh',
       },
       -- zsh -- see ~/.config/nvim/lsp/zshcs.lua AND "CUSTOM LSP" below
       yamlls = {},
@@ -285,7 +285,7 @@ return { -- NOTE: LSP-conf
     --!NOTE: CUSTOM LSP (from ~/.config/nvim/lsp/)
     --
     -- vim.lsp.enable 'zshcs' -- didn't work?
-    vim.lsp.enable 'lzp' -- TEST: custom lsp
+    vim.lsp.enable 'lzp' -- Works? -- Custom zsh lsp
 
     local hover = vim.lsp.buf.hover
     ---@param key string

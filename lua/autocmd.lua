@@ -13,16 +13,69 @@ autocmd('TextYankPost', {
   -- callback = function() vim.hl.on_yank() end,
   callback = function() vim.hl.hl_op() end,
 })
+vim.hl.hl_op {}
 
 -- HACK: Add more down below
+
+-- TODO: autocmd template to track file change-state with `sha256sum`
+--
+-- local seen = {}
+-- local kanaLuaPath = vim.fn.stdpath 'config' .. '/lua/themes/kanagawa.lua'
+-- local kanaStatePath = vim.fn.stdpath 'state' .. '/kanagawa.hash' --
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--   desc = 'When kanagawa.lua is Entered after prev change, do `:KanagawaCompile`',
+--   group = vim.api.nvim_create_augroup('KanagawaCompile-on-enter-after-save-old', { clear = true }),
+--   pattern = kanaLuaPath,
+--
+--   callback = function(args)
+--     -- check if first read
+--     local curFile = vim.api.nvim_buf_get_name(args.buf)
+--     if seen[curFile] then
+--       -- print('DEBUG: Not first time entering ' .. vim.fn.expand '%')
+--       return
+--     else
+--       -- read old hash
+--       -- local kanaHashPath = vim.fn.stdpath 'data' .. '/kanagawa.hash'
+--       local f = io.open(kanaStatePath, 'r')
+--       local prev_hash
+--       if f then
+--         prev_hash = f:read '*l'
+--         f:close()
+--         -- print('DEBUG: prev_hash =', prev_hash)
+--       end
+--
+--       -- get new hash
+--       local new_hash = vim.fn.system { 'sha256sum', kanaLuaPath }
+--       new_hash = new_hash:match '^%w+'
+--       -- print('DEBUG: new_hash =', new_hash)
+--
+--       -- compile if the file has been changed (according to sha256sum)
+--       if new_hash ~= prev_hash then
+--         -- print("DEBUG:", new_hash, '!=', prev_hash, 'Not equal, and that means: ')
+--         vim.cmd 'KanagawaCompile'
+--         local f2 = io.open(kanaStatePath, 'w')
+--         if f2 then
+--           f2:write(new_hash)
+--           f2:close()
+--         end
+--       else
+--         -- print(new_hash, '=', prev_hash, 'They are equal, nothing ever happens')
+--       end
+--
+--       -- mark the file as seen
+--       seen[curFile] = true
+--     end
+--   end,
+-- })
 
 -- niri-archcraft-niri-nvim-from-lazyvim
 -- Ensure terminal opens in current working directory
 autocmd('TermOpen', {
   callback = function()
-    vim.opt_local.number = false
-    vim.opt_local.relativenumber = false
-    vim.opt_local.signcolumn = 'no'
+    local ol = vim.opt_local
+    ol.number = false
+    ol.relativenumber = false
+    ol.signcolumn = 'no'
     vim.cmd 'startinsert'
   end,
 })
@@ -38,7 +91,7 @@ autocmd('BufReadPost', { -- Restore cursor position
   callback = function()
     local line = vim.fn.line '\'"'
     if line > 1 and line <= vim.fn.line '$' and vim.bo.filetype ~= 'commit' and vim.fn.index({ 'xxd', 'gitrebase' }, vim.bo.filetype) == -1 then
-      vim.cmd 'normal! g`"'
+      vim.cmd 'normal! g`"' -- INFO: g`" == g` (do not change jumplist) + g" (last know position)
     end
   end,
 })
@@ -63,11 +116,11 @@ autocmd('BufReadPost', { -- Restore cursor position
 --   end,
 -- }) -- bruh, could've just done `set colorcolumn=+0` to match textwidth (see :h colorcolumn)
 
-autocmd({ 'WinResized', 'WinEnter' }, { -- change colorcolumn with screenwidth
+autocmd({ 'WinResized', 'WinEnter' }, { --  -- change colorcolumn with screenwidth
   desc = 'When window is resized (prehaps) change sidescrolloff',
   group = augroup('WinResized-sidescroll', { clear = true }),
   callback = function()
-    if vim.fn.filetype ~= 'help' then
+    if vim.o.filetype ~= 'help' then -- the problem was: vim.fn.filetype
       local curwidth = vim.fn.winwidth(0)
       -- vim.opt_local.sidescroll = 0
       vim.opt_local.sidescrolloff = math.floor(curwidth / 2.5) -- math.max(..., 40)
@@ -113,6 +166,9 @@ autocmd('BufEnter', { -- TEST: which group should I ?
     if vim.o.filetype == 'conf' then vim.opt.filetype = 'cfg' end -- ~= "hyprlang"
   end,
 })
+
+-- TODO: do something(?) when a file is externally editied
+-- see :h watch-file
 
 -- INFO: Commands (vim.api.nvim_create_user_command &AND& vim.cmd(''))
 local cr_cmd = vim.api.nvim_create_user_command -- ('name', 'command', {})

@@ -16,7 +16,7 @@ return {
 
       map({ 'n', 't' }, '<M-t>', function() togterm:toggle_float { border = 'double' } end, { desc = 'toggleTerm' })
       map({ 'n', 't' }, '<leader>tt', function() togterm:toggle_float { x = 0.95, y = 0.95 } end, { desc = 'larger Term' })
-      map({ 'n', 't' }, '<C-/>', function() togterm:toggle_hor() end, { desc = 'larger Term' })
+      map({ 'n', 't' }, '<M-/>', function() togterm:toggle_hor() end, { desc = 'larger Term' }) -- '<C-/>'
     end,
     --   -- config = function() require 'foobar' end, -- NOTE: option 1 (load)
   },
@@ -47,7 +47,7 @@ return {
   },
 
   {
-    -- dev = true,
+    dev = true,
     'LibereCode/printTreeTable.nvim',
     opts = {},
   },

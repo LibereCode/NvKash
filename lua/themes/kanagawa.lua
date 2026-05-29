@@ -6,35 +6,37 @@ return { -- You can easily change to a different colorscheme.
   'rebelot/kanagawa.nvim',
   priority = 1000, -- Make sure to load this before all the other start plugins.
   config = function()
+    local kan = require 'kanagawa'
+
     ---@diagnostic disable-next-line: missing-fields
     -- Default options:
-    require('kanagawa').setup {
+    kan.setup {
 
-      compile = true, -- false -- TEST: enable compiling the colorscheme
+      compile = true, -- false -- enable compiling the colorscheme
       undercurl = true,
-      commentStyle = { italic = true },
-      functionStyle = {},
-      keywordStyle = { italic = true },
-      statementStyle = { bold = true },
-      typeStyle = {},
-      transparent = false, -- do not set background color
+      commentStyle = { italic = false }, -- italic = true
+      functionStyle = { bold = true },
+      keywordStyle = {}, --  italic = true
+      statementStyle = {}, -- bold = true
+      typeStyle = { bold = true },
+      transparent = false, -- do not set background color -- if true, also set: all = {{ bg_gutter = 'none' }},
       dimInactive = true, -- dim inactive window `:h hl-NormalNC`
 
       terminalColors = true, -- define vim.g.terminal_color_{0,17}
+      ---@type table bla bla
       colors = { -- add/modify theme and palette colors
         palette = {},
-        theme = {
-          wave = {},
-          lotus = {},
-          dragon = {},
+        -- stylua: ignore
+        theme = { wave = {}, lotus = {}, dragon = {},
           all = {
-            -- ui = { bg_gutter = 'none' },
+            ui = {
+              bg_gutter = '#12120f' -- 'none', -- see transperent
+            },
           },
         },
       },
       overrides = function(colors) -- add/modify highlights
         local theme = colors.theme
-
         -- tint background on diagnostics
         local makeDiagnosticColor = function(color)
           local c = require 'kanagawa.lib.color'
@@ -80,62 +82,42 @@ return { -- You can easily change to a different colorscheme.
     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
     vim.cmd.colorscheme 'kanagawa-dragon'
 
-    -- vim.api.nvim_create_autocmd({ 'BufWritePost', 'FileWritePost' }, { -- TODO: find out how to autosave next time VimEnter after edit this file
-    --   desc = 'When kanagawa.lua is written, do `:KanagawaCompile`',
-    --   group = vim.api.nvim_create_augroup('Kanagawa-compile-on-save', { clear = true }),
-    --
-    --   pattern = '*.config/nvim/lua/*/kanagawa.lua',
-    --   callback = function() vim.cmd 'KanagawaCompile' end,
-    -- })
-
-    -- TODO: This could be really usefull as a "global" autocmd used in general...
-    local seen = {}
     local kanaLuaPath = vim.fn.stdpath 'config' .. '/lua/themes/kanagawa.lua'
-    vim.api.nvim_create_autocmd('BufEnter', {
-      desc = 'When kanagawa.lua is Entered after prev change, do `:KanagawaCompile`',
-      group = vim.api.nvim_create_augroup('KanagawaCompile-on-enter-after-save', { clear = true }),
-      pattern = kanaLuaPath,
+    local autocmd, augroup = vim.api.nvim_create_autocmd, vim.api.nvim_create_augroup
+    local kanaStatePath = vim.fn.stdpath 'state' .. '/kanagawa.hash' --
 
-      callback = function(args)
-        -- check if first read
-        local curFile = vim.api.nvim_buf_get_name(args.buf)
-        if seen[curFile] then
-          -- print('DEBUG: Not first time entering ' .. vim.fn.expand '%')
-          return
-        else
-          -- read old hash
-          local kanaHashPath = vim.fn.stdpath 'data' .. '/kanagawa.hash'
-          local f = io.open(kanaHashPath, 'r')
-          local prev_hash
-          if f then
-            prev_hash = f:read '*l'
-            f:close()
-            -- print('DEBUG: prev_hash =', prev_hash)
-          end
-
-          -- get new hash
-          local new_hash = vim.fn.system { 'sha256sum', kanaLuaPath }
-          new_hash = new_hash:match '^%w+'
-          -- print('DEBUG: new_hash =', new_hash)
-
-          -- compile if the file has been changed (according to sha256sum)
-          if new_hash ~= prev_hash then
-            -- print("DEBUG:", new_hash, '!=', prev_hash, 'Not equal, and that means: ')
-            vim.cmd 'KanagawaCompile'
-            local f2 = io.open(kanaHashPath, 'w')
-            if f2 then
-              f2:write(new_hash)
-              f2:close()
-            end
-          else
-            -- print(new_hash, '=', prev_hash, 'They are equal, nothing ever happens')
-          end
-
-          -- mark the file as seen
-          seen[curFile] = true
+    autocmd('BufEnter', {
+      desc = 'If kanagawa.lua state-file exist, then :KanagawaCompile',
+      group = augroup('KanagawaCompile-on-enter-after-save', { clear = true }),
+      once = true,
+      callback = function()
+        if vim.uv.fs_stat(kanaStatePath) then
+          -- print('DEBUG: State file exist at' .. kanaStatePath)
+          vim.cmd 'KanagawaCompile'
+          vim.uv.fs_unlink(kanaStatePath) --
+          -- else
+          --   vim.api.nvim_echo({ { 'ERROR: No State file at' .. kanaStatePath } }, true, { err = true })
         end
       end,
     })
-    --
+
+    -- event=BufWritePost (or FileWritePost?)
+    -- - pattern = <path/kanagawa.lua> do: 1. Calc hash; 2. write it to state-file
+    autocmd('BufWritePost', {
+      desc = 'When kanagawa.lua changes, then create kanagawa.lua state-file',
+      group = augroup('kanagawa-create-state-on-save', { clear = true }),
+      pattern = kanaLuaPath,
+      callback = function()
+        local f, err = io.open(kanaStatePath, 'wb')
+        if not f then error(err) end
+        f:write ''
+        f:close()
+
+        -- -- cool,... but shit
+        -- local fd, err = vim.uv.fs_open(kanaStatePath, 'wx', 666) -- 666 = rw-rw-rw-
+        -- if not fd then error(err) end
+        -- vim.uv.fs_close(fd)
+      end,
+    })
   end,
 }

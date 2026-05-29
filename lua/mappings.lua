@@ -31,8 +31,23 @@ end
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 -- map('<Esc>', '<cmd>nohlsearch<CR>')
-map('<Esc>', '<cmd>nohl<CR>:<C-c>') -- TEST: also clear exec-line
-map(';', ':', { desc = 'cmd :' })
+map('<Esc>', '<cmd>nohl<CR>:<C-c>')
+-- map(';', ':', { desc = 'cmd-line' })
+-- map(',', ':', { desc = 'cmd-line' })
+map('<C-;>', function()
+  if vim.fn.getcmdwintype() == ':' then
+    vim.cmd.q()
+  else
+    vim.api.nvim_input 'q:' -- see also :h 'cedit'
+  end
+end, { desc = 'toggle [:]cmd-line window' })
+map('<C-;>', function() --
+  vim.api.nvim_input(vim.o.cedit)
+end, { desc = 'alt cedit bind' }, 'c')
+-- :h cmdline-editing
+map('<C-a>', '<HOME>', {}, 'c')
+map('<C-b>', '<S-Left>', {}, 'c')
+map('<C-f>', '<S-Right>', {}, 'c')
 
 -- INFO: Diagnostics/Debug Config & Keymaps
 -- See :help vim.diagnostic.Opts
@@ -127,10 +142,12 @@ leadmap('<tab>p', '<cmd>tabprev<CR>', { desc = 'prev' })
 leadmap('<tab>n', '<cmd>tabnext<CR>', { desc = 'next' })
 leadmap('<tab>t', '<C-W>T', { desc = 'window->newTab' })
 
--- INFO: quick commands / QOL
+-- INFO: quick commands / QoL
 --
 map('<C-c>', 'gcc', { desc = 'toggle comment', remap = true }) -- remap required, becuase ?
 map('<C-c>', 'gc', { desc = 'v-mode comment', remap = true }, 'x') -- v
+
+map('U', '<C-r>', { desc = '[U]N-undo (redo)' }) -- replace useless vi-like u
 
 -- Selection-mode
 map('<C-v>', '<C-o>P', { desc = 'Paste in S-mode', remap = true }, 's' --[[ { 's','i' } -- Made I-mode version better for insert ]]) -- '<C-o>"sp'

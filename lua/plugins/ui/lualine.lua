@@ -73,6 +73,7 @@ return { -- NOTE: Lualine https://github.com/nvim-lualine/lualine.nvim
         lualine_x = {
           -- 'encoding',
           -- 'fileformat',
+          -- function() return '%S' end, -- :h 'showcmd' and :h 'sloc'
           'lsp_status',
           'filetype',
         },
@@ -95,15 +96,16 @@ return { -- NOTE: Lualine https://github.com/nvim-lualine/lualine.nvim
               return colDelta -- string.format('%d,%d', lineDelta, colDelta)
             else
               return string.format('%2d%%%%', math.floor(vim.fn.line '.' / vim.fn.line '$' * 100))
+              -- return ' ' .. os.date '%R'
             end
           end,
         },
         lualine_z = {
           -- 'location',
-          function() return '%c→' .. vim.fn.col '$' - 1 end, -- NOTE: `col` is way faster, and only drawback
           -- function() return 'B) c:C=%c:' .. vim.fn.strwidth(vim.fn.getline '.') end, --  (being n+1) is really easy fixed
-          function() return '%l↓%L' end,
           -- function() return ' ' .. os.date '%R' end, -- clock
+          function() return '%c→' .. vim.fn.col '$' - 1 end, -- NOTE: `col` is way faster, and only drawback
+          function() return '%l↓%L' end,
         },
       },
 

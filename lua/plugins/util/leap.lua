@@ -3,6 +3,9 @@ return { --		TODO: try it for my minimal configs
   'andyg/leap.nvim',
   url = 'https://codeberg.org/andyg/leap.nvim.git',
   config = function()
+    vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap)')
+    vim.keymap.set('n', 'S', '<Plug>(leap-from-window)')
+
     -- E.g., `gs{leap}$y` or `ygs{leap}$`, where {leap}, as usual, means
     -- {char1}{char2}{label?}. The linewise version can also take [count],
     -- e.g. `d2gs{leap}` deletes two lines.
