@@ -23,7 +23,7 @@ return { -- NOTE: Colorizer (give color to #ff7200 hex codes) https://github.com
         display = {
           mode = { 'background', 'virtualtext' }, -- foreground
           virtualtext = {
-            -- position = 'before', -- default='eol'
+            position = 'after', -- default='eol'
             char = '󰚍', -- '', -- '■', -- character used for virtualtext
           },
         },

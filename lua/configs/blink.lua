@@ -28,25 +28,7 @@ return { -- NOTE: Autocompletion
       },
     },
 
-    { 'folke/neodev.nvim', enabled = false }, -- make sure to uninstall or disable neodev.nvim
-    {
-      'folke/lazydev.nvim',
-      ft = 'lua', -- only load on lua files
-      opts = {
-        library = {
-          -- See the configuration section for more details
-          -- Load luvit types when the `vim.uv` word is found
-          { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-        },
-        -- enabled = function(root_dir)
-        --   return not vim.uv.fs_stat(root_dir .. "/.luarc.json")
-        -- end,
-      },
-      keys = {
-        { '<leader>ld', '<CMD>LazyDev lsp<CR>' },
-      },
-      -- enabled = function(root_dir) return not vim.uv.fs_stat(root_dir .. '/.luarc.json') end, -- WARN: bricks config
-    },
+    { 'folke/lazydev.nvim', ft = 'lua' }, -- see ../plugins/code/lazydev.lua
 
     { -- NOTE: https://github.com/mikavilpas/blink-ripgrep.nvim#minimal-config
       'mikavilpas/blink-ripgrep.nvim',
@@ -176,7 +158,7 @@ return { -- NOTE: Autocompletion
 
         path = { opts = { show_hidden_files_by_default = true } },
 
-        buffer = { score_offset = -100 }, -- TEST: lower prio (was a bit spammy, and ripgrep instead)
+        buffer = { score_offset = -100 },
 
         mkdnflow = {
           name = 'Mkdnflow',
@@ -197,7 +179,7 @@ return { -- NOTE: Autocompletion
           ---@module "blink-ripgrep"
           ---@type blink-ripgrep.Options
           opts = {
-            prefix_min_len = 2, -- 3
+            prefix_min_len = 3,
             backend = {
               use = 'gitgrep-or-ripgrep', -- ripgrep
               ripgrep = {
@@ -207,7 +189,7 @@ return { -- NOTE: Autocompletion
             project_root_marker = { '.git', '.luarc.json', '.editorconfig', 'pyproject.toml' },
             -- debug = true, -- false
           },
-          score_offset = -50, -- prio other completions
+          score_offset = -75, -- prio other completions
         },
       },
     },

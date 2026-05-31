@@ -2,12 +2,11 @@ return { -- Useful plugin to show you pending keybinds.
   'folke/which-key.nvim',
   event = 'VimEnter',
   ---@module 'which-key'
-  -- ---@type wk.Opts
   ---@diagnostic disable-next-line: missing-fields
   opts = function(_, opts)
     -- vim.keymap.set('n', 'W', '<CMD>WhichKey<CR>', { desc = 'WhichKey[W]all' }) -- no leader?
     vim.keymap.set('n', '<leader>?', '<CMD>WhichKey<CR>', { desc = 'Which[?]Key' })
-    return {
+    return vim.tbl_extend('force', opts, {
       preset = 'helix', -- false|"classic"|"modern"|"helix"
       -- delay between pressing a key and opening which-key (milliseconds)
       delay = 21,
@@ -42,6 +41,7 @@ return { -- Useful plugin to show you pending keybinds.
         -- <leader> subgroups
         { '<leader>bo', group = 'order', mode = { 'n' } },
         -- { '<leader>sl', group = 'LSP actions', mode = { 'n' } },
+        -- { '<leader>dd', group = 'float diagnostic', mode = { 'n' } },
 
         -- goto
         { 'gs', group = 'surround', mode = { 'n', 'v' } },
@@ -62,6 +62,6 @@ return { -- Useful plugin to show you pending keybinds.
         --      { '<leader>key', group = "foobar" },
         --    })`
       },
-    }
+    })
   end,
 }

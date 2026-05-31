@@ -7,6 +7,7 @@ return { -- You can easily change to a different colorscheme.
   priority = 1000, -- Make sure to load this before all the other start plugins.
   config = function()
     local kan = require 'kanagawa'
+    -- print(kan.colors.palette.dragonBlack2)
 
     ---@diagnostic disable-next-line: missing-fields
     -- Default options:
@@ -18,7 +19,7 @@ return { -- You can easily change to a different colorscheme.
       functionStyle = { bold = true },
       keywordStyle = {}, --  italic = true
       statementStyle = {}, -- bold = true
-      typeStyle = { bold = true },
+      typeStyle = { italic = true },
       transparent = false, -- do not set background color -- if true, also set: all = {{ bg_gutter = 'none' }},
       dimInactive = true, -- dim inactive window `:h hl-NormalNC`
 
@@ -26,17 +27,21 @@ return { -- You can easily change to a different colorscheme.
       ---@type table bla bla
       colors = { -- add/modify theme and palette colors
         palette = {},
-        -- stylua: ignore
-        theme = { wave = {}, lotus = {}, dragon = {},
+        theme = {
+          wave = {},
+          lotus = {},
+          dragon = {},
           all = {
             ui = {
-              bg_gutter = '#12120f' -- 'none', -- see transperent
+              bg_gutter = '#1D1C19', -- 'none', -- see transparant -- dragonBlack2
             },
           },
         },
       },
       overrides = function(colors) -- add/modify highlights
         local theme = colors.theme
+        -- NOTE: colors/"theme" from ~/.local/share/nvim/lazy/kanagawa.nvim/lua/kanagawa/themes.lua
+
         -- tint background on diagnostics
         local makeDiagnosticColor = function(color)
           local c = require 'kanagawa.lib.color'
@@ -44,6 +49,10 @@ return { -- You can easily change to a different colorscheme.
         end
 
         return {
+          -- Normal = { bg = theme.ui.bg_m2 }, -- background color
+          -- SignColumn = { bg = theme.ui.bg_m1 }, -- just change bg_gutter instead
+          String = { italic = true },
+
           -- dark completion-popup
           Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1, blend = vim.o.pumblend }, -- add `blend = vim.o.pumblend` to enable transparency
           PmenuSel = { fg = 'NONE', bg = theme.ui.bg_p2 },

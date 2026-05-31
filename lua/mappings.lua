@@ -49,28 +49,13 @@ map('<C-a>', '<HOME>', {}, 'c')
 map('<C-b>', '<S-Left>', {}, 'c')
 map('<C-f>', '<S-Right>', {}, 'c')
 
--- INFO: Diagnostics/Debug Config & Keymaps
--- See :help vim.diagnostic.Opts
-vim.diagnostic.config {
-  update_in_insert = false,
-  severity_sort = true,
-  float = { border = 'rounded', source = 'if_many' },
-  underline = { severity = { min = vim.diagnostic.severity.WARN } },
-
-  -- Can switch between these as you prefer
-  virtual_text = true, -- Text shows up at the end of the line
-  virtual_lines = false, -- Text shows up underneath the line, with virtual lines
-
-  -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
-  -- stylua: ignore start
-  ---@diagnostic disable-next-line: undefined-global -- NOTE: Nice annotation
-  jump = { on_jump = on_jump },
-  -- `:h diagnostic-on-jump-example` -- DEPRECATED: jump = { float = true },
-  -- stylua: ignore end
-}
+-- Diagnostics
 
 leadmap('do', vim.diagnostic.setloclist, { desc = 'l[o]clist' })
-leadmap('dd'--[[df, see plugins/telescope.lua]], vim.diagnostic.open_float, { desc = 'floating [d]iagnostics' })
+-- leadmap('dd', vim.diagnostic.open_float, { desc = 'floating [d]iagnostics' })
+leadmap('dc', function() vim.diagnostic.open_float { scope = 'c' } end, { desc = '[c]ursor diagnostics' })
+leadmap('dd', vim.diagnostic.open_float, { desc = 'line [d]diagnostic' }) -- default
+leadmap('db', function() vim.diagnostic.open_float { scope = 'b' } end, { desc = '[b]uffer diagnostics' })
 leadmap('dl', ':log<CR>')
 local function toggleDiagnostics() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end
 leadmap('dt', toggleDiagnostics, { desc = '[t]oggle diagnostics' })

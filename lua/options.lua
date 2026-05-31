@@ -48,9 +48,9 @@ o.showcmd = false -- :h 'sc'
 -- o.showcmdloc = 'statusline' -- showcmdloc(ation) -- :h 'sloc'
 o.cedit = '<C-q>' -- :h 'cedit' (opens cmdline window)
 
-o.sidescrolloff = 40 -- :h 'siso' -- 8 723 -- very big(723)=always centered(unless at left)
+o.sidescrolloff = 20 -- :h 'siso' -- 8 40 723 -- very big(723)=always centered(unless at left)
 o.sidescroll = 1 -- :h 'ss' -- 0 1 -- scroll this many lines when `:h siso` is triggered -- 0 = center instead
-o.scrolloff = 15 -- :h 'so' -- 4 15 20 -- Lines of context (scrolloff) -- large (723) = always centered
+o.scrolloff = 12 -- :h 'so' -- 4 15 20 -- Lines of context (scrolloff) -- large (723) = always centered
 o.scrolljump = 1 -- :h 'sj' -- -69 -- like sidescroll, but for vertical -- -n = n%heifht
 
 -- NOTE: See 'ui2' [bottom/below]
@@ -154,6 +154,31 @@ o.colorcolumn = '-10,80' -- bruh
 
 -- o.winborder = 'bold' -- "bold" -- `:h 'winborder'`
 o.winborder = '.,-,.,¦,˙,-,˙,¦' -- TEST: (customAlt)=>'+,-,+,|,+,-,+,|'
+
+-- INFO: Diagnostics/Debug Config & Keymaps -- See :help vim.diagnostic.Opts
+local diag = vim.diagnostic
+diag.config {
+  update_in_insert = false,
+  severity_sort = true,
+  float = { border = 'rounded', source = 'if_many' },
+  underline = { severity = { min = diag.severity.INFO } },
+
+  -- Can switch between these as you prefer
+  virtual_text = {
+    virt_text_pos = 'eol',
+  }, -- Text shows up at the end of the line
+  virtual_lines = {
+    current_line = true,
+    severity = { min = vim.diagnostic.severity.WARN }, -- { diag.severity.ERROR }, --
+  }, -- Text shows up underneath the line, with virtual lines
+
+  -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+  -- stylua: ignore start
+  ---@diagnostic disable-next-line: undefined-global -- NOTE: Nice annotation
+  jump = { on_jump = on_jump },
+  -- `:h diagnostic-on-jump-example` -- DEPRECATED: jump = { float = true },
+  -- stylua: ignore end
+}
 
 -- NOTE: Experimental ui (see: `:h ui2`)
 require('vim._core.ui2').enable {
