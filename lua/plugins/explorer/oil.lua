@@ -39,6 +39,7 @@ return { -- NOTE: oil🦅 -- good
           desc = ':ex-mode <cDir>',
         },
 
+        ['<TAB>'] = { 'actions.preview', mode = 'n' }, -- TEST:
         ['<C-b>'] = 'actions.preview_scroll_left',
         ['<C-d>'] = 'actions.preview_scroll_down',
         ['<C-u>'] = 'actions.preview_scroll_up',

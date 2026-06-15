@@ -1,19 +1,27 @@
+-- ========================
 -- [[ Basic Autocommands ]]
+-- ========================
 --  See `:help lua-guide-autocommands`
 
-local autocmd = vim.api.nvim_create_autocmd
-local augroup = vim.api.nvim_create_augroup
+---Create an autocmd with augroup
+---@param events vim.api.keyset.events | table<vim.api.keyset.events>
+---@param augroupName string The name off the augroup
+---TIP: if struggle with name, just name it _"< events >-< a thing it does >"_
+---@param autoOpts vim.api.keyset.create_autocmd
+local function autocmd(events, augroupName, autoOpts)
+  local augroup = vim.api.nvim_create_augroup(augroupName, { clear = true })
+  autoOpts = vim.tbl_extend('force', { group = augroup }, autoOpts)
+  vim.api.nvim_create_autocmd(events, autoOpts)
+end
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.hl.on_yank()`
-autocmd('TextYankPost', {
+autocmd('TextYankPost', 'highlight-yank', {
   desc = 'Highlight when yanking (copying) text',
-  group = augroup('highlight-yank', { clear = true }), -- kickstart-highlight-yank
   -- callback = function() vim.hl.on_yank() end,
   callback = function() vim.hl.hl_op() end,
 })
-vim.hl.hl_op {}
 
 -- HACK: Add more down below
 
@@ -68,19 +76,14 @@ vim.hl.hl_op {}
 --   end,
 -- })
 
--- niri-archcraft-niri-nvim-from-lazyvim
--- Ensure terminal opens in current working directory
-autocmd('TermOpen', {
+autocmd('TermEnter', 'TermEnter-startinsert', {
   callback = function()
-    local ol = vim.opt_local
-    ol.number = false
-    ol.relativenumber = false
-    ol.signcolumn = 'no'
     vim.cmd 'startinsert'
+    vim.api.nvim_win_set_config(0, { style = 'minimal' })
   end,
 })
 --
-autocmd('BufReadPost', { -- Restore cursor position
+autocmd('BufReadPost', 'BufReadPost-restore-cursor', { -- :h restore-cursor
   pattern = '*',
   callback = function()
     local line = vim.fn.line '\'"'
@@ -90,11 +93,18 @@ autocmd('BufReadPost', { -- Restore cursor position
   end,
 })
 
+-- -- USE `:h cursorcolumn` instead !!
 -- autocmd({ 'InsertCharPre' }, { -- XXX: (cursed) moving colorcolumn (moves with cursor)
 --   callback = function() --
 --     vim.o.colorcolumn = tostring(vim.api.nvim_win_get_cursor(0)[2] + 1)
 --   end,
 -- })
+autocmd({ 'WinEnter' }, 'WinEnter-no-cursorcolumn', {
+  command = 'set nocursorcolumn', -- set cursorline nocursorcolumn
+})
+autocmd({ 'WinLeave' }, 'WinLeave-cursorcolumn', {
+  command = 'set cursorcolumn', -- set nocursorline cursorcolumn
+})
 
 -- autocmd('WinResized', { -- change colorcolumn with screenwidth
 --   group = augroup('colorcolumn-follow-columns', { clear = true }),
@@ -131,13 +141,13 @@ autocmd('BufReadPost', { -- Restore cursor position
 
 -- HACK: UI AUTOCMD specify all plugins to not show !!
 local ui_filetypes = { 'alpha', 'lazy', 'mason', 'help' }
-vim.api.nvim_create_autocmd('FileType', {
+autocmd('FileType', 'FileType-miniindentscope_disable', {
   pattern = ui_filetypes,
   callback = function() vim.b.miniindentscope_disable = true end,
 })
 
 -- Makes file.conf (and ghostty-conf.boo) into filetype "cfg" syntax
-autocmd('BufEnter', {
+autocmd('BufEnter', 'BufEnter-conf-boo-set_ft=cfg', {
   pattern = { '*.conf', '*.boo' },
   desc = 'file.conf -> file.cfg syntax',
   -- command = 'set ft=cfg',
@@ -147,17 +157,29 @@ autocmd('BufEnter', {
   end,
 })
 
-autocmd('BufEnter', {
+autocmd('BufEnter', 'BufEnter-log-set_ft=log', {
   pattern = '*.log',
   desc = 'file.log -> set ft=log',
   command = 'set ft=log',
   -- once = true,
 })
 
+autocmd('CmdwinEnter', 'CmdwinEnter-syntaxHL', {
+  callback = function()
+    vim.o.filetype = 'lua' -- FIXME: Enable Cmdwin syntax in a better way.
+  end,
+})
+
 -- TODO: do something(?) when a file is externally editied
 -- see :h watch-file
 
--- INFO: Commands (vim.api.nvim_create_user_command &AND& vim.cmd(''))
+-- TODO: Test some `:h autocmd-events`
+-- -[ ] `:h ModeChanged`
+-- -[ ] `:h CmdwinEnter`
+
+-- ==================================================
+-- Commands (vim.api.nvim_create_user_command &AND& vim.cmd(''))
+-- ==================================================
 local cr_cmd = vim.api.nvim_create_user_command -- ('name', 'command', {})
 
 cr_cmd('W', 'w', { desc = 'fix common typo of "w"' })

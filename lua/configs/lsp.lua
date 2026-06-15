@@ -21,11 +21,11 @@ return { -- NOTE: LSP-conf
     { 'j-hui/fidget.nvim', opts = {} },
   },
   opts = {
+    -- Enable the following language servers
+    --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
+    --  See `:help lsp-config` for information about keys and how to configure
+    ---@type table<string, vim.lsp.Config>
     servers = {
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-      --  See `:help lsp-config` for information about keys and how to configure
-      ---@type table<string, vim.lsp.Config>
       clangd = {}, -- c
       gopls = {}, -- go
       -- pyright = {}, -- python -- replaced with ruff -- not... ruff have no vim lsp.buf.hover() -- changed to basedpyright
@@ -42,23 +42,60 @@ return { -- NOTE: LSP-conf
       -- Special Lua Config, as recommended by neovim help docs
       lua_ls = {
         on_init = function(client)
+          -- NOTE: Disable thos config if .luarc.json is found
           if client.workspace_folders then
             local path = client.workspace_folders[1].name
-            if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
+            -- stylua: ignore
+            if path ~= vim.fn.stdpath 'config'
+              and (vim.uv.fs_stat(path .. '/.luarc.json')
+              or vim.uv.fs_stat(path .. '/..luarc.jsonc'))
+            then return end
           end
 
           -- vim.keymap.set('n', '<leader>ld', '<CMD>LazyDev lsp<CR>') -- see lazydev.keys above
 
-          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+          ---@type _.lspconfig.settings.lua_ls.Lua
+          local settingsLua = {
+            runtime = {
+              version = 'LuaJIT',
+              path = {
+                'lua/?.lua',
+                'lua/?/init.lua',
+                '?/lua/?.lua',
+                '?/lua/?/init.lua',
+              },
+            },
             workspace = {
+              -- what is?
               -- NOTE: this is a lot slower and will cause issues when working on your own configuration.
               --  See https://github.com/neovim/nvim-lspconfig/issues/3189
-              library = vim.tbl_extend('force', vim.api.nvim_get_runtime_file('', true), {
+
+              checkThirdParty = false,
+              --
+              -- library = vim.api.nvim_get_runtime_file('', true) -- XXX: SLOW -- Pull in all of 'runtimepath'
+              library = {
+                -- vim.fn.stdpath 'data' .. '/lazy', -- too much shit (SLOW)
+                vim.env.VIMRUNTIME,
+                vim.api.nvim_get_runtime_file('lua/lspconfig', false)[1],
                 '${3rd}/luv/library',
                 '${3rd}/busted/library',
-              }),
+              },
+              ignoreDir = {
+                '.vscode',
+                '**/*_spec.lua',
+                '**/tests/**',
+                '**/test/**',
+                '**/spec/**',
+                '**/doc/**',
+                '**/.github/**',
+                '**/scripts/**',
+              },
             },
-          })
+            completion = { autoRequire = true },
+            hint = { enable = true, setType = true },
+            telemetry = { enabled = false },
+          }
+          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua or {}, settingsLua)
         end,
         settings = {
           Lua = {},
@@ -95,6 +132,11 @@ return { -- NOTE: LSP-conf
 
       fish_lsp = {},
       bashls = {
+        bashIde = {
+          shfmt = {
+            path = '/',
+          },
+        },
         cmd = { 'bash-language-server', 'start' },
         filetypes = { 'sh', 'bash' }, -- 'zsh',
       },
@@ -183,8 +225,8 @@ return { -- NOTE: LSP-conf
 
         vim.api.nvim_buf_create_user_command(0, 'Lsplogged', function()
           -- INFO: Set these before use:
-          -- vim.lsp.log.set_level 'DEBUG'
-          -- vim.lsp.log.set_format_func(vim.inspect)
+          vim.lsp.log.set_level 'WARN' -- 'INFO' -- 'DEBUG'
+          vim.lsp.log.set_format_func(vim.inspect)
 
           vim.cmd('tabnew ' .. vim.lsp.log.get_filename())
         end, { desc = 'Lsp log with extra-verbosity' })

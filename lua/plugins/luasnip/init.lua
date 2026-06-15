@@ -5,6 +5,7 @@ return { -- INFO: also inconfig/blink.lua#dependencies
     local ftsnippets = {
       'all',
       'lua',
+      'sh',
       'zig',
     }
     for _, ft in ipairs(ftsnippets) do

@@ -10,53 +10,83 @@ return { -- Highlight, edit, and navigate code
   -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
   -- config = function(_, opts)
   config = function()
-    local parsers = {
+    local nvimTS = require 'nvim-treesitter'
+
+    local tsParsersExtra = {
       'bash',
       'c',
+      'cpp',
+      'css',
       'diff',
       'html',
+      'json',
+      'json5',
+      'kdl',
       'lua',
       'luadoc',
       'markdown',
       'markdown_inline',
+      'nix',
+      'python',
       'query',
+      'toml',
       'vim',
       'vimdoc',
+      'zig',
       'zsh',
-      'python',
     }
-    require('nvim-treesitter').install(parsers)
+    local tsParsersStable = nvimTS.get_available(1)
+    -- Ensure these TS-parsers are installed
+    local tsParsers = vim.tbl_extend('force', tsParsersStable, tsParsersExtra)
+    nvimTS.install(tsParsers, { summary = false })
+
     vim.api.nvim_create_autocmd('FileType', {
       callback = function(args)
-        local buf, filetype = args.buf, args.match
+        local filetype, buf = args.match, args.buf -- args.match = vim.o.filetype
 
+        -- either treesitter specific **language** (see `:h vim.treesitter.language.register()`)
+        -- OR just the same as **filetype**
         local language = vim.treesitter.language.get_lang(filetype)
         if not language then return end -- If no lang is detected, just give up
 
-        -- check if parser exists and load it -- BUG: Does it really???
-        if not vim.treesitter.language.add(language) then
-          -- stylua: ignore
-          vim.keymap.set( 'n', '<leader>ut' --[[cs|ct]],
-            vim.show_pos, { desc = 'TS: posi[t]ion' }
-          )
+        local tsAddOk, tsAddErr = vim.treesitter.language.add(language)
+
+        -- if parser exists and start treesitter for **buf**
+        if tsAddOk then
+          -- enables syntax highlighting and other treesitter features
+          vim.treesitter.start(buf, language)
+
+          -- set some Treesitter-keymaps
+          vim.keymap.set('n', '<leader>ut' --[[cs|ct]], vim.show_pos, { desc = 'TS: posi[t]ion', buf = buf })
           vim.keymap.set('n', '<leader>uT'--[[cS|cT]], function()
             vim.treesitter.inspect_tree()
             vim.api.nvim_input 'I' -- INFO: THIS IS (in one way) HOW YOU INSERT TEXT !!
-          end, { desc = 'TS: [T]ree' })
+          end, { desc = 'TS: [T]yntaxTree', buf = buf })
+
+          -- enables treesitter based folds -- see `:help folds`
+          vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+          vim.wo.foldmethod = 'expr'
+          -- enables treesitter based indentation
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        else
+          -- PERF: DEBUG:
+          -- print('vim.treesitter.language.add("' .. language .. '").err = ' .. tsAddErr)
+
+          -- NOTE: if no parser, then install the language's parser if treesitter has it
+          local tsParsersMatch = table.concat(nvimTS.get_available(), ' '):match(' ' .. language .. ' ')
+          if tsParsersMatch then
+            -- print('DEBUG: NOT installed -> installing (language/tsParsersMatch)', language, tsParsersMatch)
+            nvimTS.install(language)
+          end
           return
         end
-        -- enables syntax highlighting and other treesitter features
-        vim.treesitter.start(buf, language)
-
-        -- NOTE: I could create a new autocmd for only some filetypes and enable these
-        --
-        -- enables treesitter based folds -- see `:help folds`
-        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-        vim.wo.foldmethod = 'expr'
-        -- enables treesitter based indentation
-        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
       end,
     })
+
+    -- NOTE: uninstall all parsers:
+    -- nvimTS.uninstall(nvimTS.get_installed())
+
     -- require('nvim-treesitter').setup(opts)
+    -- NOTE: will be prepended to |runtimepath|.
   end,
 }

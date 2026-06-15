@@ -51,4 +51,10 @@ return {
     'LibereCode/printTreeTable.nvim',
     opts = {},
   },
+
+  {
+    -- dev = true,
+    'LibereCode/QoL.nvim',
+    opts = {},
+  },
 }

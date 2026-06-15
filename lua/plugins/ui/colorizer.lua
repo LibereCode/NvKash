@@ -1,12 +1,12 @@
 return { -- NOTE: Colorizer (give color to #ff7200 hex codes) https://github.com/norcalli/nvim-colorizer.lua
   'catgoose/nvim-colorizer.lua', -- 'norcalli/nvim-colorizer.lua', OG lowkey unmentained
   event = 'BufReadPre', -- BufReadPre not working -- Lazyload until event "BufREadPre"
-  -- Remember kids, TO DELETE THE OLD VERSION BEFORE INSTALLING A NEW!
   opts = function(_, opts)
     vim.keymap.set('n', '<leader>uc', ':ColorizerToggle<CR>')
     -- vim.keymap.set('n', '<leader>tc', ':ColorizerToggle<CR>')
-    return { -- INFO: https://github.com/catgoose/nvim-colorizer.lua?tab=readme-ov-file#default-configuration
-      options = {
+    opts = opts or {}
+    opts.options =
+      vim.tbl_extend('force', opts.options or {}, { -- INFO: https://github.com/catgoose/nvim-colorizer.lua?tab=readme-ov-file#default-configuration
         parsers = {
           css = true, -- preset: enables names, hex, rgb, hsl, oklch, css_var
           -- css_fn = true,
@@ -19,15 +19,18 @@ return { -- NOTE: Colorizer (give color to #ff7200 hex codes) https://github.com
             rgba = false, -- #f067
           },
         },
-
         display = {
-          mode = { 'background', 'virtualtext' }, -- foreground
+          mode = {
+            'foreground' --[[background]], -- TEST
+            'virtualtext',
+            'underline', -- TEST
+          },
           virtualtext = {
-            position = 'after', -- default='eol'
+            position = 'before', -- 'before' 'after' -- default='eol'
             char = '󰚍', -- '', -- '■', -- character used for virtualtext
           },
         },
-      },
-    }
+      })
+    return opts
   end,
 }

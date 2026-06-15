@@ -28,7 +28,7 @@ return { -- NOTE: Autocompletion
       },
     },
 
-    { 'folke/lazydev.nvim', ft = 'lua' }, -- see ../plugins/code/lazydev.lua
+    { 'folke/lazydev.nvim', ft = 'lua', opts = {} }, -- see ../plugins/code/lazydev.lua
 
     { -- NOTE: https://github.com/mikavilpas/blink-ripgrep.nvim#minimal-config
       'mikavilpas/blink-ripgrep.nvim',

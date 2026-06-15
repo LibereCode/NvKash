@@ -140,9 +140,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
     -- Quick access
     leadmap('r', function() builtin.resume {} end, '[r]esume Telescope')
-    leadmap('T', function() builtin.builtin {} end, 'Telescope [T]uiltins')
-    leadmap(':', builtin.command_history, '[:]command_history') -- maybe in find instead?
-    -- '/' => live_grep/fzf curBuf
+    leadmap('B', function() builtin.builtin {} end, '[B]elescope Tuiltins') -- [T]uiltins
     leadmap('/', function()
       --   builtin.current_buffer_fuzzy_find(themes.get_dropdown { -- themes.get_ivy
       --     winblend = 10,
@@ -180,6 +178,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- mapbuilt('sW', function() builtin.grep_string { search = vim.fn.expand '<cword>' } end, 'current [W]ord', { 'n' }) -- this is default...
     leadmap('sW', builtin.grep_string, '[W]ord', { 'n', 'x' }) -- 'v'
     leadmap('sT', builtin.treesitter, '[T]reesitter')
+    leadmap('s:', builtin.command_history, '[:]cmd_history') -- maybe in find instead?
     leadmap('s"', builtin.registers, '["]registers')
     -- leadmap('s/', function() builtin.current_buffer_fuzzy_find() end, 'Fzf [/] +BIG_preview')
     leadmap('s/', function() builtin.current_buffer_fuzzy_find {

@@ -39,7 +39,7 @@ o.softtabstop = -1 -- 4 -- sts>0 => sts=sw(=ts) -- . :h 'sts'
 -- o.expandtab = true
 
 -- o.shm:append({ W = true, I = true, c = true, C = true }) -- append to shortmess, which is truncation of terms
--- o.hortmess:append 'sI' -- disable nvim intro(default dashboard)
+-- o.shortmess:append 'sI' -- disable nvim intro(default dashboard)
 o.shortmess:append 'as' -- a=lmrw (:h shortmess) -- alpha.nvim appends I (replaces :intro)
 o.ruler = false
 
@@ -91,6 +91,7 @@ o.inccommand = 'split' -- :h 'icm' -- Preview substitutions live, as you type!
 
 o.cursorline = true -- Highlight current line
 -- o.cursorlineopt = 'both' -- default
+-- o.cursorcolumn = true -- :h 'cuc'
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -111,7 +112,7 @@ o.foldmethod = 'indent'
 o.foldtext = ''
 
 o.laststatus = 2 -- :h 'ls' -- foldlevel is better
-o.splitkeep = 'screen' -- 'cursor'
+o.splitkeep = 'cursor' -- :h 'spk' -- cursor position on win-resize
 
 o.lazyredraw = true -- :h 'lz' -- Force update with :redraw --  TEST:
 

@@ -9,7 +9,7 @@
 -- local map = vim.keymap.set
 ---@param key string|string
 ---@param cmd string|function
----@param optsExtra table? -- `:h vim.keymap.set()` _opts_ tbl
+---@param optsExtra vim.keymap.set.Opts? -- `:h vim.keymap.set()` _opts_ tbl
 ---@param mode string|string[]? -- specify if mode is different than _n_(ormal mode)
 local function map(key, cmd, optsExtra, mode)
   local optsMap = vim.tbl_extend('error', {}, optsExtra or {})
@@ -19,7 +19,7 @@ local nomap = vim.keymap.del -- disable (default) mappings
 
 --- @param keys string -- the keys after _<leader>_
 --- @param cmd string|function -- `<CMD>foobar<CR>` or lua `function()`
---- @param opts table<any, any>|nil -- **optional** table of _key=val_ opts
+--- @param opts vim.keymap.set.Opts? -- **optional** table of _key=val_ opts
 --- @param modes table|string|nil -- **optional** table or string of modes if not _"n"_
 --- @return nil -- *return fuck all*
 local function leadmap(keys, cmd, opts, modes) -- better leadmap (allows { opts })
@@ -57,9 +57,12 @@ leadmap('dc', function() vim.diagnostic.open_float { scope = 'c' } end, { desc =
 leadmap('dd', vim.diagnostic.open_float, { desc = 'line [d]diagnostic' }) -- default
 leadmap('db', function() vim.diagnostic.open_float { scope = 'b' } end, { desc = '[b]uffer diagnostics' })
 leadmap('dl', ':log<CR>')
-local function toggleDiagnostics() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end
-leadmap('dt', toggleDiagnostics, { desc = '[t]oggle diagnostics' })
-leadmap('ud', toggleDiagnostics, { desc = '[d]diagnostics' })
+local function toggleDiagnostics(opts) ---@param opts? vim.diagnostic.Filter
+  opts = opts or {}
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled(opts), opts)
+end
+leadmap('dt', function() toggleDiagnostics() end, { desc = '[t]oggle diagnostics (globally)' })
+leadmap('ud', function() toggleDiagnostics { bufnr = 0 } end, { desc = '[d]diagnostics' })
 
 -- INFO: TERMINAL
 --
@@ -84,26 +87,42 @@ map('<M-Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }, 't') --TEST:
 
 -- INFO: Windows/buffers/tabs
 --
--- windows
--- Keybinds to make split navigation easier. Use CTRL+<hjkl> to switch between windows
---  See `:help wincmd` for a list of all window commands
-map('<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-map('<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-map('<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-map('<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- windows -- See `:help wincmd` for list
+local wincmd = vim.cmd.wincmd
+map('<C-h>', function() wincmd 'h' end, { desc = 'Move focus to the left window' })
+map('<C-l>', function() wincmd 'l' end, { desc = 'Move focus to the right window' })
+map('<C-j>', function() wincmd 'j' end, { desc = 'Move focus to the lower window' })
+map('<C-k>', function() wincmd 'k' end, { desc = 'Move focus to the upper window' })
 -- NOTE Some terminals have colliding keymaps or are not able to send distinct keycodes
-map('<C-A-h>', '<C-w>H', { desc = 'Move window to the left' })
-map('<C-A-l>', '<C-w>L', { desc = 'Move window to the right' })
-map('<C-A-j>', '<C-w>J', { desc = 'Move window to the lower' })
-map('<C-A-k>', '<C-w>K', { desc = 'Move window to the upper' })
+map('<C-A-h>', function() wincmd 'H' end, { desc = 'Move window to the left' })
+map('<C-A-l>', function() wincmd 'L' end, { desc = 'Move window to the right' })
+map('<C-A-j>', function() wincmd 'J' end, { desc = 'Move window to the lower' })
+map('<C-A-k>', function() wincmd 'K' end, { desc = 'Move window to the upper' })
 
-map('<C-->', '<C-w>2-', { desc = '[-] win-height' })
-map('<C-=>', '<C-w>2+', { desc = '[+] win-height' }) -- same key as +
-map('<C-,>', '<C-w>2<', { desc = 'widgth less [<]' }) -- lower-case <
-map('<C-.>', '<C-w>2>', { desc = 'width more [>]' }) -- lower-case >
+map('<M-S-->', function() wincmd '2-' end, { desc = '[-] win-height' }) -- '<C-->'
+map('<M-S-=>', function() wincmd '2+' end, { desc = '[+] win-height' }) -- '<C-=>'
+map('<M-S-,>', function() wincmd '2<' end, { desc = 'widgth less [<]' }) -- '<C-,>'
+map('<M-S-.>', function() wincmd '2>' end, { desc = 'width more [>]' }) -- '<C-.>'
 
-leadmap('|', ':vsplit<CR>', { desc = 'vertical[|]split' }) -- <C-w>v
-leadmap('_', ':split<CR>', { desc = 'horizontal[_]split' }) -- <C-w>s
+-- leadmap('|', ':vsplit<CR>', { desc = 'vertical[|]split' }) -- <C-w>v
+-- leadmap('_', ':split<CR>', { desc = 'horizontal[_]split' }) -- <C-w>s
+
+-- TODO: Move this (expaned version with state keeping) to a new plugin "QoL.nvim"
+leadmap('T', function()
+  local getConf = vim.api.nvim_win_get_config(0)
+  -- vim.print('>', getConf, '<')
+  if getConf.relative ~= '' then --
+    vim.api.nvim_win_set_config(0, { split = 'above', win = vim.fn.win_getid(1) })
+  else
+    vim.api.nvim_win_set_config(0, {
+      relative = 'editor',
+      width = math.floor(vim.o.columns * 0.8),
+      height = math.floor(vim.o.lines * 0.8),
+      col = math.floor(vim.o.columns * 0.2 / 2),
+      row = math.floor(vim.o.lines * 0.2 / 2),
+    })
+  end
+end, { desc = '[T]uuggle float' })
 
 -- buffers -- see `plugins.ui` bufferline & lualine for more
 local function bufopts(tbl) -- otps in vim.keymap.set(), habing noremap and silent
@@ -156,6 +175,12 @@ map('<C-v>', '<ESC>pa', { desc = 'Paste in I-mode', remap = true }, 'i') -- NOTE
 -- better jk
 map('j', 'gj', { desc = 'better ↓j', silent = true }, { 'n', 'x' }) -- v
 map('k', 'gk', { desc = 'better ↑k', silent = true }, { 'n', 'x' }) -- v
+
+-- move in insert-mode with ALT-hjkl
+map('<M-h>', '<Left>', { desc = '←', silent = false }, { 'i', 's', 'c' }) --TODO: 'c'
+map('<M-j>', '<Down>', { desc = '↓', silent = false }, { 'i', 's', 'c' })
+map('<M-k>', '<Up>', { desc = '↑', silent = false }, { 'i', 's', 'c' })
+map('<M-l>', '<Right>', { desc = '→', silent = false }, { 'i', 's', 'c' })
 
 -- jump to local link  -- really weird why `g]` wasen't enough, especially the last esc?
 -- map('gL', 'g]1<CR><escape>', { desc = '[L]ocal Link' }) -- NOTE: This disables the default
@@ -241,3 +266,40 @@ map('<localleader>,', '<cmd>echo "localleader"<Bar>echo "btw"<CR>', { desc = 'lo
 -- NOTE: see ~/.config/nvim/after/ftplugin/ for spicy stuff !!
 --
 -- NOTE: see also `configs.lazy` 'custom_keys' (allows lazy keys, but global) https://lazy.folke.io/configuration
+
+-- -- XXX: kind of is its plugin at this point (QoL.nvim ?)
+--
+-- local cmdBuf = { buf = -1, win = -1 }
+-- local neoCmdWin = function() -- TODO: make this a plugin (or part of **QoL.nvim**)
+--   if not vim.api.nvim_buf_is_valid(cmdBuf.buf) then cmdBuf.buf = vim.api.nvim_create_buf(false, true) end
+--   --
+--   if vim.api.nvim_win_is_valid(cmdBuf.win) then
+--     if vim.api.nvim_get_current_win() == cmdBuf.win then
+--       vim.api.nvim_win_close(cmdBuf.win, false)
+--     else
+--       vim.api.nvim_set_current_win(cmdBuf.win)
+--     end
+--   else
+--     cmdBuf.win = vim.api.nvim_open_win(cmdBuf.buf, true, {
+--       relative = 'editor',
+--       anchor = 'SW',
+--       row = vim.o.lines - 2,
+--       col = vim.o.columns - 2,
+--       width = vim.o.columns,
+--       height = 3,
+--       -- style = 'minimal',
+--     })
+--   end
+--   --
+--   vim.bo[cmdBuf.buf].filetype = 'lua'
+--   -- NOTE: Have to manually set the lsp (I think). Would like that it set filetype before lsp-check?
+--   vim.lsp.start({ name = 'lua_ls', cmd = { 'lua-language-server' } }, { bufnr = cmdBuf.buf })
+--   map('<C-CR>', function()
+--     vim.cmd.source()
+--     vim.cmd.close()
+--   end, { desc = 'Source', buf = cmdBuf.buf }, { 'i', 'n' })
+--   map('<CR>', '<CMD>so<CR>', { desc = 'Source', buf = cmdBuf.buf }, { 'n' })
+--   map('<C-s>', '<CMD>so<CR>', { desc = 'Source', buf = cmdBuf.buf }, { 'n' })
+-- end
+-- leadmap(':', function() neoCmdWin() end, { desc = 'lua cmd-buf' })
+-- map('<M-;>', function() neoCmdWin() end, { desc = 'lua cmd-buf' })
