@@ -218,6 +218,28 @@ leadmap('uL', '<CMD>set cul!<CR>', { desc = 'toggle cursor-[L]ine' })
 --     -- vim.opt.shiftwidth = tabStuff
 --   end)
 -- end, { desc = 'set [t]abStuff' })
+leadmap('uc', function() vim.opt_local.cursorcolumn = not vim.o.cursorcolumn end, { desc = 'toggle [c]ursorColumn' })
+leadmap('uC', function()
+  vim.opt_local.cursorline = not vim.o.cursorline
+  vim.opt_local.cursorcolumn = not vim.o.cursorcolumn
+end, { desc = 'toggle [C]ursor{Line+Column}' })
+
+---@class mapping.mapOpts
+---@field key string|string[]
+---@field cmd string|function
+---@field opts? vim.keymap.set.Opts
+---@field mode? string|string[]
+
+---@param mapOpts mapping.mapOpts
+local function mapping(mapOpts)
+  local key = mapOpts.key
+  local cmd = mapOpts.cmd
+  local opts = mapOpts.opts or {}
+  local mode = mapOpts.mode or 'n'
+  vim.keymap.set(mode, key, cmd, opts)
+end
+
+mapping { cmd = '<CMD>echo "Hello mappings!"<CR>', key = '<leader>m' }
 
 -- INFO: open/organize
 --

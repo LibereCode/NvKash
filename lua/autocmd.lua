@@ -99,12 +99,12 @@ autocmd('BufReadPost', 'BufReadPost-restore-cursor', { -- :h restore-cursor
 --     vim.o.colorcolumn = tostring(vim.api.nvim_win_get_cursor(0)[2] + 1)
 --   end,
 -- })
-autocmd({ 'WinEnter' }, 'WinEnter-no-cursorcolumn', {
-  command = 'set nocursorcolumn', -- set cursorline nocursorcolumn
-})
-autocmd({ 'WinLeave' }, 'WinLeave-cursorcolumn', {
-  command = 'set cursorcolumn', -- set nocursorline cursorcolumn
-})
+-- autocmd({ 'WinEnter' }, 'WinEnter-no-cursorcolumn', {
+--   command = 'set nocursorcolumn', -- set cursorline nocursorcolumn
+-- })
+-- autocmd({ 'WinLeave' }, 'WinLeave-cursorcolumn', {
+--   command = 'set cursorcolumn', -- set nocursorline cursorcolumn
+-- })
 
 -- autocmd('WinResized', { -- change colorcolumn with screenwidth
 --   group = augroup('colorcolumn-follow-columns', { clear = true }),

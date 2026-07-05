@@ -2,7 +2,7 @@ return { -- NOTE: Colorizer (give color to #ff7200 hex codes) https://github.com
   'catgoose/nvim-colorizer.lua', -- 'norcalli/nvim-colorizer.lua', OG lowkey unmentained
   event = 'BufReadPre', -- BufReadPre not working -- Lazyload until event "BufREadPre"
   opts = function(_, opts)
-    vim.keymap.set('n', '<leader>uc', ':ColorizerToggle<CR>')
+    vim.keymap.set('n', '<leader>uz', ':ColorizerToggle<CR>', { desc = 'toggle colori[z]er' })
     -- vim.keymap.set('n', '<leader>tc', ':ColorizerToggle<CR>')
     opts = opts or {}
     opts.options =
