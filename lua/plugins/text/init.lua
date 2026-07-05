@@ -3,7 +3,10 @@
 return {
 
   --[[ markdown ]]
+  --- renderer ---
   -- require 'plugins.text.markview',
+  require 'plugins.text.render-markdown',
+  --- control ---
   -- require 'plugins.text.mkdnflow',
   require 'plugins.text.markdown-plus',
 
