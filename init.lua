@@ -82,6 +82,7 @@ I hope you enjoy your Neovim journey,
 - TJ
 
 P.S. You can delete this when you're done too. It's your config now! :)
+
 --]]
 
 ---------------------------------------------------------------------------------------------------
