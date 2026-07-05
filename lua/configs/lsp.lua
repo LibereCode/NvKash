@@ -148,7 +148,7 @@ return { -- NOTE: LSP-conf
       vale_ls = { -- you can just rename them... (vale-ls -> vale_ls)
         filetypes = { 'text', 'markdown' },
       },
-      markdown_oxide = {}, -- marksman={}, -- markdown
+      marksman = {}, -- markdown_oxide = {}, -- markdown
       hyprls = {}, -- hyprlang
       nil_ls = {}, -- nix
       -- cssls = {},
@@ -163,6 +163,7 @@ return { -- NOTE: LSP-conf
       },
       qmlls = {},
       tombi = {}, -- toml -- taplo tombi
+      jdtls = {}, -- java-language-server -- jls
     },
   },
   config = function(_, opts)
@@ -304,7 +305,6 @@ return { -- NOTE: LSP-conf
       -- INSTALL LSP ABOVE (and Linters, and Formatters here)
       -- put DAP with plugins.code `nvim-dap` !!
 
-      'beautysh',
       'html-lsp',
       'jsonlint',
       'markdownlint-cli2',

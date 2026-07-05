@@ -11,7 +11,7 @@ return {
 
     -- TEST:
     lint.linters_by_ft = {
-      markdown = { 'markdownlint-cli2' }, -- 'vale'
+      -- markdown = { 'markdownlint-cli2' },
       -- text = { 'vale' },
 
       -- INFO: Add more here

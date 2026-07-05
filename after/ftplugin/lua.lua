@@ -24,5 +24,10 @@ map('gh', helpCword(), { desc = 'help <cword>', remap = true }) -- will replace 
 -- default gh ``:h gh`. Just use <C-g> while in V-mode instead....
 
 local ol = vim.opt_local
--- o.softtabstop = 2 -- . :h 'sts' -- Will only be applied at config because :...
--- ... I have a ~/.config/stylua saying tab = 4, so stylua here don't apply globally
+---@param len integer Length in spaces of tabs
+local tablen = function(len)
+  for _, opt in ipairs { 'ts', 'sts', 'sw' } do
+    ol[opt] = len
+  end
+end
+tablen(2)

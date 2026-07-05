@@ -14,7 +14,6 @@ return {
       -- min_pattern_length = 2, -- fucks up labels on f/F/t/T/;/,
       -- rainbow = { enabled = true, shade = 9 },
     },
-    ---@type Flash.Config.jump
     jump = {
       nohlsearch = true,
     },

@@ -53,9 +53,7 @@ return { -- NOTE: Autoformat
       -- inspired by lazyvim https://www.lazyvim.org/plugins/formatting#conformnvim
       -- TODO: Figure out if key = can be a table ( {sh, bash, zsh } = { 'beautysh' })
       fish = { 'fish_indent' },
-      sh = { 'beautysh' },
-      bash = { 'beautysh' },
-      zsh = { 'beautysh' },
+      -- sh|bash|zsh = { 'beautysh' }, -- XXX: just using lsp formatter is better
       python = function(bufnr)
         -- stylua: ignore start
         if require('conform').get_formatter_info('ruff_format', bufnr).available then

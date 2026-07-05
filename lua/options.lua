@@ -33,9 +33,11 @@ o.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus' -- together with th
 
 o.breakindent = true -- Enable break indent
 -- o.smartindent = true -- maybe not so smart...
-o.tabstop = 4 -- . :h 'ts'
-o.shiftwidth = 0 -- 4 -- 0 => sw=ts --  . :h 'sw'
-o.softtabstop = -1 -- 4 -- sts>0 => sts=sw(=ts) -- . :h 'sts'
+
+local tabLen = 4
+o.tabstop = tabLen -- . :h 'ts'
+o.shiftwidth = tabLen -- 0|4 => sw=ts --  . :h 'sw'
+o.softtabstop = tabLen -- -1|4 -- sts>0 => sts=sw(=ts) -- . :h 'sts'
 -- o.expandtab = true
 
 -- o.shm:append({ W = true, I = true, c = true, C = true }) -- append to shortmess, which is truncation of terms
@@ -44,8 +46,8 @@ o.shortmess:append 'as' -- a=lmrw (:h shortmess) -- alpha.nvim appends I (replac
 o.ruler = false
 
 -- o.cmdheight = 0 -- 0 2 -- Too buggy (when too low, pushes cursor position)
-o.showcmd = false -- :h 'sc'
--- o.showcmdloc = 'statusline' -- showcmdloc(ation) -- :h 'sloc'
+o.showcmd = true -- :h 'sc'
+o.showcmdloc = 'statusline' -- showcmdloc(ation) -- :h 'sloc'
 o.cedit = '<C-q>' -- :h 'cedit' (opens cmdline window)
 
 o.sidescrolloff = 20 -- :h 'siso' -- 8 40 723 -- very big(723)=always centered(unless at left)
@@ -149,7 +151,7 @@ cset 't_Co=256'
 cset 'termguicolors'
 cset 'background=dark'
 
-o.textwidth = 100 -- 80
+-- o.textwidth = 100 -- 80 -- XXX annoying
 -- o.colorcolumn = tostring(vim.opt.textwidth:get()) -- see also autocmd
 o.colorcolumn = '-10,80' -- bruh
 

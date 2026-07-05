@@ -46,15 +46,19 @@ return { -- Highlight, edit, and navigate code
 
         -- either treesitter specific **language** (see `:h vim.treesitter.language.register()`)
         -- OR just the same as **filetype**
-        local language = vim.treesitter.language.get_lang(filetype)
-        if not language then return end -- If no lang is detected, just give up
+        local lang = vim.treesitter.language.get_lang(filetype)
+        if lang == 'ghostty' or lang == 'conf' then
+          lang = 'ini'
+        elseif not lang then
+          return
+        end -- If no lang is detected, just give up
 
-        local tsAddOk, tsAddErr = vim.treesitter.language.add(language)
+        local tsAddOk, tsAddErr = vim.treesitter.language.add(lang)
 
         -- if parser exists and start treesitter for **buf**
         if tsAddOk then
           -- enables syntax highlighting and other treesitter features
-          vim.treesitter.start(buf, language)
+          vim.treesitter.start(buf, lang)
 
           -- set some Treesitter-keymaps
           vim.keymap.set('n', '<leader>ut' --[[cs|ct]], vim.show_pos, { desc = 'TS: posi[t]ion', buf = buf })
@@ -73,10 +77,10 @@ return { -- Highlight, edit, and navigate code
           -- print('vim.treesitter.language.add("' .. language .. '").err = ' .. tsAddErr)
 
           -- NOTE: if no parser, then install the language's parser if treesitter has it
-          local tsParsersMatch = table.concat(nvimTS.get_available(), ' '):match(' ' .. language .. ' ')
+          local tsParsersMatch = table.concat(nvimTS.get_available(), ' '):match(' ' .. lang .. ' ')
           if tsParsersMatch then
             -- print('DEBUG: NOT installed -> installing (language/tsParsersMatch)', language, tsParsersMatch)
-            nvimTS.install(language)
+            nvimTS.install(lang)
           end
           return
         end

@@ -146,14 +146,23 @@ autocmd('FileType', 'FileType-miniindentscope_disable', {
   callback = function() vim.b.miniindentscope_disable = true end,
 })
 
--- Makes file.conf (and ghostty-conf.boo) into filetype "cfg" syntax
-autocmd('BufEnter', 'BufEnter-conf-boo-set_ft=cfg', {
-  pattern = { '*.conf', '*.boo' },
-  desc = 'file.conf -> file.cfg syntax',
-  -- command = 'set ft=cfg',
-  -- once = true,
+-- -- Makes file.conf (and ghostty-conf.boo) into filetype "cfg" syntax
+-- autocmd('BufEnter', 'BufEnter-conf-boo-set_ft=cfg', {
+--   pattern = { '*.conf', '*.boo' },
+--   desc = 'file.conf -> file.cfg syntax',
+--   -- command = 'set ft=cfg',
+--   -- once = true,
+--   callback = function()
+--     if vim.o.filetype == 'conf' then vim.opt.filetype = 'cfg' end -- ~= "hyprlang"
+--   end,
+-- })
+autocmd('BufEnter', 'BufEnter-boo-ghostty', {
+  -- pattern = { '*.boo' },
+  pattern = { '**/ghostty/**' },
+  desc = 'file.boo -> ft=ghostty',
   callback = function()
-    if vim.o.filetype == 'conf' then vim.opt.filetype = 'cfg' end -- ~= "hyprlang"
+    local ft = vim.o.filetype
+    if ft == 'conf' then ft = 'ghostty' end
   end,
 })
 

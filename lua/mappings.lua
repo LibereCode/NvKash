@@ -80,7 +80,7 @@ map('<C-Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }, 't') --TEST:
 map('<M-Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }, 't') --TEST:
 
 -- TIP: Disable arrow keys in normal mode
--- map('<left>', '<cmd>echo "Use h to move!!"<CR>')
+-- map('<left>', '<cmd>echo "Use h to move!!"<CR>'e
 -- map('<right>', '<cmd>echo "Use l to move!!"<CR>')
 -- map('<up>', '<cmd>echo "Use k to move!!"<CR>')
 -- map('<down>', '<cmd>echo "Use j to move!!"<CR>')
@@ -103,6 +103,10 @@ map('<M-S-->', function() wincmd '2-' end, { desc = '[-] win-height' }) -- '<C--
 map('<M-S-=>', function() wincmd '2+' end, { desc = '[+] win-height' }) -- '<C-=>'
 map('<M-S-,>', function() wincmd '2<' end, { desc = 'widgth less [<]' }) -- '<C-,>'
 map('<M-S-.>', function() wincmd '2>' end, { desc = 'width more [>]' }) -- '<C-.>'
+
+-- TEST: better use for <C-tab>
+map('<C-TAB>', '<C-w>w', { desc = 'next window' })
+map('<C-S-TAB>', '<C-w>W', { desc = 'prev window' })
 
 -- leadmap('|', ':vsplit<CR>', { desc = 'vertical[|]split' }) -- <C-w>v
 -- leadmap('_', ':split<CR>', { desc = 'horizontal[_]split' }) -- <C-w>s
