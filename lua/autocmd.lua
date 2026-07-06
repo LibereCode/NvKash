@@ -2,6 +2,28 @@
 -- [[ Basic Autocommands ]]
 -- ========================
 --  See `:help lua-guide-autocommands`
+--
+
+---Get the **version** of _nvim_ (with `nvim -v`)
+---@return integer[]?
+---**TODO:** instead return a table of each version segment (ie: {0, 13, 0})
+---**?TODO:** Merge with (my plugin) QoL.nvim?
+-- local function get_nvimVersion()
+--   local v = io.popen('nvim -v', 'r')
+--   if v then
+--     local vl = v:read '*L'
+--     -- local _, _, vn = v:read('*L'):find 'NVIM v0.([^.]*)'
+--     -- local _, _, vn = vl:find 'NVIM v0.([^.]*)'
+--     local vv = {}
+--     local _, _, a, b, c = vl:find 'NVIM v([^.]*).([^.]*).([^.-]*)'
+--     for _, i in ipairs { a, b, c } do
+--       table.insert(vv, tonumber(i))
+--     end
+--     v:close()
+--     return vv
+--   end
+-- end
+-- local nvimVersion = get_nvimVersion() or { 0, 12, 0 }
 
 ---Create an autocmd with augroup
 ---@param events vim.api.keyset.events | table<vim.api.keyset.events>
@@ -19,8 +41,13 @@ end
 --  See `:help vim.hl.on_yank()`
 autocmd('TextYankPost', 'highlight-yank', {
   desc = 'Highlight when yanking (copying) text',
-  -- callback = function() vim.hl.on_yank() end,
-  callback = function() vim.hl.hl_op() end,
+  callback = function()
+    if vim.hl['hl_op'] then
+      vim.hl['hl_op']()
+    else
+      vim.hl['on_yank']()
+    end
+  end,
 })
 
 -- HACK: Add more down below
