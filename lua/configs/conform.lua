@@ -74,7 +74,7 @@ return { -- NOTE: Autoformat
 
     formatters = { -- formatter settings
       prettierd = {
-        args = { '--config', vim.env.XDG_CONFIG_HOME or (vim.fn.expand '~' .. '/.config') .. '/prettierrc.json' },
+        args = { '--config', (vim.env.XDG_CONFIG_HOME or (vim.fn.expand '~' .. '/.config')) .. '/prettierrc.json' },
       },
       -- examples -- see :h conform-options
       -- formatterTbl = {

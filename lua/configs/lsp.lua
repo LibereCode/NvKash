@@ -35,27 +35,27 @@ return { -- NOTE: LSP-conf
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`ts_ls`) will work just fine
-      ts_ls = {}, -- typescripts etc
+      -- ts_ls = {}, -- typescripts etc
 
       stylua = {}, -- Used to format Lua code
 
       -- Special Lua Config, as recommended by neovim help docs
       lua_ls = {
         on_init = function(client)
-          -- NOTE: Disable thos config if .luarc.json is found
+          -- NOTE: Disable those config if .luarc.json is found
           if client.workspace_folders then
             local path = client.workspace_folders[1].name
             -- stylua: ignore
             if path ~= vim.fn.stdpath 'config'
               and (vim.uv.fs_stat(path .. '/.luarc.json')
-              or vim.uv.fs_stat(path .. '/..luarc.jsonc'))
+              or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
             then return end
           end
 
           -- vim.keymap.set('n', '<leader>ld', '<CMD>LazyDev lsp<CR>') -- see lazydev.keys above
 
           ---@type _.lspconfig.settings.lua_ls.Lua
-          local settingsLua = {
+          local settingsLua_new = {
             runtime = {
               version = 'LuaJIT',
               path = {
@@ -95,7 +95,12 @@ return { -- NOTE: LSP-conf
             hint = { enable = true, setType = true },
             telemetry = { enabled = false },
           }
-          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua or {}, settingsLua)
+          local settingsLua = client.config.settings.Lua
+          if type(settingsLua) == 'table' then
+            client.config.settings.Lua = vim.tbl_deep_extend('force', settingsLua, settingsLua_new)
+          else
+            client.config.settings.Lua = settingsLua_new
+          end
         end,
         settings = {
           Lua = {},
@@ -107,15 +112,18 @@ return { -- NOTE: LSP-conf
       --   -- and https://www.reddit.com/r/neovim/comments/1mdtr4g/emmylua_ls_is_supersnappy/
       --   cmd = { 'emmylua_ls' },
       --   filetypes = { 'lua' },
-      --   root_markers = { '.emmyrc.json', '.luarc.json', '.git' },
+      --   root_markers = { '.emmyrc.json' },
       --   settings = {
       --     Lua = {},
       --   },
+      --   on_init = function() vim.lsp.enable('lua_ls', false) end,
+      --   on_attach = function() vim.lsp.enable('lua_ls', false) end,
+      --   workspace_required = true, -- TEST:
       -- }, -- NOTE: indexes almost 2x of lua_ls, prolly because index too much in ~/.local/share/nvim/lazy
 
       -- NOTE: ADD LSP HERE
 
-      -- biome = {}, -- replace ts_ls
+      biome = {}, -- replace ts_ls
       -- ruff = {}, -- replace pyright -- Not... I will use as a formatter and linter instead
       ty = { -- replace pyright, fr. -- `ty` is from `ruff` creator -- really good
         configuration = {
@@ -149,6 +157,7 @@ return { -- NOTE: LSP-conf
         filetypes = { 'text', 'markdown' },
       },
       marksman = {}, -- markdown_oxide = {}, -- markdown
+      -- oxlint = {}, -- js/ts
       hyprls = {}, -- hyprlang
       nil_ls = {}, -- nix
       -- cssls = {},

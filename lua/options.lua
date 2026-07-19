@@ -10,7 +10,7 @@
 -- The only problem is that, only typing `vim.o.` (not o if alias) give completions
 local o = vim.opt -- this works perfect, and vim.o breaks config
 local g = vim.g
-local cset = vim.cmd.set
+local cset = vim.cmd.set -- ???
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 g.have_nerd_font = true
@@ -33,6 +33,8 @@ o.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus' -- together with th
 
 o.breakindent = true -- Enable break indent
 -- o.smartindent = true -- maybe not so smart...
+-- o.cindent=true -- :h cin
+o.cinkeys = '0{,0),0],:,0#,!^F,o,O,e' -- ",0}" -- :h cink
 
 local tabLen = 4
 o.tabstop = tabLen -- . :h 'ts'
@@ -147,8 +149,8 @@ o.undofile = true -- :h udf
 o.undolevels = 1723 -- :h ul
 
 o.termguicolors = true -- Enable true colors for proper colorscheme support
-cset 't_Co=256'
-cset 'termguicolors'
+cset 't_Co=256' -- ???
+-- cset 'termguicolors'
 cset 'background=dark'
 
 -- o.textwidth = 100 -- 80 -- XXX annoying
