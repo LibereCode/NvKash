@@ -208,6 +208,34 @@ autocmd('CmdwinEnter', 'CmdwinEnter-syntaxHL', {
   end,
 })
 
+-- NOTE: 2 lsp-progress-bar
+-- autocmd('LspProgress', 'LspProgress-notify', {
+--   callback = function(ev)
+--     local client = vim.lsp.get_client_by_id(ev.data.client_id)
+--     if client then
+--       local val = ev.data.params.value
+--       local msg = ('[%s] %s %s'):format(client.name, val.kind == 'end' and '✔' or '', val.title or '')
+--       vim.notify(msg)
+--     end
+--   end,
+-- })
+-- autocmd('LspProgress', 'LspProgress-nvim_echo', { -- best
+--   callback = function(ev)
+--     local val = ev.data.params.value
+--     local client = vim.lsp.get_client_by_id(ev.data.client_id)
+--     if client then
+--       vim.api.nvim_echo({ { val.message or 'done' } }, false, {
+--         id = 'lsp.' .. ev.data.client_id,
+--         kind = 'progress',
+--         source = 'vim.lsp',
+--         title = '[' .. client.name .. '] ' .. val.title,
+--         status = val.kind ~= 'end' and 'running' or 'success',
+--         percent = val.percentage,
+--       })
+--     end
+--   end,
+-- })
+
 -- TODO: do something(?) when a file is externally editied
 -- see :h watch-file
 

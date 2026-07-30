@@ -104,9 +104,8 @@ require 'custom' -- NOTE: sauce all custom in this file
 -- [[ Install `lazy.nvim` plugin manager ]]
 require 'configs.lazy' -- See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 
-vim.cmd [[
-source ~/.config/nvim/nvim.vim
-]] -- sources a vim-script file (so I can use vim-scipt in config)
+-- sources a vim-script file (so I can use vim-scipt in config)
+vim.cmd('source ' .. vim.fn.stdpath 'config' .. '/nvim.vim')
 
 -- print(vim.fn.input 'what?') -- what?
 

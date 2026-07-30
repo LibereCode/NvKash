@@ -118,7 +118,7 @@ o.foldtext = ''
 o.laststatus = 2 -- :h 'ls' -- foldlevel is better
 o.splitkeep = 'cursor' -- :h 'spk' -- cursor position on win-resize
 
-o.lazyredraw = true -- :h 'lz' -- Force update with :redraw --  TEST:
+-- o.lazyredraw = true -- :h 'lz' -- Force update with :redraw
 
 -- go to previous/next line with h,l,left arrow and right arrow when cursor reaches end/beginning of line
 o.ww:append '<>[]hl' -- OP !! -- wrapoff, see below -- '<>'=left/right in N+V and '[]' in I+R mode; 'hl'=h/l in N+V

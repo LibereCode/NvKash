@@ -16,4 +16,6 @@ return {
   require 'plugins.ui.indent-blankline',
   -- require 'plugins.ui.image',
   require 'plugins.ui.lualine',
+  -- require 'plugins.ui.noice',
+  -- require 'plugins.ui.tiny-cmdline',
 }

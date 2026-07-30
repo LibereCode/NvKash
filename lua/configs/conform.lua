@@ -65,7 +65,10 @@ return { -- NOTE: Autoformat
       json = { 'prettierd' },
       jsonc = { 'prettierd' },
 
-      nix = { 'nixfmt' },
+      c = { 'clang-format' },
+      cpp = { 'clang-format' },
+      java = { 'clang-format' },
+      nix = { 'nixfmt' }, -- 'nixfmt' 'alejandra'
       css = { 'prettierd' },
       xml = { 'xmlformatter' },
 

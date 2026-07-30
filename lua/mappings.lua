@@ -30,8 +30,8 @@ local nomap = vim.keymap.del -- disable (default) mappings
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
--- map('<Esc>', '<cmd>nohlsearch<CR>')
-map('<Esc>', '<cmd>nohl<CR>:<C-c>')
+map('<Esc>', '<cmd>nohl<CR>') -- nohl == nohlsearch
+-- map('<Esc>', '<cmd>nohl<CR>:<C-c>')
 -- map(';', ':', { desc = 'cmd-line' })
 -- map(',', ':', { desc = 'cmd-line' })
 map('<C-;>', function()
@@ -145,12 +145,13 @@ map('<leader>x', '<cmd>bn<BAR>bd #<CR>', bufopts { desc = 'delete[x]buffer' })
 -- map('L', '<cmd>bn<CR>', bufopts { desc = 'next buf' }) -- './plugins/ui/bufferline.lua'
 
 -- tabs
-map('<leader><tab>l', '<cmd>tabs<CR>', { desc = 'tab list' })
-map('<leader><tab><tab>', '<cmd>tabnew<CR>', { desc = 'new' })
-map('<leader><tab>d', '<cmd>tabclose<CR>', { desc = 'delete' })
-map('<leader><tab>p', '<cmd>tabprev<CR>', { desc = 'prev' })
-map('<leader><tab>n', '<cmd>tabnext<CR>', { desc = 'next' })
-map('<leader><tab>t', '<C-W>T', { desc = 'window->newTab' })
+local tabPrefix = '<leader><tab>'
+map(tabPrefix .. 'l', '<cmd>tabs<CR>', { desc = 'tab list' })
+map(tabPrefix .. 'n', '<cmd>tabnew<CR>', { desc = 'new' }) -- '<leader><tab><tab>'
+map(tabPrefix .. '<tab>', '<cmd>tabnext<CR>', { desc = 'next' }) -- '<leader><tab>n'
+map(tabPrefix .. '<S-tab>', '<cmd>tabprev<CR>', { desc = 'prev' }) -- '<leader><tab>p'
+map(tabPrefix .. 'd', '<cmd>tabclose<CR>', { desc = 'delete' })
+map(tabPrefix .. 't', '<C-W>T', { desc = 'window->newTab' })
 
 -- INFO: quick commands / QoL
 --
