@@ -1,7 +1,7 @@
 -- XXX: Sorry, but too much config.
 -- flash.nvim is just better...
 return {
-  -- leap.nvim 🦘🦘🦘
+  -- leap.nvim 🦘🦘
   'andyg/leap.nvim',
   url = 'https://codeberg.org/andyg/leap.nvim.git',
   config = function()
@@ -45,7 +45,11 @@ return {
     -- preview for matches starting with whitespace or an alphabetic
     -- mid-word character: foobar[baaz] = quux
     --                     *    ***  ** * *  *
-    require('leap').opts.preview = function(ch0, ch1, ch2) return not (ch1:match '%s' or (ch0:match '%a' and ch1:match '%a' and ch2:match '%a')) end
+    -- -@param ch0 string
+    -- -@param ch1 string
+    -- -@param ch2 string
+    -- -@return boolean
+    -- require('leap').opts.preview = function(ch0, ch1, ch2) return not (ch1:match '%s' or (ch0:match '%a' and ch1:match '%a' and ch2:match '%a')) end
 
     -- Enable the traversal keys to repeat the previous search without
     -- explicitly invoking Leap (`<cr><cr>...` instead of `s<cr><cr>...`):
