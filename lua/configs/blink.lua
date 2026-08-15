@@ -93,6 +93,7 @@ return { -- NOTE: Autocompletion
         auto_show = true,
         auto_show_delay_ms = 345,
       },
+      list = { selection = { preselect = true, auto_insert = true } },
       menu = { -- LazyVim ref
         border = 'none',
         draw = {
@@ -101,6 +102,7 @@ return { -- NOTE: Autocompletion
         },
         -- auto_show = false, -- see :h blink-cmp-config-completion # GHOST TEXT
         --
+        ---@type ("n"|"s")[]|function|fun():"n"|"s"[]
         direction_priority = function() -- :h blink-cmp-recipes # AVOID MULTI-LINE COMPLETION GHOST TEXT -- it works, stfu diagnostics
           local ctx = require('blink.cmp').get_context()
           local item = require('blink.cmp').get_selected_item()

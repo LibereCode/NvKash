@@ -20,6 +20,15 @@ return { -- NOTE: Autoformat
     notify_on_error = false,
     format_on_save = function(bufnr)
       local bufname = vim.api.nvim_buf_get_name(bufnr)
+
+      -- from nixvim -> configrom-nvim -> settings example
+      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then return nil end
+      local slow_format_filetypes
+      if slow_format_filetypes and slow_format_filetypes[vim.bo[bufnr].filetype] then return nil end
+      local function on_format(err)
+        if err and err:match 'timeout$' then slow_format_filetypes[vim.bo[bufnr].filetype] = true end
+      end
+
       -- Disable "format_on_save lsp_fallback" for languages without FORMAT-STANDARD
       local disable_filetypes = { c = true, cpp = true }
       if disable_filetypes[vim.bo[bufnr].filetype] then
@@ -37,7 +46,7 @@ return { -- NOTE: Autoformat
       return { -- else
         timeout_ms = 345,
         lsp_format = 'fallback',
-      }
+      }, on_format
     end,
     formatters_by_ft = {
       lua = { 'stylua' },

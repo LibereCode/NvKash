@@ -28,7 +28,7 @@
 -- local nvimVersion = get_nvimVersion() or { 0, 12, 0 }
 
 ---Create an autocmd with augroup
----@param events vim.api.keyset.events | table<vim.api.keyset.events>
+---@param events vim.api.keyset.events | vim.api.keyset.events[]
 ---@param augroupName string The name off the augroup
 ---TIP: if struggle with name, just name it _"< events >-< a thing it does >"_
 ---@param autoOpts vim.api.keyset.create_autocmd
