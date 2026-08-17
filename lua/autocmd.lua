@@ -25,7 +25,7 @@
 --     return vv
 --   end
 -- end
--- local nvimVersion = get_nvimVersion() or { 0, 12, 0 }
+-- local nvimVersion = get_nvimVersion() or { 0, 12, 0 } --
 
 ---Create an autocmd with augroup
 ---@param events vim.api.keyset.events | vim.api.keyset.events[]
