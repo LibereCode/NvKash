@@ -213,3 +213,4 @@ crcmd("PackGet", function()
     end
     print("-------------------")
 end, { desc = "Print vim.pack.get table" })
+

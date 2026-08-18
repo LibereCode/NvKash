@@ -11,7 +11,7 @@ set cursorline
 
 set smartindent
 set smartcase
-set ignorecase
+"set ignorecase
 
 set nowrap
 set showmatch
@@ -62,7 +62,7 @@ tno	<C-ESC>	<C-\><C-n>
 no		j		gj
 no		k		gk
 
-colorscheme wildcharm
+"colorscheme wildcharm
 
 
 function MyTabLine()
