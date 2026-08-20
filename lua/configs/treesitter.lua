@@ -28,6 +28,7 @@ return { -- Highlight, edit, and navigate code
       'markdown_inline',
       'nix',
       'python',
+      'rust',
       'query',
       'toml',
       'vim',

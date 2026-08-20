@@ -69,16 +69,16 @@ return { -- NOTE: Autoformat
           return { 'ruff_format' } else return { 'black' } end
       end, -- stylua: ignore stop
       -- kdl = { "kdlfmt" }, -- fucks up niri config, and I can't get `.kdlfmtignore` to work -- https://github.com/hougesen/kdlfmt
-      markdown = { 'prettierd' }, -- "markdownlint-cli2" -- TEST:
-      yaml = { 'prettierd' },
-      json = { 'prettierd' },
-      jsonc = { 'prettierd' },
+      markdown = { 'prettier' }, -- "markdownlint-cli2"
+      yaml = { 'prettier' }, -- prettier vs prettierd 🤔 -- prettierd had trouble closing, leaving many running
+      json = { 'prettier' },
+      jsonc = { 'prettier' },
 
       c = { 'clang-format' },
       cpp = { 'clang-format' },
       java = { 'clang-format' },
       nix = { 'nixfmt' }, -- 'nixfmt' 'alejandra'
-      css = { 'prettierd' },
+      css = { 'prettier' },
       xml = { 'xmlformatter' },
 
       -- ['_'] = { 'trim_whitespace' }, -- run on filetype without any formatter

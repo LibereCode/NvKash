@@ -193,6 +193,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     -- find/files
     leadmap('fb', builtin.buffers, 'buffers')
     leadmap('fc', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, 'nvim [c]onfig') -- Shortcut for searching your Neovim configuration files
+    leadmap('fd', builtin.fd, 'files')
     leadmap('ff', builtin.fd, 'files') -- fd=find_files
     leadmap('fh', builtin.help_tags, 'help')
     leadmap('fk', builtin.keymaps, 'keymaps')

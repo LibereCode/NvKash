@@ -317,7 +317,8 @@ return { -- NOTE: LSP-conf
       'html-lsp',
       'jsonlint',
       'markdownlint-cli2',
-      'prettierd',
+      -- 'prettierd',
+      'prettier',
       'shellcheck',
     })
 

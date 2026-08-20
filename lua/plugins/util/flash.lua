@@ -1,32 +1,33 @@
 return {
   'folke/flash.nvim',
   event = 'VeryLazy',
-  vscode = true,
+  -- vscode = true,
   ---@type Flash.Config
-  opts = { -- HACK: omg, jag glömde denna och det fucka mig så länge (den fixa att `f` och `t` keys ej använde flash)
-
-    search = {
-      -- mode = 'fuzzy',
-      -- incremental = true,
-    },
-    label = {
-      -- style = 'inline', ---@type "eol" | "overlay" | "right_align" | "inline"
-      -- min_pattern_length = 2, -- fucks up labels on f/F/t/T/;/,
-      -- rainbow = { enabled = true, shade = 9 },
-    },
-    jump = {
-      nohlsearch = true,
-    },
-    prompt = {
-      prefix = { { ' 󰙻 ', 'FlashPromptIcon' } }, -- ⚡ 󰙻 󰉁󱐋
-    },
-    modes = {
-      char = {
-        jump_labels = true, -- f/F/t/T/;/, with labels
-      },
-    },
-  },
-
+  opts = {},
+  -- opts = { -- HACK: omg, jag glömde denna och det fucka mig så länge (den fixa att `f` och `t` keys ej använde flash)
+  --
+  --   search = {
+  --     -- mode = 'fuzzy',
+  --     -- incremental = true,
+  --   },
+  --   label = {
+  --     -- style = 'inline', ---@type "eol" | "overlay" | "right_align" | "inline"
+  --     -- min_pattern_length = 2, -- fucks up labels on f/F/t/T/;/,
+  --     -- rainbow = { enabled = true, shade = 9 },
+  --   },
+  --   jump = {
+  --     nohlsearch = true,
+  --   },
+  --   prompt = {
+  --     prefix = { { ' 󰙻 ', 'FlashPromptIcon' } }, -- ⚡ 󰙻 󰉁󱐋
+  --   },
+  --   modes = {
+  --     char = {
+  --       jump_labels = true, -- f/F/t/T/;/, with labels
+  --     },
+  --   },
+  -- },
+  --
   keys = {
     { -- wtf, detta fungerade superenkelt? flyttade hit ifrån config/keymaps.lua
       's',

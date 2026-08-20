@@ -307,10 +307,10 @@ and setup [flathub](https://flathub.org/setup) to
 <details><summary>asdf and mise-en-place</summary>
 
 [asdf](https://asdf-vm.com/) and [mise](https://mise.jdx.dev/)
-    are tool version managers,
-    mostly aimed towards project-specific tool versioning.<br />
-    However both support managing tools
-    globally in the user-space as well:<br />
+are tool version managers,
+mostly aimed towards project-specific tool versioning.<br />
+However both support managing tools
+globally in the user-space as well:<br />
 
 <details><summary>mise</summary>
 

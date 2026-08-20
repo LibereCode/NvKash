@@ -3,16 +3,22 @@
 return {
   -- leap.nvim 🦘🦘
   'andyg/leap.nvim',
+  lazy = false,
   url = 'https://codeberg.org/andyg/leap.nvim.git',
   config = function()
     vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap)')
     vim.keymap.set('n', 'S', '<Plug>(leap-from-window)')
+    -- For example, `gs{leap}yap` or `ygs{leap}ap` will yank the paragraph
+    -- at the position specified by `{leap}`.
+
+    vim.keymap.set({ 'n' }, { 'gA' }, 'ga', { desc = 'char info' })
+    vim.keymap.set({ 'n' }, { 'ga' }, '<Plug>(leap-anywhere)', {})
 
     -- E.g., `gs{leap}$y` or `ygs{leap}$`, where {leap}, as usual, means
     -- {char1}{char2}{label?}. The linewise version can also take [count],
     -- e.g. `d2gs{leap}` deletes two lines.
-    vim.keymap.set({ 'n', 'o' }, 'gl', '<plug>(leap-remote)') -- 'gs' 'gz' 'gl'
-    vim.keymap.set({ 'n', 'o' }, 'gL', '<Plug>(leap-remote-linewise)') -- 'gS' 'gZ' 'gL'
+    vim.keymap.set({ 'n', 'x', 'o' }, 'gl', '<plug>(leap-remote)') -- 'gs' 'gz' 'gl'
+    vim.keymap.set({ 'n', 'x', 'o' }, 'gL', '<Plug>(leap-remote-linewise)') -- 'gS' 'gZ' 'gL'
     -- Useful shortcut for a frequent operation: the same as remote-linewise,
     -- except it auto-triggers even without [count] (`yrr{leap}` copies a line).
     vim.keymap.set({ 'o' }, 'rr', '<Plug>(leap-remote-line)')
@@ -21,14 +27,14 @@ return {
     vim.keymap.set({ 'x', 'o' }, 'ar', '<Plug>(leap-remote-text-object)')
     vim.keymap.set({ 'x', 'o' }, 'ir', '<Plug>(leap-remote-inner-text-object)')
 
-    vim.keymap.set({ 'x', 'o' }, 'an', function()
+    vim.keymap.set({ 'x', 'o' }, 'S', function()
       require('leap.treesitter').select {
         -- To increase/decrease the selection in a clever-f-like manner,
         -- with the trigger key itself (vannnNN...). The default keys
         -- (<enter>/<backspace>) also work, so feel free to skip this.
-        opts = require('leap.user').with_traversal_keys('n', 'N'),
+        opts = require('leap.user').with_traversal_keys('s', 'S'),
       }
-    end)
+    end, { desc = 'leap treesitter [n]node' })
 
     -- Set automatic paste after yanking:
     vim.api.nvim_create_autocmd('User', {
@@ -53,32 +59,6 @@ return {
 
     -- Enable the traversal keys to repeat the previous search without
     -- explicitly invoking Leap (`<cr><cr>...` instead of `s<cr><cr>...`):
-    do
-      local clever = require('leap.user').with_traversal_keys
-      -- For relative directions, set the `backward` flags according to:
-      -- local prev_backward = require('leap').state['repeat'].backward
-      vim.keymap.set(
-        { 'n', 'x', 'o' },
-        ';', -- '<cr>', -- TEST:
-        function()
-          require('leap').leap {
-            ['repeat'] = true,
-            opts = clever('<cr>', '<bs>'),
-          }
-        end
-      )
-      vim.keymap.set(
-        { 'n', 'x', 'o' },
-        ',', -- '<bs>', -- TEST:
-        function()
-          require('leap').leap {
-            ['repeat'] = true,
-            opts = clever('<bs>', '<cr>'),
-            backward = true,
-          }
-        end
-      )
-    end
 
     -- search and motion -- https://codeberg.org/andyg/leap.nvim#search-and-motions
 
@@ -110,11 +90,23 @@ return {
 
     -- clever s ( a la sneak)
     do
-      local clever_s = require('leap.user').with_traversal_keys('s', 'S')
-      vim.keymap.set({ 'n', 'x', 'o' }, 's', function() require('leap').leap { opts = clever_s } end)
-      vim.keymap.set({ 'n', 'x', 'o' }, 'S', function() require('leap').leap { backward = true, opts = clever_s } end)
-    end
+      -- local clever_s = require('leap.user').with_traversal_keys('s', 'S')
+      -- vim.keymap.set({ 'n', 'x', 'o' }, 's', function() require('leap').leap { opts = clever_s } end)
+      -- vim.keymap.set({ 'n', 'x', 'o' }, 'S', function() require('leap').leap { backward = true, opts = clever_s } end)
 
+      -- :h leap-features
+      local clever = require('leap.user').with_traversal_keys
+      -- For relative instead of absolute directions, set the `backward`
+      -- flags according to the previous invocation:
+      -- `require('leap').state['repeat'].backward`.
+      vim.keymap.set({ 'n', 'x', 'o' }, '<cr>', function() require('leap').leap { ['repeat'] = true, opts = clever('<cr>', '<bs>') } end)
+      vim.keymap.set({ 'n', 'x', 'o' }, '<bs>', function() require('leap').leap { ['repeat'] = true, opts = clever('<bs>', '<cr>'), backward = true } end)
+
+      -- :h leap.opts.keys
+      local keys = require('leap').opts.keys
+      keys.next_target = { '<enter>', 's' }
+      keys.prev_target = { '<backspace>', 'S' }
+    end
     -- Labels and HL -- https://codeberg.org/andyg/leap.nvim#labels-and-highlighting
 
     -- always show labels at beginning
